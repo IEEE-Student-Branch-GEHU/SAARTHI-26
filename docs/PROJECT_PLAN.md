@@ -2,7 +2,7 @@
 ### Product Architect + UI/UX Architect | Discovery & Planning Document
 > **Status**: Awaiting approval before implementation begins.
 > **Date**: 2026-08-20
-> **Repository state**: Greenfield — only `AGENTS.md` and `.agents/` exist.
+> **Repository state**: Greenfield.
 
 ---
 
@@ -32,9 +32,6 @@
 
 | Item | Status |
 |------|--------|
-| `AGENTS.md` | Exists — 1,589 lines of engineering rules + SAARTHI-specific project rules |
-| `.agents/skills/` | Exists — large library of skill SKILL.md files |
-| `.agents/skills_library/` | Exists — additional skills |
 | Application code | None |
 | `package.json` | None |
 | `index.html` | None |
