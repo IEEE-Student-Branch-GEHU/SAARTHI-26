@@ -1,0 +1,22 @@
+/* JudgesSection.module.css */
+.section { background: var(--color-bg-surface); }
+.header { margin-bottom: var(--space-12); }
+.eyebrow { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-accent-cyan); letter-spacing: 0.1em; margin-bottom: var(--space-3); }
+.heading { font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl)); }
+
+.placeholder { display: flex; flex-direction: column; align-items: center; gap: var(--space-6); padding: var(--space-16); border: 1px dashed var(--color-border-dim); border-radius: var(--radius-xl); text-align: center; }
+.placeholderIcon { font-size: 4rem; }
+.placeholderText { max-width: 40ch; text-align: center; color: var(--color-text-secondary); }
+
+.group { margin-bottom: var(--space-12); }
+.groupHeading { font-size: var(--text-xl); color: var(--color-text-secondary); margin-bottom: var(--space-8); font-family: var(--font-mono); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-6); list-style: none; }
+
+.card { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-6); background: var(--color-bg-base); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); text-align: center; transition: border-color var(--transition-base), transform var(--transition-base); }
+.card:hover { border-color: var(--color-border-dim); transform: translateY(-4px); }
+
+.photo { width: 80px; height: 80px; border-radius: var(--radius-full); object-fit: cover; border: 2px solid var(--color-border-dim); }
+.name { font-weight: var(--weight-semibold); color: var(--color-text-primary); max-width: none; }
+.role { font-size: var(--text-sm); color: var(--color-accent-cyan); max-width: none; }
+.org { font-size: var(--text-xs); color: var(--color-text-muted); max-width: none; }

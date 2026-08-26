@@ -1,0 +1,207 @@
+/**
+ * SAARTHI Design Tokens — Phase 2
+ *
+ * Color philosophy: 45% Blue · 45% White · 10% Yellow
+ *
+ *   BLUE   = World / environment / depth
+ *   WHITE  = Structure / typography / panels
+ *   YELLOW = Energy / CTA / highlights / accents
+ *
+ * Do not hardcode color values in component files.
+ * Update the visual identity by changing values here only.
+ */
+
+:root {
+  /* ─── World Blue — Background & Environment (45%) ────────────────────────── */
+
+  --color-world-deepest:   #030327;   /* deepest background — used under hero canvas */
+  --color-world-base:      #050538;   /* primary page background */
+  --color-world-mid:       #080858;   /* mid-surface — section alternation */
+  --color-world-surface:   #0B0B6E;   /* card / panel surface */
+  --color-world-elevated:  #0E0E82;   /* elevated surfaces — modals, dropdowns */
+  --color-world-rim:       #1414A0;   /* rim / highlight blue used on borders */
+
+  /* Legacy aliases (keeps old component references working during transition) */
+  --color-bg-base:         var(--color-world-base);
+  --color-bg-surface:      var(--color-world-mid);
+  --color-bg-elevated:     var(--color-world-surface);
+
+  /* ─── Structure White — Typography & Panels (45%) ────────────────────────── */
+
+  --color-white-pure:      #FFFFFF;
+  --color-white-primary:   #F5F7FF;   /* main heading / strong text */
+  --color-white-secondary: #C8D0F0;   /* body text, labels */
+  --color-white-muted:     #7A85B8;   /* placeholder text, captions */
+  --color-white-dim:       #3A4070;   /* disabled text */
+
+  /* Legacy text aliases */
+  --color-text-primary:    var(--color-white-primary);
+  --color-text-secondary:  var(--color-white-secondary);
+  --color-text-muted:      var(--color-white-muted);
+  --color-text-inverse:    var(--color-world-base);
+
+  /* ─── Energy Yellow — CTAs, Highlights, Accents (10%) ───────────────────── */
+
+  --color-energy:          #FFD43B;   /* primary yellow — CTAs, active indicators */
+  --color-energy-bright:   #FFE066;   /* hover / lit state */
+  --color-energy-dim:      rgba(255, 212, 59, 0.55);
+  --color-energy-ghost:    rgba(255, 212, 59, 0.12);
+  --color-energy-border:   rgba(255, 212, 59, 0.30);
+
+  /* ─── Borders ─────────────────────────────────────────────────────────────── */
+
+  --color-border-subtle:   rgba(245, 247, 255, 0.08);   /* very faint white border */
+  --color-border-dim:      rgba(245, 247, 255, 0.18);   /* standard card border */
+  --color-border-bright:   rgba(245, 247, 255, 0.40);   /* highlighted border */
+  --color-border-energy:   var(--color-energy-border);  /* yellow energy border */
+
+  /* ─── Portal / Circuit accent colours ───────────────────────────────────── */
+
+  /* A cooler blue-white for circuit lines (not dominant — supporting role) */
+  --color-circuit:         #A0AAFF;
+  --color-circuit-dim:     rgba(160, 170, 255, 0.35);
+  --color-circuit-ghost:   rgba(160, 170, 255, 0.10);
+
+  /* Deep violet for portal depth layer */
+  --color-portal-deep:     #1A00A0;
+  --color-portal-mid:      #2B00CC;
+  --color-portal-edge:     #4400FF;
+
+  /* Legacy accent aliases — used by existing component CSS */
+  --color-accent-cyan:         var(--color-circuit);
+  --color-accent-cyan-dim:     var(--color-circuit-dim);
+  --color-accent-cyan-ghost:   var(--color-circuit-ghost);
+  --color-accent-cyan-border:  rgba(160, 170, 255, 0.20);
+  --color-accent-violet:       var(--color-portal-mid);
+  --color-accent-violet-dim:   rgba(43, 0, 204, 0.5);
+  --color-accent-violet-ghost: rgba(43, 0, 204, 0.12);
+
+  /* TBA badge uses yellow instead of old orange */
+  --color-accent-orange:       var(--color-energy);
+  --color-accent-orange-dim:   var(--color-energy-dim);
+  --color-accent-orange-ghost: var(--color-energy-ghost);
+
+  /* ─── Status ──────────────────────────────────────────────────────────────── */
+
+  --color-success: #4AE89F;
+  --color-warning: var(--color-energy);
+  --color-error:   #FF4D6A;
+
+  /* ─── Glows & Shadows ─────────────────────────────────────────────────────── */
+
+  /* Yellow energy glow */
+  --glow-energy-sm: 0 0 8px  rgba(255, 212, 59, 0.45);
+  --glow-energy-md: 0 0 16px rgba(255, 212, 59, 0.50), 0 0 40px rgba(255, 212, 59, 0.20);
+  --glow-energy-lg: 0 0 24px rgba(255, 212, 59, 0.60), 0 0 64px rgba(255, 212, 59, 0.25);
+
+  /* Blue world glow */
+  --glow-world-sm:  0 0 10px rgba(68, 0, 255, 0.35);
+  --glow-world-md:  0 0 24px rgba(68, 0, 255, 0.40), 0 0 60px rgba(27, 0, 160, 0.20);
+  --glow-world-lg:  0 0 40px rgba(68, 0, 255, 0.50), 0 0 100px rgba(27, 0, 160, 0.25);
+
+  /* Circuit glow (subtle) */
+  --glow-circuit-sm: 0 0 6px  rgba(160, 170, 255, 0.30);
+  --glow-circuit-md: 0 0 14px rgba(160, 170, 255, 0.35), 0 0 36px rgba(160, 170, 255, 0.12);
+
+  /* Legacy glow aliases */
+  --glow-cyan-sm:   var(--glow-circuit-sm);
+  --glow-cyan-md:   var(--glow-circuit-md);
+  --glow-cyan-lg:   var(--glow-world-md);
+  --glow-violet:    var(--glow-world-md);
+  --glow-orange:    var(--glow-energy-sm);
+
+  /* Elevation shadows */
+  --shadow-sm: 0 1px 4px  rgba(0, 0, 5, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 5, 0.6);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 5, 0.7);
+
+  /* ─── Typography ──────────────────────────────────────────────────────────── */
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-pixel:   'Press Start 2P', monospace;  /* decorative only */
+
+  /* Font sizes */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+  --text-6xl:  3.75rem;
+  --text-7xl:  4.5rem;
+
+  /* Font weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Line heights */
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.6;
+  --leading-relaxed: 1.75;
+
+  /* ─── Spacing Scale (4px base) ───────────────────────────────────────────── */
+
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ─── Section Layout ──────────────────────────────────────────────────────── */
+  --section-padding-y: var(--space-20);
+  --section-padding-x: var(--space-6);
+  --content-max-width: 1200px;
+
+  /* ─── Border Radius ───────────────────────────────────────────────────────── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ─── Transitions ─────────────────────────────────────────────────────────── */
+  --transition-fast:  150ms ease;
+  --transition-base:  200ms ease;
+  --transition-slow:  350ms ease;
+  --transition-crawl: 500ms ease;
+
+  /* ─── Z-Index ─────────────────────────────────────────────────────────────── */
+  --z-behind:   -1;
+  --z-base:      0;
+  --z-raised:   10;
+  --z-dropdown: 20;
+  --z-sticky:   30;
+  --z-overlay:  40;
+  --z-modal:    50;
+  --z-toast:    60;
+
+  /* ─── Canvas / Portal specific ────────────────────────────────────────────── */
+
+  /* These are read by the PortalCanvas.tsx component via JS */
+  --portal-color-bg:      #030327;
+  --portal-color-world:   #050538;
+  --portal-color-circuit: #A0AAFF;
+  --portal-color-energy:  #FFD43B;
+  --portal-color-white:   #F5F7FF;
+  --portal-color-deep:    #1A00A0;
+
+  /* Breakpoints (docs only — use raw values in media queries) */
+  /* mobile: 375px | sm: 480px | md: 768px | lg: 1024px | xl: 1280px */
+}

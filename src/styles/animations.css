@@ -1,0 +1,146 @@
+/**
+ * Shared Keyframe Animations — Phase 2
+ *
+ * All reusable @keyframes live here.
+ * Component-specific animations are co-located in their CSS Module files.
+ *
+ * Naming matches the new token system:
+ *   glowPulseEnergy  — yellow energy pulse
+ *   glowPulseWorld   — blue world pulse
+ *   glowPulseCircuit — subtle circuit shimmer
+ *
+ * Old names kept as aliases for backward compat during transition.
+ */
+
+/* ─── Entrance ───────────────────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Energy glow (Yellow — CTA, active, energy) ────────────────────────── */
+
+@keyframes glowPulseEnergy {
+  0%, 100% { box-shadow: 0 0 8px  rgba(255, 212, 59, 0.40); }
+  50%       { box-shadow: 0 0 20px rgba(255, 212, 59, 0.70), 0 0 48px rgba(255, 212, 59, 0.25); }
+}
+
+/* ─── World glow (Blue — logo, portal, world features) ──────────────────── */
+
+@keyframes glowPulseWorld {
+  0%, 100% { box-shadow: 0 0 10px rgba(68, 0, 255, 0.30); }
+  50%       { box-shadow: 0 0 24px rgba(68, 0, 255, 0.55), 0 0 60px rgba(27, 0, 160, 0.20); }
+}
+
+/* ─── Circuit shimmer (Blue-white — circuit lines, subtle accents) ────────── */
+
+@keyframes glowPulseCircuit {
+  0%, 100% { box-shadow: 0 0 6px  rgba(160, 170, 255, 0.25); }
+  50%       { box-shadow: 0 0 14px rgba(160, 170, 255, 0.50), 0 0 36px rgba(160, 170, 255, 0.15); }
+}
+
+/* Backward-compatible aliases */
+@keyframes glowPulseCyan   { 0%, 100% { box-shadow: 0 0 6px rgba(160, 170, 255, 0.25); } 50% { box-shadow: 0 0 14px rgba(160, 170, 255, 0.50), 0 0 36px rgba(160, 170, 255, 0.15); } }
+@keyframes glowPulseViolet { 0%, 100% { box-shadow: 0 0 10px rgba(43, 0, 204, 0.30); }  50% { box-shadow: 0 0 24px rgba(43, 0, 204, 0.55), 0 0 60px rgba(27, 0, 160, 0.20); } }
+
+/* ─── Float ──────────────────────────────────────────────────────────────── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+
+/* ─── Rotation ───────────────────────────────────────────────────────────── */
+
+@keyframes spinSlow        { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+@keyframes spinSlowReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+/* ─── Portal ring rotation ───────────────────────────────────────────────── */
+
+@keyframes portalRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes portalRotateReverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* ─── Circuit energy flow ────────────────────────────────────────────────── */
+
+@keyframes circuitFlow {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -200; }
+}
+
+/* ─── Data stream gradient ───────────────────────────────────────────────── */
+
+@keyframes dataStream {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── Shimmer skeleton ───────────────────────────────────────────────────── */
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+
+/* ─── Scan line ──────────────────────────────────────────────────────────── */
+
+@keyframes scanLine {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ─── Cursor blink ───────────────────────────────────────────────────────── */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── Underline grow ─────────────────────────────────────────────────────── */
+
+@keyframes underlineGrow {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ─── Energy pulse (for hero CTA ring) ──────────────────────────────────── */
+
+@keyframes energyRing {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  100% { transform: scale(1.8);  opacity: 0; }
+}
+
+/* ─── prefers-reduced-motion — collapse all animations ───────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+}

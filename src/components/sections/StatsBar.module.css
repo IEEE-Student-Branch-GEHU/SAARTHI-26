@@ -1,0 +1,43 @@
+/* StatsBar.module.css */
+
+.bar {
+  padding-block: var(--space-8);
+  border-top:    1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background:    var(--color-bg-surface);
+}
+
+.inner {
+  display:         flex;
+  flex-wrap:       wrap;
+  justify-content: center;
+  gap:             var(--space-8) var(--space-12);
+}
+
+.stat {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-1);
+  position:       relative;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size:   var(--text-4xl);
+  font-weight: var(--weight-bold);
+  color:       var(--color-energy);
+  line-height: 1;
+}
+
+.label {
+  font-family:    var(--font-mono);
+  font-size:      var(--text-xs);
+  color:          var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tbaBadge {
+  margin-top: var(--space-1);
+}

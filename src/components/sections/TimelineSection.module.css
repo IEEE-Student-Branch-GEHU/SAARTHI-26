@@ -1,0 +1,101 @@
+/* TimelineSection.module.css */
+.section { background: var(--color-bg-surface); }
+
+.header { margin-bottom: var(--space-12); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size:   var(--text-sm);
+  color:       var(--color-energy);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-3);
+}
+
+.heading {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+}
+
+.list {
+  display:        flex;
+  flex-direction: column;
+  list-style:     none;
+  max-width:      640px;
+}
+
+.item {
+  display: flex;
+  gap:     var(--space-6);
+}
+
+.connector {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  flex-shrink:    0;
+  width:          24px;
+}
+
+.dot {
+  width:         16px;
+  height:        16px;
+  border-radius: var(--radius-full);
+  border:        2px solid var(--color-border-dim);
+  background:    var(--color-bg-base);
+  flex-shrink:   0;
+  transition:    border-color var(--transition-base), background var(--transition-base);
+}
+
+.line {
+  flex:       1;
+  width:      2px;
+  min-height: var(--space-8);
+  background: var(--color-border-subtle);
+  margin:     var(--space-2) 0;
+}
+
+.content {
+  padding-bottom: var(--space-8);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.dateRow {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-3);
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size:   var(--text-sm);
+  color:       var(--color-text-muted);
+}
+
+.phase {
+  font-size:   var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color:       var(--color-text-primary);
+}
+
+.description {
+  font-size:   var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* ─── State variants ─────────────────────────────────────────────────────── */
+
+.active .dot {
+  border-color: var(--color-energy);
+  background:   var(--color-energy);
+  box-shadow:   var(--glow-energy-sm);
+}
+
+.active .phase {
+  color: var(--color-energy);
+}
+
+.completed .dot {
+  border-color: var(--color-success);
+  background:   var(--color-success);
+}

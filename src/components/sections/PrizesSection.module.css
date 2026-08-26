@@ -1,0 +1,79 @@
+/* PrizesSection.module.css */
+.section { background: var(--color-bg-base); }
+
+.header { margin-bottom: var(--space-12); text-align: center; }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: var(--text-sm);
+  color: var(--color-energy); letter-spacing: 0.1em;
+  margin-bottom: var(--space-3);
+}
+
+.heading { font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl)); }
+
+.podium {
+  display:         flex;
+  align-items:     flex-end;
+  justify-content: center;
+  gap:             var(--space-4);
+  flex-wrap:       wrap;
+}
+
+.tier {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-4);
+  padding:        var(--space-8);
+  background:     var(--color-bg-surface);
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-xl);
+  min-width:      200px;
+  transition:     border-color var(--transition-base), transform var(--transition-base);
+}
+
+.tier:hover {
+  border-color: var(--color-border-dim);
+  transform: translateY(-4px);
+}
+
+.tierFirst {
+  border-color: var(--color-energy-border);
+  box-shadow:   var(--glow-energy-md);
+  padding-block: var(--space-12);
+}
+
+.tierFirst:hover {
+  border-color: var(--color-energy);
+}
+
+.chest { font-size: 3.5rem; }
+
+.rank {
+  font-family: var(--font-mono);
+  font-size:   var(--text-sm);
+  color:       var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  max-width: none;
+}
+
+.amount {
+  font-family: var(--font-display);
+  font-size:   var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color:       var(--color-energy);
+  max-width:   none;
+}
+
+.perks {
+  list-style: none;
+  display:    flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.perks li {
+  font-size: var(--text-sm);
+  color:     var(--color-text-secondary);
+}

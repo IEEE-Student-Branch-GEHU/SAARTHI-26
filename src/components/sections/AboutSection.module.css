@@ -1,0 +1,65 @@
+/* AboutSection.module.css */
+.section { background: var(--color-bg-surface); }
+
+.grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-16);
+  align-items:           center;
+}
+
+.textCol { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.eyebrow { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-energy); letter-spacing: 0.1em; }
+
+.heading { font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl)); }
+
+.body { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-6); margin-top: var(--space-2); }
+
+.factItem { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.factLabel { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.factValue { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-text-primary); display: flex; align-items: center; gap: var(--space-2); }
+
+/* Visual column */
+.visualCol { display: flex; justify-content: center; align-items: center; }
+
+.visualPlaceholder {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-4);
+  padding:        var(--space-12);
+  border:         1px solid var(--color-energy-border);
+  border-radius:  var(--radius-xl);
+  background:     var(--color-energy-ghost);
+  animation:      glowPulseWorld 4s ease infinite;
+}
+
+.bigHex {
+  font-size:  8rem;
+  color:      var(--color-energy);
+  line-height: 1;
+  animation:  floatSlow 6s ease infinite;
+}
+
+.visualLabel {
+  font-family:    var(--font-mono);
+  font-size:      var(--text-sm);
+  color:          var(--color-energy);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .visualCol {
+    order: -1;
+  }
+  .bigHex { font-size: 5rem; }
+}

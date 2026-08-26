@@ -1,0 +1,269 @@
+/* Navbar.module.css */
+
+/* ─── Header shell ───────────────────────────────────────────────────────── */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  transition: background var(--transition-base), border-color var(--transition-base);
+  border-bottom: 1px solid transparent;
+}
+
+.header.scrolled {
+  background:    rgba(5, 5, 56, 0.88);
+  border-color:  var(--color-border-subtle);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nav {
+  width: 100%;
+}
+
+/* ─── Inner row ──────────────────────────────────────────────────────────── */
+
+.inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  height:          64px;
+  gap:             var(--space-6);
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────────────── */
+
+.logo {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-2);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  font-size:   1.4rem;
+  color:       var(--color-energy);
+  line-height: 1;
+  animation:   glowPulseEnergy 3s ease infinite;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size:   var(--text-xl);
+  color:       var(--color-text-primary);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Desktop links ──────────────────────────────────────────────────────── */
+
+.links {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-1);
+  list-style:  none;
+  margin-left: auto;
+}
+
+.link {
+  position:    relative;
+  display:     block;
+  padding:     var(--space-2) var(--space-3);
+  font-size:   var(--text-sm);
+  font-weight: var(--weight-medium);
+  color:       var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition:  color var(--transition-base), background var(--transition-base);
+}
+
+.link::after {
+  content:    '';
+  position:   absolute;
+  bottom:     2px;
+  left:       50%;
+  right:      50%;
+  height:     2px;
+  background: var(--color-energy);
+  border-radius: var(--radius-full);
+  transition: left var(--transition-base), right var(--transition-base);
+}
+
+.link:hover {
+  color:      var(--color-white-primary);
+  background: rgba(245, 247, 255, 0.07);
+}
+
+.link.active {
+  color: var(--color-white-primary);
+}
+
+.link.active::after {
+  left:  var(--space-3);
+  right: var(--space-3);
+}
+
+/* ─── Register CTA ───────────────────────────────────────────────────────── */
+
+.cta {
+  flex-shrink: 0;
+}
+
+.registerBtn {
+  display:     inline-flex;
+  align-items: center;
+  padding:     var(--space-2) var(--space-5);
+  background:  var(--color-energy);
+  color:       var(--color-world-base);
+  font-weight: var(--weight-semibold);
+  font-size:   var(--text-sm);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition:  transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.registerBtn:hover {
+  transform:  translateY(-1px) scale(1.02);
+  box-shadow: var(--glow-energy-md);
+  opacity:    1;
+}
+
+.registerBtn:active {
+  transform: scale(0.97);
+}
+
+.registerBtnDisabled {
+  display:     inline-flex;
+  align-items: center;
+  padding:     var(--space-2) var(--space-5);
+  border:      1px solid var(--color-border-dim);
+  color:       var(--color-text-muted);
+  font-weight: var(--weight-semibold);
+  font-size:   var(--text-sm);
+  border-radius: var(--radius-md);
+  cursor: default;
+}
+
+/* ─── Hamburger ──────────────────────────────────────────────────────────── */
+
+.hamburger {
+  display:          none;
+  flex-direction:   column;
+  justify-content:  center;
+  align-items:      center;
+  gap:              5px;
+  width:            40px;
+  height:           40px;
+  padding:          var(--space-2);
+  border-radius:    var(--radius-md);
+  flex-shrink:      0;
+}
+
+.hamburger span {
+  display:          block;
+  width:            22px;
+  height:           2px;
+  background:       var(--color-text-primary);
+  border-radius:    var(--radius-full);
+  transition:       transform var(--transition-base), opacity var(--transition-base);
+  transform-origin: center;
+}
+
+.hamburger.hamburgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.hamburgerOpen span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.hamburgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── Mobile menu ────────────────────────────────────────────────────────── */
+
+.mobileMenu {
+  display:         flex;
+  flex-direction:  column;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(5, 5, 56, 0.97);
+  backdrop-filter: blur(16px);
+  z-index:         calc(var(--z-sticky) - 1);
+  padding-top:     80px;
+  padding-inline:  var(--space-6);
+  opacity:         0;
+  pointer-events:  none;
+  transition:      opacity var(--transition-slow);
+}
+
+.mobileMenu.mobileMenuOpen {
+  opacity:        1;
+  pointer-events: all;
+}
+
+.mobileLinks {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  list-style:     none;
+}
+
+.mobileLink {
+  display:     block;
+  padding:     var(--space-4) var(--space-2);
+  font-family: var(--font-display);
+  font-size:   var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color:       var(--color-text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition:   color var(--transition-base);
+}
+
+.mobileLink:hover {
+  color: var(--color-energy);
+}
+
+.mobileRegisterBtn {
+  display:       block;
+  margin-top:    var(--space-6);
+  padding:       var(--space-4);
+  background:    var(--color-energy);
+  color:         var(--color-world-base);
+  font-weight:   var(--weight-bold);
+  font-size:     var(--text-lg);
+  border-radius: var(--radius-md);
+  text-align:    center;
+  text-decoration: none;
+}
+
+.mobileRegisterBtnDisabled {
+  display:       block;
+  margin-top:    var(--space-6);
+  padding:       var(--space-4);
+  border:        1px solid var(--color-border-dim);
+  color:         var(--color-text-muted);
+  font-weight:   var(--weight-bold);
+  font-size:     var(--text-lg);
+  border-radius: var(--radius-md);
+  text-align:    center;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .links,
+  .cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
