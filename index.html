@@ -768,7 +768,7 @@
                 height: 160px;
                 border: 2px solid #ffffff;
                 max-width: 665px;
-                margin: -80px auto;
+                margin: 25px auto 0;
                 padding: 22px 35px;
                 box-shadow: 0 15px 40px rgba(0,0,0,0.9);
                 position: relative;
@@ -831,7 +831,7 @@
                 display: flex;
                 gap: 100px;
                 justify-content: center;
-                margin-top: 118px;
+                margin-top: 40px;
             }
 
             .btn-icon {
@@ -5097,7 +5097,7 @@
                 width: 320px;
                 height: 108px;
                 padding: 8px 12px;
-                margin: -38px auto;
+                margin: 20px auto 0;
             }
             
             .countdown-card h2 {
@@ -5145,7 +5145,7 @@
             
             .stone-buttons {
                 gap: 20px;
-                margin-top: 120px;   
+                margin-top: 35px;   
                 flex-wrap: nowrap;
                 flex-direction: column;  /* Makes buttons stack vertically */
                 align-items: center;
@@ -5727,7 +5727,7 @@
                 max-width: 310px;
                 height: 95px;
                 padding: 5px 8px;
-                margin-top: -25px;
+                margin-top: 15px;
             }
 
             .countdown-card h1 {
@@ -5756,7 +5756,7 @@
 
             .stone-buttons {
                 gap: 20px;
-                margin-top: 80px;
+                margin-top: 25px;
                 flex-wrap: nowrap;  
                 margin-bottom: -40px;
             }
@@ -6259,7 +6259,7 @@
                 max-width: 360px;
                 height: 95px;
                 padding: 5px 8px;
-                margin-top: -25px;
+                margin-top: 15px;
             }
 
             .countdown-card h1 {
@@ -7288,7 +7288,7 @@
             <div class="countdown-card">
                 <h1>Event Date</h1>
                 <div class="countdown" id="countdown" style="justify-content: center;">
-                    <div><span style="font-size: clamp(1.5rem, 3vw, 3rem); letter-spacing: 4px;">TBD</span></div>
+                    <div><span style="font-size: clamp(1rem, 2.2vw, 1.8rem); letter-spacing: 3px; font-family: 'Press Start 2P', cursive;">TO BE DECIDED</span></div>
                 </div>
             </div>
             
@@ -8183,34 +8183,9 @@
                 }, 100);
             })();
             /* ======================================================
-            COUNTDOWN (SAFE & LIGHT)
+            COUNTDOWN (EVENT DATE: TO BE DECIDED)
             ====================================================== */
-            (function initCountdown() {
-                const target = new Date('March 8, 2026 00:00:00').getTime();
-                const el = {
-                    d: document.getElementById('days'),
-                    h: document.getElementById('hours'),
-                    m: document.getElementById('mins'),
-                    s: document.getElementById('secs')
-                };
-
-                const timer = setInterval(() => {
-                    if (document.hidden) return;
-
-                    const diff = target - Date.now();
-                    if (diff <= 0) {
-                        clearInterval(timer);
-                        document.getElementById('countdown').innerHTML =
-                            '<div style="font-size:22px">EVENT STARTED</div>';
-                        return;
-                    }
-
-                    el.d.textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
-                    el.h.textContent = String(Math.floor(diff / 3600000) % 24).padStart(2, '0');
-                    el.m.textContent = String(Math.floor(diff / 60000) % 60).padStart(2, '0');
-                    el.s.textContent = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
-                }, 1000);
-            })();
+            // Countdown timer active when specific event date is announced.
 
             /* ======================================================
             HIDE CLOUD WHEN HERO SCROLLS AWAY (MOBILE ONLY)
