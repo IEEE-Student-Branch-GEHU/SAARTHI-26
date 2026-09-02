@@ -703,7 +703,9 @@
             .hero {
                 margin-top: 0px;
                 max-width: 100%;
-                padding: 180px 20px 60px;
+                min-height: 100vh;
+                box-sizing: border-box;
+                padding: 120px 20px 60px;
                 text-align: center;
                 background-image: url('https://lh3.googleusercontent.com/pw/AP1GczOBOyyVJKZ9-qi7e-E_4TPut9pQnFbNZx-gMFzpJV9q-0YceDG0vxRyoDS1vdZAzLgJJ5bSf8SceXI841Z7Ubthr3knqR1UWSd6BidQtJCi3j2S4DlVnhvX_0p5iHjYtY6xaH2LTtsuikPYOi6XLAZZ=w800-h450-s-no-gm?authuser=0');
                 background-size: cover;
@@ -712,6 +714,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
                 position: relative;
             }
 
@@ -5071,10 +5074,10 @@
                 overflow-x: auto;
             }
             
-            /* Hero Section - Much smaller */
+            /* Hero Section - Fullscreen on tablet */
             .hero {
-                /* min-height: 60vh; */
-                height: 700px;
+                min-height: 100vh;
+                height: auto;
             }
             
             .hero-logo {
@@ -5704,7 +5707,8 @@
             }
 
             .hero{
-                height: 630px;
+                min-height: 100vh;
+                height: auto;
             }
 
             .hero-logo {
@@ -6235,7 +6239,8 @@
         /* Very small screens (≤375px) */
         @media (max-width: 400px) {
             .hero{
-                max-height: 870px;
+                min-height: 100vh;
+                height: auto;
             }
 
             .hero-logo {
