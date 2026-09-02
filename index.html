@@ -703,7 +703,9 @@
             .hero {
                 margin-top: 0px;
                 max-width: 100%;
-                padding: 180px 20px 60px;
+                min-height: 100vh;
+                box-sizing: border-box;
+                padding: 120px 20px 60px;
                 text-align: center;
                 background-image: url('https://lh3.googleusercontent.com/pw/AP1GczOBOyyVJKZ9-qi7e-E_4TPut9pQnFbNZx-gMFzpJV9q-0YceDG0vxRyoDS1vdZAzLgJJ5bSf8SceXI841Z7Ubthr3knqR1UWSd6BidQtJCi3j2S4DlVnhvX_0p5iHjYtY6xaH2LTtsuikPYOi6XLAZZ=w800-h450-s-no-gm?authuser=0');
                 background-size: cover;
@@ -712,6 +714,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
                 position: relative;
             }
 
@@ -765,7 +768,7 @@
                 height: 160px;
                 border: 2px solid #ffffff;
                 max-width: 665px;
-                margin: -80px auto;
+                margin: 25px auto 0;
                 padding: 22px 35px;
                 box-shadow: 0 15px 40px rgba(0,0,0,0.9);
                 position: relative;
@@ -828,7 +831,7 @@
                 display: flex;
                 gap: 100px;
                 justify-content: center;
-                margin-top: 118px;
+                margin-top: 40px;
             }
 
             .btn-icon {
@@ -5071,10 +5074,10 @@
                 overflow-x: auto;
             }
             
-            /* Hero Section - Much smaller */
+            /* Hero Section - Fullscreen on tablet */
             .hero {
-                /* min-height: 60vh; */
-                height: 700px;
+                min-height: 100vh;
+                height: auto;
             }
             
             .hero-logo {
@@ -5094,7 +5097,7 @@
                 width: 320px;
                 height: 108px;
                 padding: 8px 12px;
-                margin: -38px auto;
+                margin: 20px auto 0;
             }
             
             .countdown-card h2 {
@@ -5142,7 +5145,7 @@
             
             .stone-buttons {
                 gap: 20px;
-                margin-top: 120px;   
+                margin-top: 35px;   
                 flex-wrap: nowrap;
                 flex-direction: column;  /* Makes buttons stack vertically */
                 align-items: center;
@@ -5704,7 +5707,8 @@
             }
 
             .hero{
-                height: 630px;
+                min-height: 100vh;
+                height: auto;
             }
 
             .hero-logo {
@@ -5723,7 +5727,7 @@
                 max-width: 310px;
                 height: 95px;
                 padding: 5px 8px;
-                margin-top: -25px;
+                margin-top: 15px;
             }
 
             .countdown-card h1 {
@@ -5752,7 +5756,7 @@
 
             .stone-buttons {
                 gap: 20px;
-                margin-top: 80px;
+                margin-top: 25px;
                 flex-wrap: nowrap;  
                 margin-bottom: -40px;
             }
@@ -6235,7 +6239,8 @@
         /* Very small screens (≤375px) */
         @media (max-width: 400px) {
             .hero{
-                max-height: 870px;
+                min-height: 100vh;
+                height: auto;
             }
 
             .hero-logo {
@@ -6254,7 +6259,7 @@
                 max-width: 360px;
                 height: 95px;
                 padding: 5px 8px;
-                margin-top: -25px;
+                margin-top: 15px;
             }
 
             .countdown-card h1 {
@@ -7246,15 +7251,10 @@
 
                 <div class="nav-sign-container" style="--index: 4">
                     <div class="sign-chain"></div>
-                    <a href="https://ace-hack-hacker-swags-inky.vercel.app/" class="nav-sign">DG Swags</a>
-                </div>
-
-                <div class="nav-sign-container" style="--index: 5">
-                    <div class="sign-chain"></div>
                     <a href="#faq-preview" class="nav-sign">FAQs</a>
                 </div>
 
-                <div class="nav-sign-container" style="--index: 6">
+                <div class="nav-sign-container" style="--index: 5">
                     <div class="sign-chain"></div>
                     <a href="#contact" class="nav-sign">Contact</a>
                 </div>
@@ -7283,7 +7283,7 @@
             <div class="countdown-card">
                 <h1>Event Date</h1>
                 <div class="countdown" id="countdown" style="justify-content: center;">
-                    <div><span style="font-size: clamp(1.5rem, 3vw, 3rem); letter-spacing: 4px;">TBD</span></div>
+                    <div><span style="font-size: clamp(1rem, 2.2vw, 1.8rem); letter-spacing: 3px; font-family: 'Press Start 2P', cursive;">TO BE DECIDED</span></div>
                 </div>
             </div>
             
@@ -7293,7 +7293,7 @@
                 <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Diamond" class="popup-image">
                 </div>
                 <div class="stone-btn-wrapper">
-                    <a href="https://linktr.ee/acehack5" class="stone-btn">Join The Community</a>
+                    <a href="#" class="stone-btn" data-soon="true">Join The Community</a>
                     <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Golden Apple" class="popup-image">
                 </div>
             </div>
@@ -7830,7 +7830,7 @@
 
                     <!-- RIGHT IMAGE -->
                     <div class="prize-right-image">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNPDSXAem-P97x9M9aUgKNwXvZtZoPTGfWAduJPNGrqqHJECuegmCSPTHw65hRrIsDrRvFng8NdQKz9yya1KI0dSc4CNt5mKzCR2HpoH0XUZm0bWEs1aq0yW9gA7MWl0rfZBae-F1cMIGs4FukREIpi=w510-h829-s-no-gm?authuser=0" alt="Prize Character">
+                        <img src="images/prize-character.png" alt="Prize Character">
                     </div>
                 </div>
 
@@ -7887,7 +7887,7 @@
                 </div>
                 <div class="sponsor-cta">
                     <div class="stone-btn-wrapper" style="top:-60px;">
-                        <a href="benefit.html" class="stone-btn sponsor-btn">Know More</a>
+                        <a href="#" class="stone-btn sponsor-btn" data-soon="true">Know More</a>
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Diamond" class="popup-image">
                     </div>
                 </div>
@@ -7918,7 +7918,7 @@
                     <p class="sponsor-cta-text">Want to sponsor SAARTHI-26?</p>
                     <img src="https://lh3.googleusercontent.com/pw/AP1GczMBNh5POzKXRQllSkb_9dJAKpHpJX7IdShFywClNRtYi9TP0IFtTsc-3dOSTBpehBXzF9inr72GK9s0xXIoe2PKnrmAsnzR183tTQsfGFCUESiUiQ_k8lQ6nk15-RC_Qzb4o8AVUIiCs6YkIrnFZKva=w1080-h608-s-no-gm?authuser=0" alt="Sponsor CTA" class="sponsor-cta-image">
                     <div class="stone-btn-wrapper">
-                        <a href="https://drive.google.com/file/d/1thZZ9LluUTOqWVE0CzORUJYkEzWPyHSp/view" class="stone-btn sponsor-btn">Become a Sponsor</a>
+                        <a href="#" class="stone-btn sponsor-btn" data-soon="true">Become a Sponsor</a>
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Diamond" class="popup-image">
                     </div>
                 </div>
@@ -8178,34 +8178,9 @@
                 }, 100);
             })();
             /* ======================================================
-            COUNTDOWN (SAFE & LIGHT)
+            COUNTDOWN (EVENT DATE: TO BE DECIDED)
             ====================================================== */
-            (function initCountdown() {
-                const target = new Date('March 8, 2026 00:00:00').getTime();
-                const el = {
-                    d: document.getElementById('days'),
-                    h: document.getElementById('hours'),
-                    m: document.getElementById('mins'),
-                    s: document.getElementById('secs')
-                };
-
-                const timer = setInterval(() => {
-                    if (document.hidden) return;
-
-                    const diff = target - Date.now();
-                    if (diff <= 0) {
-                        clearInterval(timer);
-                        document.getElementById('countdown').innerHTML =
-                            '<div style="font-size:22px">EVENT STARTED</div>';
-                        return;
-                    }
-
-                    el.d.textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
-                    el.h.textContent = String(Math.floor(diff / 3600000) % 24).padStart(2, '0');
-                    el.m.textContent = String(Math.floor(diff / 60000) % 60).padStart(2, '0');
-                    el.s.textContent = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
-                }, 1000);
-            })();
+            // Countdown timer active when specific event date is announced.
 
             /* ======================================================
             HIDE CLOUD WHEN HERO SCROLLS AWAY (MOBILE ONLY)
@@ -8462,7 +8437,6 @@
                     { href: '#timeline', text: 'Timeline',},
                     { href: '#guests', text: 'Guests' },
                     { href: '#tracks', text: 'Tracks' },
-                    { href: 'https://ace-hack-hacker-swags-inky.vercel.app/', text: 'DG Swags' },
                     { href: '#faq-preview', text: 'FAQs'},
                     { href: '#contact', text: 'Contact' }
                 ];
@@ -9256,7 +9230,7 @@
 
             console.log('✓ Bootup screen initialized');
             })();
-        </script><img class="flying-entity" alt="Flying Dragon" src="https://lh3.googleusercontent.com/pw/AP1GczPV701QojlTPppKTU5fRn4pSw94_Yh_U6spxRgmq1I1WtR7nQjxEpirl4UNy4I53aLpKYZqULLRuoWkL58Ew3xOBkzT6XA0vjYm9GzfXZ9s7xwY_KDb3XJPUWc6S8NaByK1CEI9VvQz6aeQnSg8bEam=w1126-h938-s-no-gm"><div class="hamburger-menu"><span></span><span></span><span></span></div><div class="nav-backdrop"></div><div class="mobile-nav-overlay"><div class="mobile-nav-logo"><img src="https://lh3.googleusercontent.com/pw/AP1GczNcsBYJRrDQF5xc-IOD9E_9tAf-KWM-rpVcJYXr7EzNU94-PQCOFTBnrTo2AVnYqDfkW-wroeaoN8hMMf_B0vW-mqVewR_bhtGTWzxJSby3AyqlRiJmtvTrrhH1Wi6sWxqgW2K27xgdVhvhdnUMZu0q=w950-h316-s-no-gm?authuser=0" alt="SAARTHI-26 Logo"></div><div class="mobile-nav-content"><div class="mobile-nav-item"><a href="#home" class="mobile-nav-link">Home</a></div><div class="mobile-nav-item"><a href="#timeline" class="mobile-nav-link">Timeline</a></div><div class="mobile-nav-item"><a href="#guests" class="mobile-nav-link">Guests</a></div><div class="mobile-nav-item"><a href="#tracks" class="mobile-nav-link">Tracks</a></div><div class="mobile-nav-item"><a href="#" class="mobile-nav-link">Swags</a></div><div class="mobile-nav-item"><a href="#faq-preview" class="mobile-nav-link">FAQs</a></div><div class="mobile-nav-item"><a href="#contact" class="mobile-nav-link">Contact</a></div></div></div>
+        </script><img class="flying-entity" alt="Flying Dragon" src="https://lh3.googleusercontent.com/pw/AP1GczPV701QojlTPppKTU5fRn4pSw94_Yh_U6spxRgmq1I1WtR7nQjxEpirl4UNy4I53aLpKYZqULLRuoWkL58Ew3xOBkzT6XA0vjYm9GzfXZ9s7xwY_KDb3XJPUWc6S8NaByK1CEI9VvQz6aeQnSg8bEam=w1126-h938-s-no-gm"><div class="hamburger-menu"><span></span><span></span><span></span></div><div class="nav-backdrop"></div><div class="mobile-nav-overlay"><div class="mobile-nav-logo"><img src="https://lh3.googleusercontent.com/pw/AP1GczNcsBYJRrDQF5xc-IOD9E_9tAf-KWM-rpVcJYXr7EzNU94-PQCOFTBnrTo2AVnYqDfkW-wroeaoN8hMMf_B0vW-mqVewR_bhtGTWzxJSby3AyqlRiJmtvTrrhH1Wi6sWxqgW2K27xgdVhvhdnUMZu0q=w950-h316-s-no-gm?authuser=0" alt="SAARTHI-26 Logo"></div><div class="mobile-nav-content"><div class="mobile-nav-item"><a href="#home" class="mobile-nav-link">Home</a></div><div class="mobile-nav-item"><a href="#timeline" class="mobile-nav-link">Timeline</a></div><div class="mobile-nav-item"><a href="#guests" class="mobile-nav-link">Guests</a></div><div class="mobile-nav-item"><a href="#tracks" class="mobile-nav-link">Tracks</a></div><div class="mobile-nav-item"><a href="#faq-preview" class="mobile-nav-link">FAQs</a></div><div class="mobile-nav-item"><a href="#contact" class="mobile-nav-link">Contact</a></div></div></div>
 
         <div id="toast" class="mc-toast">Coming Soon!</div>
 
