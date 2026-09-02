@@ -1,133 +1,77 @@
-# SAARTHI — Hackathon Website
+﻿# SAARTHI-26 Official Website
 
-> Official hackathon landing page for **SAARTHI-26**, built with React 19 + TypeScript + Vite.
+The official portal for SAARTHI-26, hosted by the IEEE Student Branch Graphic Era Hill University (GEHU). This repository hosts the interactive, Minecraft-themed hackathon landing website.
 
----
+## Overview
 
-## Tech Stack
+SAARTHI-26 is a flagship hackathon platform bringing together student developers, engineers, and designers to build solutions across tracks including Web3, Artificial Intelligence, Open Innovation, and more.
 
-| Layer | Technology |
-|---|---|
-| Framework | React 19 |
-| Language | TypeScript 6 |
-| Build Tool | Vite 8 |
-| Routing | React Router DOM v7 |
-| Styling | CSS Modules + Vanilla CSS |
-| Linting | Oxlint |
-
----
-
-## Project Architecture
+## Repository Structure
 
 ```
-SAARTHI/
-├── index.html                  # App entry point (Vite root)
-├── vite.config.ts              # Vite configuration
-├── tsconfig.json               # TypeScript root config
-│
-├── public/
-│   ├── favicon.svg             # Site favicon
-│   └── icons.svg               # SVG icon sprite
-│
-└── src/
-    ├── main.tsx                # React DOM render root
-    ├── App.tsx                 # Root component — router setup
-    │
-    ├── config/
-    │   └── site.ts             # Global site constants (name, links, dates)
-    │
-    ├── data/                   # Static content data
-    │   ├── faq.ts              # FAQ items
-    │   ├── judges.ts           # Judges list
-    │   ├── prizes.ts           # Prize tiers
-    │   ├── sponsors.ts         # Sponsor list
-    │   ├── timeline.ts         # Event timeline entries
-    │   └── tracks.ts           # Hackathon tracks
-    │
-    ├── pages/                  # Route-level page components
-    │   ├── Home.tsx            # Main landing page
-    │   ├── Rules.tsx           # Rules page
-    │   ├── Rules.module.css
-    │   ├── NotFound.tsx        # 404 fallback
-    │   └── NotFound.module.css
-    │
-    ├── components/
-    │   ├── layout/             # Persistent UI shell
-    │   │   ├── Navbar.tsx      # Sticky top navigation
-    │   │   ├── Navbar.module.css
-    │   │   ├── Footer.tsx      # Site footer
-    │   │   └── Footer.module.css
-    │   │
-    │   └── sections/           # Page sections (rendered in Home.tsx)
-    │       ├── HeroSection     # Animated hero with portal canvas
-    │       ├── StatsBar        # Live stats bar
-    │       ├── AboutSection    # About the hackathon
-    │       ├── TracksSection   # Hackathon tracks
-    │       ├── TimelineSection # Event timeline
-    │       ├── PrizesSection   # Prize breakdown
-    │       ├── JudgesSection   # Judges panel
-    │       ├── SponsorsSection # Sponsors grid
-    │       └── FAQSection      # FAQ accordion
-    │
-    ├── hooks/                  # Reusable React hooks
-    │   ├── usePortalCanvas.ts  # Canvas 2D animation engine (hero portal)
-    │   ├── useIntersectionObserver.ts  # Scroll-triggered visibility
-    │   ├── useScrollSpy.ts     # Active nav link detection
-    │   └── useReducedMotion.ts # Respects prefers-reduced-motion
-    │
-    ├── styles/                 # Global CSS
-    │   ├── globals.css         # Base reset + global styles
-    │   ├── tokens.css          # Design tokens (colors, spacing, fonts)
-    │   └── animations.css      # Shared keyframe animations
-    │
-    └── assets/
-        ├── hero.png            # Hero background asset
-        └── vite.svg            # Vite logo
+SAARTHI-26/
+|-- .github/
+|   |-- workflows/
+|   |   `-- codeql.yml          # Automated static analysis security scanning
+|   |-- CODEOWNERS              # Repository code ownership and reviewers
+|   `-- dependabot.yml          # Automated dependency updates
+|-- css/                        # Stylesheets and layout definitions
+|-- fonts/                      # Typography assets
+|-- images/                     # Graphic assets and section media
+|-- js/                         # Client-side scripts and interaction logic
+|-- media/                      # Audio and background video media
+|-- index.html                  # Main application entry point
+|-- CODE_OF_CONDUCT.md          # Community standards and conduct expectations
+|-- CONTRIBUTING.md             # Contribution workflows and guidelines
+|-- LICENSE                     # Project license terms (MIT)
+|-- README.md                   # Project documentation
+`-- SECURITY.md                 # Security reporting and vulnerability disclosure
 ```
 
----
+## Local Development
 
-## Key Design Decisions
+The project is built as a client-side web application and does not require complex build pipelines or external runtimes to preview.
 
-### CSS Modules
-Every component has a co-located `.module.css` file. This ensures styles are locally scoped and avoids global class collisions.
+### Prerequisites
 
-### Static Data Layer (`/data`)
-All page content — judges, prizes, sponsors, FAQ — lives in typed TypeScript files under `src/data/`. This makes content updates fast and keeps components clean of hardcoded strings.
+- A modern standards-compliant web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari)
+- Git (for version control)
+- Optional: A lightweight HTTP server (for example, Python `http.server`, Node.js `live-server`, or the VS Code Live Server extension)
 
-### Custom Hooks (`/hooks`)
-- **`usePortalCanvas`** — A self-contained Canvas 2D animation that powers the hero section portal effect (starfield, circuit grid, geometric rings, particle field, pointer parallax).
-- **`useIntersectionObserver`** — Drives scroll-triggered entrance animations on sections.
-- **`useScrollSpy`** — Tracks which section is in view to highlight the active navbar link.
-- **`useReducedMotion`** — Gates all animations behind the OS `prefers-reduced-motion` setting for accessibility.
+### Quick Start
 
-### Design Tokens (`tokens.css`)
-Color palette, typography, spacing, and breakpoints are all defined as CSS custom properties in `tokens.css`, giving the entire site a consistent design system.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/IEEE-Student-Branch-GEHU/SAARTHI-26.git
+   cd SAARTHI-26
+   ```
 
----
+2. Start a local server:
+   ```bash
+   # Using Python 3
+   python -m http.server 8000
+   ```
 
-## Getting Started
+3. Open your browser and navigate to:
+   ```
+   http://localhost:8000
+   ```
 
-```bash
-# Install dependencies
-npm install
+## Development Workflow and Standards
 
-# Start development server
-npm run dev
+- Branch naming: Use descriptive prefixes such as `feature/`, `fix/`, or `docs/` (for example, `fix/timeline-alignment`).
+- Commit messages: Follow conventional commit standards (for example, `feat: add partner section`, `fix: correct mobile padding`).
+- Automated checks: Pull requests trigger automated CodeQL vulnerability scans.
+- Code review: All contributions must be reviewed and approved by repository maintainers as specified in `.github/CODEOWNERS`.
 
-# Production build
-npm run build
+## Security and Vulnerability Reporting
 
-# Preview production build
-npm run preview
-```
+Please review our [Security Policy](SECURITY.md) for guidelines on responsibly disclosing vulnerabilities. Do not report security vulnerabilities via public GitHub issues.
 
----
+## Contributing
 
-## Color Palette
+We welcome community contributions. Please read our [Contributing Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before submitting pull requests.
 
-| Token | Hex | Usage |
-|---|---|---|
-| `--color-bg` | `#050538` | World background (deep blue) |
-| `--color-surface` | `#F5F7FF` | Structural elements (white) |
-| `--color-accent` | `#FFD43B` | Energy / highlights (yellow) |
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
