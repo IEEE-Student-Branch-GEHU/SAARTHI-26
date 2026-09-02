@@ -4578,6 +4578,49 @@
                 line-height: 1.3;
             }
 
+            /* Sponsors To Be Announced Banner */
+            .sponsors-tba-container {
+                max-width: 820px;
+                margin: 40px auto 20px;
+                padding: 45px 30px;
+                background: rgba(18, 10, 32, 0.75);
+                border: 4px solid #8d00eb;
+                box-shadow: 0 0 30px rgba(141, 0, 235, 0.45);
+                text-align: center;
+                border-radius: 4px;
+            }
+
+            .sponsors-tba-title {
+                font-size: 24px;
+                color: #ffffff;
+                text-shadow: 3px 3px 0 #8d00eb;
+                letter-spacing: 2px;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .sponsors-tba-desc {
+                font-size: 11px;
+                color: #e0d0f5;
+                line-height: 2;
+                text-shadow: 1px 1px #000;
+                margin-bottom: 0;
+            }
+
+            @media (max-width: 768px) {
+                .sponsors-tba-container {
+                    padding: 30px 20px;
+                    margin: 30px 15px 15px;
+                }
+                .sponsors-tba-title {
+                    font-size: 16px;
+                }
+                .sponsors-tba-desc {
+                    font-size: 9px;
+                    line-height: 1.8;
+                }
+            }
+
             /* ============================================
             SPONSOR CTA SECTION
             ============================================ */
@@ -8709,290 +8752,13 @@
                 
                 <h2 data-corner-text="The MVP group" style="margin-top: -22px;">OUR SPONSORS</h2>
                 <br>
-                <!-- Tier 0: Organizing Partners -->
-                <div class="sponsor-tier support-partners">
-                    <h3 class="tier-title section-tier-title">ORGANIZED BY</h3>
-                    <div class="sponsor-row">
-                        <!-- GitHub -->
-                        <a href="https://uem.edu.in/uem-jaipur/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczN4f3CE9sG6CcfyWfepWZwKbDZd8AgMyaDK45swhqMwD6IoYhnTYApA89CJ1RdIojw7hN8KHlDJfLmJHo9gfESEW5rl-kHAJuU0Zrw4fk54Q2h_nEyYjlC4KJz8H4zqiROcr9rmd6Y6rgxG3iKnfbyM=w323-h323-s-no-gm?authuser=0" alt="GitHub" class="sponsor-logo">
-                            <p class="sponsor-name">UEMJ</p>
-                        </a>
-
-                        <!-- Pure Buttons -->
-                        <a href="https://iic.mic.gov.in/institute-list" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczO1tKEma54kG4PUz3136VCo5Tjx08e2xdcYNMpJbMzUICVK4MBTDfqMmOGTzZRr_xfO2IDQC7Sf0uRgmSwmBWIU9IQ7jpbTklbtrLsYhI_R7w-q68ogDJzqe00F7BI8NJ5VN6iZz6ZAOOPoMgAyHz2L=w200-h200-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">IIC</p>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tier 1: Main Partners (Event, Platform, Track, Travel, Hiring) -->
-                <div class="sponsor-tier main-partners">
-                    <div class="sponsor-row">
-                        <!-- Event Partner -->
-                         <div class="sponsor-wrapper">
-                            <h3 class="tier-title">GOLD<br>PARTNER</h3>
-                            <a href="https://base44.com/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczPJ75cHwHqxc7CYMj2wpVzhew6zh2Nm1eYlanGdScY4H24oidyUtLGDBl9mD9BCWlHxaRBINZb7-48bmVmjUDjG39tiQIvTVl-Y4DcCZhYR-bUpB1jOpx4iIjswmujURKxIIs5laCpAUzEu07kRdreE=w512-h512-s-no-gm?authuser=0" alt="Major League Hacking" class="sponsor-logo">
-                                <p class="sponsor-name">Base44</p>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">SILVER<br>PARTNER</h3>
-                            <a href="https://vercel.com/" target="_blank" class="sponsor-card">
-                                <img src="images/180x180.png" alt="Major League Hacking" class="sponsor-logo">
-                                <p class="sponsor-name">Vercel</p>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">EVENT<br>PARTNER</h3>
-                            <a href="https://mlh.io/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczPDKScOK3ImxUuPd48WhMAPCS2GA12rOCqhy_lnmA5AFkKEwDeT5s7cy7ChTD6Ot3DN6jh7fEIQNIrVpBH4gJTGJwLwa1UygL315QXQ8nlO3yvfkubYLlOUNw2kzqEou0Y0WhydfMRIOMGcz_WL_2D-=w396-h396-s-no-gm?authuser=0" alt="Major League Hacking" class="sponsor-logo">
-                                <p class="sponsor-name">MLH</p>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">BRONZE<br>PARTNER</h3>
-                            <a href="https://www.redhat.com/en" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczP6ixmensatIwFvlTfF1tPDOhj-YCPsXMkcXGmP84nNZRif2qa7h-vMCK4Zu7Xh-RdZ-UF-Jqm48zeVdwIhbhTZPhepqK5sKS_vBF5tQHc9w1ccdMddJFzQzcTsMMS64Blt-4DMZ67zXH9CmIy77E5c=w326-h326-s-no-gm?authuser=0" alt="Major League Hacking" class="sponsor-logo">
-                                <p class="sponsor-name">RedHat</p>
-                            </a>
-                        </div>
-
-                        <!-- Platform Partner -->
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">PLATFORM<br>PARTNER</h3>
-                            <a href="https://acehack5.devfolio.co" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczMa3cUBO7G0J5vHfBnLUy-lkzNqvggOZgw0nwMgPQSukEg5Am7zoXUkUPH9nkmtwj_Aj69Wd6Pb6KZeeVUOyGAh2Ncb5GY8SwHxrdTQOVKGBVKeJ5zwqTEa27vqM9SfShHL61JuDGgOJJ32vJnsQMU4=w255-h255-s-no-gm?authuser=0" alt="Devfolio" class="sponsor-logo">
-                                <p class="sponsor-name">Devfolio</p>
-                            </a>
-                        </div>
-
-                        <!-- Travel Partner -->
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">TRAVEL<br>PARTNER</h3>
-                            <a href="https://www.abhibus.com/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczOS4PlTmCpNiuJDuMh5ralNIj94fEqcm-EQ2ZFehyl9crINofC5FsZgqy2FL_yZi644PMAxYfur9srq9HELglT_d2TdwnLSHWCuTSEVjXtrN_4grtbJ6Wo0mF7ZetZ2BhJ6aTem41qLcFKM3ik1ZDwm=w512-h512-s-no-gm?authuser=0" alt="abhibus" class="sponsor-logo">
-                                <p class="sponsor-name">abhibus</p>
-                            </a>
-                        </div>
-
-                        <!-- Hiring Partner -->
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">HIRING<br>PARTNER</h3>
-                            <a href="https://www.threewaystudio.world/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczOdplTsPhTx_Ad2sIGfY9ULnfA5qgjkSQfORahCJ5kBngFR32GOOKfUhYlaOjfS5KUmYCvqjp9xYKWTKitzoD-suiHmMH_oGr8h3AiUi7_MRZlXiZtaBOFMc2LroFEmwiJuXD5dedRY7N-4qVSmuPfU=w300-h300-s-no-gm?authuser=0" alt="Threeway" class="sponsor-logo">
-                                <p class="sponsor-name">Threeway</p>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">KNOWLEDGE<br>PARTNER</h3>
-                            <a href="https://mastra.ai/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczPba-3ywKjHzdcAFlGU9Ix8YFJH8RviBl98gIS9XvM_BjAE6hheySO_gQ0mQY8RR-Y-VWwumCkiUrPg42du7o0tfMB6II3svLL9Xuw4C4qa9sEta5qtwt7nwQDA4gd0MirweBGJ4TMfb0cbmwrH6UBg=w195-h194-s-no-gm?authuser=0" alt="Mastra AI" class="sponsor-logo">
-                                <p class="sponsor-name">Mastra AI</p>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-wrapper">
-                            <h3 class="tier-title">AI TRACK<br>PARTNER</h3>
-                            <a href="https://www.duality.ai/" target="_blank" class="sponsor-card">
-                                <img src="https://lh3.googleusercontent.com/pw/AP1GczPn0Ng0ozDP7LWo5YY-R0eSxeaqGiIXDHoPdev0AZlnxjQ_Xlaje4noYDBJ2Un0a4204l3Qrmn4e2ym4m1YtWQdxG2F8ay3U3i0y14x9k-zYh2wuJTIpL_CrqbPAS6ecMPiRRcpwv4FQCzkGon4D-O_=w320-h320-s-no-gm?authuser=0" alt="Duality AI" class="sponsor-logo">
-                                <p class="sponsor-name">Duality AI</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tier 2: Secondary Partners (AI Track, Community, Knowledge) -->
-                <div class="sponsor-tier secondary-partners">
-                    <div class="sponsor-row">
-                        <!-- AI Track Partner -->
-                        
-                
-                    </div>
-                </div>
-
-                <!-- Tier 2.6: Support Partners -->
-                <div class="sponsor-tier track-partners">
-                    <h3 class="tier-title section-tier-title">TRACK PARTNER</h3>
-                    <div class="sponsor-row">
-
-                        <a href="https://algobharat.in/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOd4XxnC5bCwzexmQ2mtTPcFYMcbaBQ4QymW4_HVM0P4165TKnFSVzoGk8ZzQ51OUdbQVZNAdRnrSadgUYgQeS_7g8CeboWLYQaZF-tcEAZymblPN2T6D_vfOWzjcFErL0fRyEN8G_OWuQsnmIc-v2N=w400-h400-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">AlgoRand Bharat</p>
-                        </a>
-                        <!-- GitHub -->
-                        <a href="https://ethindia.co/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPCFrW6ib3dQcb36A2FG6trIqazn8HIFlfQjd-jMctRRPOuyL8E5pg7alFPlQ76GeUQ_XU_PqcaceMzwja8wozElKEFqHGp-S7azyivXBcQlYeknKpjGo13iuX9fSW5RadPiULkAzRK26Xp8j2MvODQ=w407-h407-s-no-gm?authuser=0" alt="GitHub" class="sponsor-logo">
-                            <p class="sponsor-name">ETH India</p>
-                        </a>
-
-                        <!-- Pure Buttons -->
-                        <a href="https://gemini.google.com/app?hl=en-IN" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPwbNsnTXe4X9p6p5LVytT5ipumTXB49x6BsxgF8TvjAl6EDgrJxHT9MCtyDlQW_GcLObbbfPcDLFyB8gingbLSl3Wy6QmqA_esaIETzzPHm7RgdtljSeTjYe2lOxiv5ErMTiWfu1pvChifjuBCizc8=w369-h369-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Gemini</p>
-                        </a>
-
-                        <a href="https://elevenlabs.io/brand" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMqJ9vRoeycCtLwj6R5B7hDynS9B6syTqNw2TSRZHig28VR181t7qAswAIjlmIFqG4kaRXUsPvt0qSevqfAiid7RaKzQSfRYwL-N9qLZLoiyAnvKUi6XcLUqwwV_ZCSNjNO9zgdlRY3tv6McOQMwB0Y=w325-h325-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">ElevenLabs</p>
-                        </a>
-
-                        <a href="https://www.vultr.com/?gad_campaignid=23534804580" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczP3L_RmfRGY16HvwFbhz3asUdJnM30WQuuHzbqdH0OGbS3Toj8Hh17A31cuWiLmK2efO8NuGLJu_jQY8-hWCplw2caolaj0ijLZV2Gi8K-E9npIj_dJX0q2NqfFEsLWkdbimOUDmqO13DNHcwpXGYdt=w711-h711-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Vultr</p>
-                        </a>
-
-                        <a href="https://solana.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczP5ovcSPQKw5J_uqvMolKbOeejMIPjof68buR0yXJZOkuCuxep1sAomUESE4rvgjpeXj6JOAaowZCoHATndznC-2TrgrJNcoGjX-jLl7wyJFryDG2fQKm6GmGqQMdU354OfanT3ABuPVBznJv57saLo=w335-h335-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Solana</p>
-                        </a>
-
-                        <a href="https://auth0.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOmSaxkp1NwlP59ExE_I7pWhkOT9ZUprPL7zy_rVD8l49TLmbstytiQSS20MTFJt8KC5aTphM-r00K1DsapZzz7icUz20vczRjRkeXMA3ZIEIUk2j6NMT2k4UHRj9igTDj_jh1ft2ZsQA9cCdHCDzEj=w354-h354-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Auth0</p>
-                        </a>
-
-                        
-                    </div>
-                </div>
-
-                <!-- Tier 3: Support Partners -->
-                <div class="sponsor-tier support-partners">
-                    <h3 class="tier-title section-tier-title">SUPPORT PARTNER</h3>
-                    <div class="sponsor-row">
-                        <!-- GitHub -->
-                        <a href="https://github.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPtgt4lp288usORooj4kVkzDraqpRrv9C5LNLAGLb629M6GgWn-IZSvA6EsZyVPmTi1dq_EwJR1p66PXyXXWYncZVYkPI3EfFdzAmgKzpbk8kezvKlcfxoUfPT2--1h98GlhIgFMopJ6FwgRkILBhP7=w1038-h938-s-no-gm?authuser=0" alt="GitHub" class="sponsor-logo">
-                            <p class="sponsor-name">GitHub</p>
-                        </a>
-
-                        <!-- Pure Buttons -->
-                        <a href="https://mlh.link/MLH-PureButtons-hackathons" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczP20lYD2QaV0qiBb1w7G1-vQjeoI23hqQN6aHVkfKmiSNVonE4UzHhiSwqom-FTiojgg4BnzdZBNbdLOxDOSiJ3qQOJPDcoDE7-frwyT4lTsEJfOL0BIa20vb03q97aGuQla0464baMUDVViBfpohfw=w877-h877-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Pure Buttons</p>
-                        </a>
-                    </div>
-                </div>
-
-                 <!-- Tier 3.5: Community Partners -->
-                <div class="sponsor-tier support-partners">
-                    <h3 class="tier-title section-tier-title">COMMUNITY PARTNER</h3>
-                    <div class="sponsor-row">
-                        <!-- GitHub -->
-                        <a href="https://www.linkedin.com/company/zk-genesis/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczN5Iw0fX6XIdwQPOWKk6kSWgP378Z79e2kNTXTYl_rC4cUqAcVqoTHr4ifx1wsZaG_5lDUWesOBhwNrWpOUb2ZGc9cvpKNQbcxh-gAUf89yccKTKsG08Rv4BNLamWP2u-I0scy64jzdSVA3krXrQeIs=w100-h100-s-no-gm?authuser=0" alt="GitHub" class="sponsor-logo">
-                            <p class="sponsor-name">Genesis</p>
-                        </a>
-
-                        <!-- Pure Buttons -->
-                        <a href="https://www.linkedin.com/company/girlsleadingtech/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNUI7tbcaejp4lPYPSixPpdSQZ_IYEcl2MtdmMYa-Hz8YRWa32N9PZOoXmRQBDMbM6DWT_7I9bhM3cxD3xkVtet7of4XiOorZkx2Mm6YeKVEK-O2Tvb-cIgBCaBaCusw_mHLddKQEZkT9JMqD_4BHmZ=w200-h200-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Girls Leading<br>Tech</p>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="sponsor-tier support-partners">
-                    <h3 class="tier-title section-tier-title">MEDIA PARTNERS</h3>
-                    <div class="sponsor-row">
-                        <!-- GitHub -->
-                        <a href="https://theglobalhues.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMoK2GWOeEuJ5ZxOSLtmAVAwY1JGUij_FFVVJil_l2AlGx1lPxCXMjt1LAH8pKLQPm5Ic753ukCYmaxQzea99npV_szKcYfJ2_ZuMqVLUbwu9bFJGI_1I8K20kzRRiKILKTwqK0ATrNQbIFdb0TO_W1=w225-h225-s-no-gm?authuser=0" alt="GitHub" class="sponsor-logo">
-                            <p class="sponsor-name">The Global Hues</p>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tier 4: In-Kind Sponsors -->
-                <div class="sponsor-tier inkind-sponsors">
-                    <h3 class="tier-title section-tier-title">IN-KIND SPONSORS</h3>
-                    <div class="sponsor-row">
-                        <a href="https://www.sublimetext.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMOWjCun8M7cVhvNkyxCNkErGFZCPX5KeeoV7gp2VooVdVogqpXg0C91dGav7NcBXbwc6VvsHCG5OewIi7k7G_pN2nM3rKb1DEqrouCPANwYwdVXpRw9ps5Y7QkunWc1_VlGN6-mHdnDOWP-EHGVbbh=w466-h466-s-no-gm?authuser=0" alt="Sublime Text" class="sponsor-logo">
-                            <p class="sponsor-name">Sublime<br>Text</p>
-                        </a>
-
-                        <a href="https://www.offsec.com/courses/pen-200/?qgad=790450611586&amp;qgterm=offsec&amp;gad_campaignid=9268290411" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczO6TVhkxFaN1Px7dSwrdVRl1YsHB7kATUTHgPvaNdetDf6bQBG2eRWLllNsJqiBQa7kWjZTIaWPc9RQa3LT5MEP9Se_YG41mLS9Lk5ro9BQzBidoxYbDiWKU8dc6H1EQmCoGiYzPEeYryYvSgMCJ_ap=w444-h444-s-no-gm?authuser=0" alt="Offsec" class="sponsor-logo">
-                            <p class="sponsor-name">Offsec</p>
-                        </a>
-
-                        <a href="https://cleanshot.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMaYaGNkDN8hLEQD5Y1Pz_bf_JAE-tQZFFZVhCayfJuTUG_r3DyEBW1vHjZJks1bNIGsI3beZIvvM75vaB85xCeHbf9Dl4LTzQ8P38Wtl1m-Zz-QL8amVktZTuqai7ZjmYo1FKVAHvJDNYqWXJavW_H=w281-h281-s-no-gm?authuser=0" alt="CleanShot" class="sponsor-logo">
-                            <p class="sponsor-name">CleanShot</p>
-                        </a>
-
-                        <a href="https://www.interviewcake.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMlrU4Ov-uae_pjUuNz0rW7up3zZsrPfCZWPZWsrlDaCQczS4Hf4-BzqToHDoZlBPjDSRhEw6tAm0nolpC5eIFUw3IP1t-q7WdvP-CZjTbEC8grpt-WFPwlrIl4Av2PEsqd6u6Wye0Zt6x1qvkSNyXj=w219-h230-s-no-gm?authuser=0" alt="Interview Cake" class="sponsor-logo">
-                            <p class="sponsor-name">Interview<br>Cake</p>
-                        </a>
-
-                        <a href="https://balsamiq.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNCG3ExDQ1fTob5XtCrJPjS3Dyd3Jqj9-FPu_IQVP0dxqeuWojnYf3AxRIOHGPQfEfnZQudvBaScom-JNmxHDhAIvNpaudkHQLq_-GKyqxoGSSQVUhYOi7cdrBhbbU453nE9qFfW34n49O1p_DSfgvy=w135-h135-s-no-gm?authuser=0" alt="Balsamiq" class="sponsor-logo">
-                            <p class="sponsor-name">Balsamiq</p>
-                        </a>
-
-                        <a href="https://gen.xyz/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczORzhX_krZ2_NIacSzkMo7PU-tubhrfr8QpDrXS4l-LEplpaGeLGxyWjn4ftxpWX1mnw9EIE12TfKUfRQl_FnKOoBix2hQMyqiOdqulIGWA9RwjXCySeBQ7-GlCTUUt_ppKCN_barOa2SZOjRVI_PX5=w270-h270-s-no-gm?authuser=0" alt=".xyz" class="sponsor-logo">
-                            <p class="sponsor-name">.xyz</p>
-                        </a>
-
-                        <a href="https://mobbin.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMz4NxOl96l5FJAFtNvtxGacCYSQ69OI11Drnn6DaeRES5wdA0F5ME2biPyrfcdPu3rR1E8BVpjuPL84rM5lcZI7nWTVZOdHqKyBR7Gebj-s7v4sABfuKxlcM5nX4D3_M43CZAzPYkFd04qRIeTJJ29=w225-h225-s-no-gm?authuser=0" alt="Mobbin" class="sponsor-logo">
-                            <p class="sponsor-name">Mobbin</p>
-                        </a>
-
-                         <a href="https://reskilll.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczM7tcVI2t64bVZUVuHqTGl_7f5VVsBMqK8mONOhpgRYaZV_V5ponZRhmd9WH0r2hHn_EFBIWwXVa-CDF9HrnpKYT5UiuLg7i5gaZnXF6ra56t3WpddNAVE-8-xL_FPI1UqoeV0jjgiBlsyKpOdlRJSG=w291-h291-s-no-gm?authuser=0" alt=".xyz" class="sponsor-logo">
-                            <p class="sponsor-name">Reskill</p>
-                        </a>
-
-                        <a href="https://azure.microsoft.com/en-us" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMfHZLxyi5fr-BZG2QLrTjq_wPBgNlqHRlufJF7KOI3rek5XUdqELkUg8tYnuKsu0K4gqwHTIKK_a1fvaJT5LPGubn5xoj71LdBdLn7VGmtmhj1KBbEtp-6HB-kxFm8PviRhPC2XPJJy27yHVpl8zky=w251-h250-s-no-gm?authuser=0" alt="Mobbin" class="sponsor-logo">
-                            <p class="sponsor-name">Microsoft Azure</p>
-                        </a>
-
-                        <a href="https://azdev.reskilll.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMvXh7PdShxcSeg5JGBpFcdX2fgwmGuzlizgY99S8ofu_nwRk-jF7g1AlieasL63BB5B0Vve4upf9cvpIG-RmZkehzItk1HsM35kuHUcP4_bL-B7gFf3FKldCKHTtokAoZ1dOkJ_9fb676YrCTakFag=w251-h250-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Azure Dev Community</p>
-                        </a>
-
-                        <a href="https://www.securewithtechies.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOIZRzJANSjLFsCIBCNQqZe0n6M-XnST9jJjC2xJhpj8rfeAirCh0CQAnabX2jkH1jf3Ff-cDWEsgrGlfD3vRq45TU8HnUekXpD0erMgJVpRajJodM0WWgmWkuHT94GoJbZ_2Pzh85zT5OM-D0GhEPG=w363-h363-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Secure with Techies</p>
-                        </a>
-
-                        <a href="https://fueler.io/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOrD5UcX5J9AL9hN4mGhc2KiZQr0krk2QMooTyzvOBTEr9Y-DKYHeiI8Kv4baDGPJX5BIaOGkJa2dGPyec1E9xxMhKt4NCpv7auqjrj2psCtrCyDTyg6PTE7l4gOsMcC5TuNn_iTpN5Avizo8uYQ2M6=w200-h200-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Fueler</p>
-                        </a>
-
-                        <a href="https://www.commudle.com/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNl4acydFGpZ_tBYgRvlBjUYUgPEXTQ0d6-5z2uZTabsHvTNSMmt-tQ2ht45s-F5UP-tjTk3HgaPLnIrh8mA7ZqRv5kxaUnUlcTkM64B2ojBA17rDPG7LNHLmhGv_e27W3eMKidtEVE6rfF-nCNcreE=w330-h330-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Commudle</p>
-                        </a>
-
-                        <a href="https://openrouter.ai/" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOheQb0S9f8_5Cx-YTm1nuLQ2MvDDEiyeISBUctjATrwrTxguhxdjTAPMGI4U59TVD84jTAF_rLtMrAuYkTLOGjyeQlau7Z-fxfJVRnK9m02KK8UbFg5dWJnJ3ajwZbda9x7Q-9uXacQLbFrvrFHuR2=w343-h343-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Open Router</p>
-                        </a>
-
-                        <a href="" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOLd1YvL4B0IQdnLGxCH9WMt3lF4D9uTGoBqfRQwCEvD1BLST-IEVr4Giyzabi99tFDoVJtSR7QsSGJzBBnwU5Ln7Nvt8j1ZHjnLNDnRa6Rk_AoXoGEkVbid0UXY4d_Ak2OZVe_kdN5tuKjh0t-2eZp=w374-h374-s-no-gm?authuser=0" alt="AoPS" class="sponsor-logo">
-                            <p class="sponsor-name">Typhoon</p>
-                        </a>
-
-                        <a href="" target="_blank" class="sponsor-card">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMWHHkc9_l7lHzr2_Y_-fh6zzJ0o5r2Belv-dsRuT0bOSmd3aINiiq1bmM4PPOOr1s4w_o3kx99MfAwA56hcrmeyet6bvcCPVMePCDz8SsYCV8StPoBVDomK3BY26lQVpiEnKZEoMhUHD40F7wKzdlX=w372-h372-s-no-gm?authuser=0" alt="Pure Buttons" class="sponsor-logo">
-                            <p class="sponsor-name">Kailshians</p>
-                        </a>
-                    </div>
+                <!-- Sponsors Announcement Banner -->
+                <div class="sponsors-tba-container">
+                    <h3 class="sponsors-tba-title">TO BE ANNOUNCED</h3>
+                    <p class="sponsors-tba-desc">
+                        Our sponsors and partners for SAARTHI-26 will be revealed soon!<br>
+                        Stay tuned for exciting announcements, prizes, and partnership details.
+                    </p>
                 </div>
 
                 <!-- Sponsor CTA -->
