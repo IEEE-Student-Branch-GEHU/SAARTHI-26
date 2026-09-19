@@ -4174,6 +4174,12 @@
                 transform: rotate(-45deg) translate(8px, -8px);
             }
 
+            .hamburger-menu:focus-visible,
+            .mobile-nav-link:focus-visible {
+                outline: 2px solid #fff;
+                outline-offset: 3px;
+            }
+
             /* Mobile overlay menu */
             .mobile-nav-overlay {
                 display: none;
@@ -5744,9 +5750,50 @@
                 width: 15px;
                 height: 35px;
             }
+
+            .countdown > div {
+                width: 100%;
+                height: auto;
+                min-height: 38px;
+                padding: 5px 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .countdown > div span {
+                display: block;
+                max-width: 100%;
+                font-size: clamp(.65rem, 3.5vw, 1rem) !important;
+                letter-spacing: 1px !important;
+                line-height: 1.25;
+                text-align: center;
+                white-space: normal;
+            }
             
             .countdown div span:first-child {
                 font-size: 10px;
+            }
+
+            #countdown > div {
+                width: 100% !important;
+                max-width: none !important;
+                height: auto !important;
+                min-height: 38px;
+                padding: 5px 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #countdown > div span {
+                width: auto !important;
+                max-width: 100%;
+                font-size: clamp(.65rem, 3.5vw, 1rem) !important;
+                letter-spacing: 1px !important;
+                line-height: 1.25;
+                text-align: center;
+                white-space: normal;
             }
             
             .countdown span {
@@ -7211,11 +7258,21 @@
         <div class="end-sky" id="endSky"><div class="purple-glow" style="left: 88.1266%; top: 87.374%; width: 400px; height: 400px; animation-duration: 25s;"></div></div> 
 
         <!-- Navbar -->
-        <div class="hamburger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <!-- Single Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
+
+<!-- Single Hamburger Button -->
+<button 
+  class="hamburger-menu" 
+  id="hamburgerBtn" 
+  aria-label="Toggle navigation menu" 
+  aria-expanded="false" 
+  aria-controls="mobileNavDrawer"
+>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
         <!-- Navbar -->
         <nav>
@@ -8414,114 +8471,66 @@
             });
 
             /* ======================================================
-            HAMBURGER MENU - MOBILE ONLY (≤480px)
+            HAMBURGER MENU - SINGLE STATIC MOBILE NAVIGATION
             ====================================================== */
             (function initMobileMenu() {
-                // Create elements immediately
-                const hamburger = document.createElement('div');
-                hamburger.className = 'hamburger-menu';
-                hamburger.innerHTML = '<span></span><span></span><span></span>';
-                
-                const backdrop = document.createElement('div');
-                backdrop.className = 'nav-backdrop';
-                
-                const mobileNav = document.createElement('div');
-                mobileNav.className = 'mobile-nav-overlay';
-                
-                const navContent = document.createElement('div');
-                navContent.className = 'mobile-nav-content';
-                
-                // Nav links
-                const navLinks = [
-                    { href: '#home', text: 'Home' },
-                    { href: '#timeline', text: 'Timeline',},
-                    { href: '#guests', text: 'Guests' },
-                    { href: '#tracks', text: 'Tracks' },
-                    { href: '#faq-preview', text: 'FAQs'},
-                    { href: '#contact', text: 'Contact' }
-                ];
-                
-                // Build menu
-                navLinks.forEach(link => {
-                    const item = document.createElement('div');
-                    item.className = 'mobile-nav-item';
-                    
-                    const anchor = document.createElement('a');
-                    anchor.href = link.href;
-                    anchor.className = 'mobile-nav-link';
-                    anchor.textContent = link.text;
-                    if (link.soon) anchor.dataset.soon = 'true';
-                    
-                    item.appendChild(anchor);
-                    navContent.appendChild(item);
-                });
+                const hamburger = document.getElementById('hamburgerBtn');
+                const mobileNav = document.getElementById('mobileNavOverlay');
+                if (!hamburger || !mobileNav) return;
 
-                // Add logo at bottom
-                const logoSection = document.createElement('div');
-                logoSection.className = 'mobile-nav-logo';
+                const removeDuplicates = () => {
+                    document.querySelectorAll('.hamburger-menu').forEach(button => button !== hamburger && button.remove());
+                    document.querySelectorAll('.mobile-nav-overlay').forEach(overlay => overlay !== mobileNav && overlay.remove());
+                    document.querySelectorAll('.nav-backdrop').forEach(item => item !== backdrop && item.remove());
+                };
 
-                const logoImg = document.createElement('img');
-                logoImg.src = 'https://lh3.googleusercontent.com/pw/AP1GczNcsBYJRrDQF5xc-IOD9E_9tAf-KWM-rpVcJYXr7EzNU94-PQCOFTBnrTo2AVnYqDfkW-wroeaoN8hMMf_B0vW-mqVewR_bhtGTWzxJSby3AyqlRiJmtvTrrhH1Wi6sWxqgW2K27xgdVhvhdnUMZu0q=w950-h316-s-no-gm?authuser=0';
-                logoImg.alt = 'SAARTHI-26 Logo';
-
-                logoSection.appendChild(logoImg);
-                mobileNav.appendChild(logoSection);
-                
-                mobileNav.appendChild(navContent);
-                
-                // Append to body
-                document.body.appendChild(hamburger);
-                document.body.appendChild(backdrop);
-                document.body.appendChild(mobileNav);
-                
-                console.log('✓ Hamburger menu elements created');
-                
-                // Toggle menu
-                function toggleMenu() {
-                    hamburger.classList.toggle('active');
-                    mobileNav.classList.toggle('active');
-                    backdrop.classList.toggle('active');
-                    
-                    if (mobileNav.classList.contains('active')) {
-                        document.body.style.overflow = 'hidden';
-                    } else {
-                        document.body.style.overflow = '';
-                    }
+                const backdrop = document.querySelector('.nav-backdrop') || document.createElement('div');
+                if (!backdrop.parentNode) {
+                    backdrop.className = 'nav-backdrop';
+                    document.body.appendChild(backdrop);
                 }
-                
-                // Close menu
-                function closeMenu() {
+                removeDuplicates();
+                const navObserver = new MutationObserver(removeDuplicates);
+                navObserver.observe(document.body, { childList: true });
+                setTimeout(() => navObserver.disconnect(), 1000);
+                if (!mobileNav.querySelector('.mobile-nav-content')) {
+                    mobileNav.innerHTML = `<div class="mobile-nav-content">${[
+                        ['#home', 'Home'], ['#timeline', 'Timeline'], ['#guests', 'Guests'],
+                        ['#tracks', 'Tracks'], ['#faq-preview', 'FAQs'], ['#contact', 'Contact']
+                    ].map(([href, text]) => `<div class="mobile-nav-item"><a href="${href}" class="mobile-nav-link">${text}</a></div>`).join('')}</div>`;
+                }
+
+                let lastFocused = hamburger;
+                const closeMenu = () => {
                     hamburger.classList.remove('active');
                     mobileNav.classList.remove('active');
                     backdrop.classList.remove('active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    mobileNav.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
-                }
-                
-                // Event listeners
-                hamburger.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleMenu();
-                });
-                
+                    lastFocused.focus();
+                };
+                const openMenu = () => {
+                    lastFocused = document.activeElement;
+                    hamburger.classList.add('active');
+                    mobileNav.classList.add('active');
+                    backdrop.classList.add('active');
+                    hamburger.setAttribute('aria-expanded', 'true');
+                    mobileNav.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                    mobileNav.querySelector('.mobile-nav-link')?.focus();
+                };
+                hamburger.addEventListener('click', () => hamburger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu());
                 backdrop.addEventListener('click', closeMenu);
-                
-                // Handle nav links
-                navContent.querySelectorAll('.mobile-nav-link').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        if (link.dataset.soon) {
-                            e.preventDefault();
-                            const toast = document.getElementById('toast');
-                            if (toast) {
-                                toast.textContent = link.textContent + ' Coming Soon!';
-                                toast.classList.add('show');
-                                setTimeout(() => toast.classList.remove('show'), 2000);
-                            }
-                        }
-                        closeMenu();
-                    });
+                mobileNav.addEventListener('click', e => {
+                    if (e.target.closest('.mobile-nav-link')) closeMenu();
                 });
-                
-                console.log('✓ Hamburger menu initialized');
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') closeMenu();
+                });
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) closeMenu();
+                });
             })();
 
             /* ======================================================
@@ -8552,7 +8561,7 @@
             let ease = 0.08;
             let isUserScrolling = false;
 
-            window.addEventListener("wheel", e => {
+           /* window.addEventListener("wheel", e => {
                 e.preventDefault();
                 targetScroll += e.deltaY;
                 targetScroll = Math.max(
@@ -8560,7 +8569,21 @@
                     Math.min(targetScroll, document.body.scrollHeight - window.innerHeight)
                 );
                 isUserScrolling = true;
-            }, { passive: false });
+            }, { passive: false });*/
+                document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const targetId = a.getAttribute('href');
+        if (targetId.length > 1) {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.pushState(null, null, targetId);
+            }
+        }
+    });
+});
+
 
             function smoothScroll() {
                 if (isUserScrolling) {
@@ -8579,6 +8602,7 @@
             document.querySelectorAll('a[href^="#"]:not(#mlh-trust-badge)').forEach(a => {
                 a.addEventListener('click', e => {
                     const targetId = a.getAttribute('href');
+                    if (!targetId || targetId === '#') return;
                     const targetElement = document.querySelector(targetId);
                     
                     if (!targetElement) return;
