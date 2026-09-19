@@ -7267,7 +7267,7 @@
   id="hamburgerBtn" 
   aria-label="Toggle navigation menu" 
   aria-expanded="false" 
-  aria-controls="mobileNavDrawer"
+  aria-controls="mobileNavOverlay"
 >
   <span></span>
   <span></span>
@@ -8493,8 +8493,9 @@
                 const navObserver = new MutationObserver(removeDuplicates);
                 navObserver.observe(document.body, { childList: true });
                 setTimeout(() => navObserver.disconnect(), 1000);
+
                 if (!mobileNav.querySelector('.mobile-nav-content')) {
-                    mobileNav.innerHTML = `<div class="mobile-nav-content">${[
+                    mobileNav.innerHTML = `<div class="mobile-nav-logo"><img src="https://lh3.googleusercontent.com/pw/AP1GczNcsBYJRrDQF5xc-IOD9E_9tAf-KWM-rpVcJYXr7EzNU94-PQCOFTBnrTo2AVnYqDfkW-wroeaoN8hMMf_B0vW-mqVewR_bhtGTWzxJSby3AyqlRiJmtvTrrhH1Wi6sWxqgW2K27xgdVhvhdnUMZu0q=w950-h316-s-no-gm?authuser=0" alt="SAARTHI-26 Logo"></div><div class="mobile-nav-content">${[
                         ['#home', 'Home'], ['#timeline', 'Timeline'], ['#guests', 'Guests'],
                         ['#tracks', 'Tracks'], ['#faq-preview', 'FAQs'], ['#contact', 'Contact']
                     ].map(([href, text]) => `<div class="mobile-nav-item"><a href="${href}" class="mobile-nav-link">${text}</a></div>`).join('')}</div>`;
@@ -8523,10 +8524,39 @@
                 hamburger.addEventListener('click', () => hamburger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu());
                 backdrop.addEventListener('click', closeMenu);
                 mobileNav.addEventListener('click', e => {
-                    if (e.target.closest('.mobile-nav-link')) closeMenu();
+                    const link = e.target.closest('.mobile-nav-link');
+                    if (link) {
+                        if (link.dataset.soon === 'true') {
+                            e.preventDefault();
+                            const toast = document.getElementById('toast');
+                            if (toast) {
+                                toast.textContent = link.textContent.trim() + ' Coming Soon!';
+                                toast.classList.add('show');
+                                setTimeout(() => toast.classList.remove('show'), 2000);
+                            }
+                        }
+                        closeMenu();
+                    }
                 });
                 document.addEventListener('keydown', e => {
-                    if (e.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') closeMenu();
+                    if (hamburger.getAttribute('aria-expanded') !== 'true') return;
+                    if (e.key === 'Escape') {
+                        closeMenu();
+                        return;
+                    }
+                    if (e.key === 'Tab') {
+                        const focusables = Array.from(mobileNav.querySelectorAll('a[href], button')).filter(el => el.offsetWidth > 0 || el.offsetHeight > 0);
+                        focusables.unshift(hamburger);
+                        const first = focusables[0];
+                        const last = focusables[focusables.length - 1];
+                        if (e.shiftKey && document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        } else if (!e.shiftKey && document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
                 });
                 window.addEventListener('resize', () => {
                     if (window.innerWidth > 768) closeMenu();
@@ -9254,7 +9284,8 @@
 
             console.log('✓ Bootup screen initialized');
             })();
-        </script><img class="flying-entity" alt="Flying Dragon" src="https://lh3.googleusercontent.com/pw/AP1GczPV701QojlTPppKTU5fRn4pSw94_Yh_U6spxRgmq1I1WtR7nQjxEpirl4UNy4I53aLpKYZqULLRuoWkL58Ew3xOBkzT6XA0vjYm9GzfXZ9s7xwY_KDb3XJPUWc6S8NaByK1CEI9VvQz6aeQnSg8bEam=w1126-h938-s-no-gm"><div class="hamburger-menu"><span></span><span></span><span></span></div><div class="nav-backdrop"></div><div class="mobile-nav-overlay"><div class="mobile-nav-logo"><img src="https://lh3.googleusercontent.com/pw/AP1GczNcsBYJRrDQF5xc-IOD9E_9tAf-KWM-rpVcJYXr7EzNU94-PQCOFTBnrTo2AVnYqDfkW-wroeaoN8hMMf_B0vW-mqVewR_bhtGTWzxJSby3AyqlRiJmtvTrrhH1Wi6sWxqgW2K27xgdVhvhdnUMZu0q=w950-h316-s-no-gm?authuser=0" alt="SAARTHI-26 Logo"></div><div class="mobile-nav-content"><div class="mobile-nav-item"><a href="#home" class="mobile-nav-link">Home</a></div><div class="mobile-nav-item"><a href="#timeline" class="mobile-nav-link">Timeline</a></div><div class="mobile-nav-item"><a href="#guests" class="mobile-nav-link">Guests</a></div><div class="mobile-nav-item"><a href="#tracks" class="mobile-nav-link">Tracks</a></div><div class="mobile-nav-item"><a href="#faq-preview" class="mobile-nav-link">FAQs</a></div><div class="mobile-nav-item"><a href="#contact" class="mobile-nav-link">Contact</a></div></div></div>
+        </script>
+        <img class="flying-entity" alt="Flying Dragon" src="https://lh3.googleusercontent.com/pw/AP1GczPV701QojlTPppKTU5fRn4pSw94_Yh_U6spxRgmq1I1WtR7nQjxEpirl4UNy4I53aLpKYZqULLRuoWkL58Ew3xOBkzT6XA0vjYm9GzfXZ9s7xwY_KDb3XJPUWc6S8NaByK1CEI9VvQz6aeQnSg8bEam=w1126-h938-s-no-gm">
 
         <div id="toast" class="mc-toast">Coming Soon!</div>
 
