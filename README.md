@@ -1,4 +1,4 @@
-﻿# SAARTHI-26
+# SAARTHI-26
 
 [![CodeQL](https://github.com/IEEE-Student-Branch-GEHU/SAARTHI-26/actions/workflows/codeql.yml/badge.svg)](https://github.com/IEEE-Student-Branch-GEHU/SAARTHI-26/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -41,7 +41,7 @@ The interface incorporates an interactive, retro-gaming pixel aesthetic designed
 - **Hero & Landing Interface**: Full-screen responsive viewport showcasing event branding, countdown badge, and quick action controls.
 - **Dynamic Schedule Timeline**: Chronological event schedule covering participant milestones, tech talks, and review phases.
 - **Prize Pool & Chests**: Visual tier representation showcasing award distributions and partner tracks.
-- **Track Exploration**: Interactive modules detailing challenge categories across Web3, Artificial Intelligence, and Open Innovation.
+- **Track Exploration**: Interactive modules detailing challenge categories across AI/ML, Healthcare, Smart Cities, Sustainability, Agriculture, Education & FinTech, Cybersecurity, and Open Innovation.
 - **Sponsors & Partner Showcase**: Structured showcase section for academic, community, and corporate partners.
 - **Audio & Ambient Controls**: Integrated soundtrack toggle and responsive background canvas animations.
 - **Responsive Layout Engine**: Mobile-first architecture tested across mobile, tablet, and widescreen viewports.
