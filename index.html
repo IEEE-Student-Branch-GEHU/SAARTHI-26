@@ -1858,65 +1858,7 @@
             }
 
 
-            .stats {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                gap: 20px;
-                margin-top: 85px;
-                margin-bottom: -90px;
-                max-width: 1200px;
-                margin-left: auto;
-                margin-right: auto;
-                position: relative;
-            }
 
-            .stat-box {
-                background-image: url('https://lh3.googleusercontent.com/pw/AP1GczM2ytk2P5EgeQdRDBd2REXXNiWXD-0dHpDG-t8z2DqK0LSgQP6sBgDjF2JqnVyfmLkoxToNHyNrrDuq0YdHVADBbUYd0lwwZNHlq0_NAFzDd82pvUEM0wCAnli7VrCKN9sD_l8S_SwShDNEkiJPbaSU=w703-h703-s-no-gm?authuser=0');
-                background-size: cover;
-                height: 100px;
-                /* border: 2px solid #9501f7; */
-                padding: 30px 10px;
-                text-align: center;
-                /* box-shadow: 0 10px 25px rgba(0,0,0,0.8); */
-                transition: transform 0.3s;
-                position: relative;
-                z-index: 1;
-            }
-
-            .stat-box::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                /* background: rgba(0, 0, 0, 0.7); */
-                z-index: 0;
-            }
-
-            .stat-box > * {
-                position: relative;
-                z-index: 1;
-            }
-
-            .stat-box:hover {
-                transform: translateY(-10px) scale(1.05);
-            }
-
-            .stat-number {
-                margin-top: 12px;
-                font-size: 26px;
-                display: block;
-                margin-bottom: 5px;
-                text-shadow: 3px 3px 0 #000000;
-                color: #ffffff;
-            }
-
-            .stat-label {
-                margin-top: 14px;
-                font-size: 10px;
-                color: #FFF;
-            }
 
             /* Tracks Container */
             .tracks-container {
@@ -3971,18 +3913,17 @@
             .stone-btn,
             .minecart-card,
             .card-wrapper,
-            .prize-card,
-            .ghast-banner-wrapper,
-            .lantern,
-            .stat-box,
-            .bee-image,
-            .card,
-            .chest-wrapper,
-            .particle,
-            .end-cloud,
-            .star,
-            .purple-glow,
-            .lantern-container {
+                        .prize-card,
+                        .ghast-banner-wrapper,
+                        .lantern,
+                        .bee-image,
+                        .card,
+                        .chest-wrapper,
+                        .particle,
+                        .end-cloud,
+                        .star,
+                        .purple-glow,
+                        .lantern-container {
                 will-change: transform;
                 transform: translateZ(0);
                 backface-visibility: hidden;
@@ -4106,10 +4047,9 @@
             }
 
             /* OPTIMIZE TRANSITIONS */
-            .stone-btn,
-            .minecart-body,
-            .stat-box,
-            .popup-image {
+                        .stone-btn,
+                        .minecart-body,
+                        .popup-image {
                 transition-property: transform, opacity, box-shadow;
                 transition-duration: 0.3s;
                 transition-timing-function: ease;
@@ -5263,29 +5203,6 @@
                 height: auto;        /* ← Maintain aspect ratio */
             }
             
-            /* Stats - Keep 4 columns, much smaller */
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                margin-top: 35px;
-                max-width: 80%;
-                padding-top: 20px;
-            }
-            
-            .stat-box {
-                height: 85px;
-                padding: 12px 8px;
-            }
-            
-            .stat-number {
-                font-size: 22px;
-                margin-bottom: 10px;
-            }
-            
-            .stat-label {
-                font-size: 9px;
-            }
-            
             .stone-btn {
                 font-size: 16px;
                 text-shadow: 2px 2px #000;
@@ -5864,17 +5781,12 @@
             }
 
             .about-image{
-                margin-top: -100px;
-                margin-bottom: -150px;
-            }
+                            margin-top: -100px;
+                            margin-bottom: -150px;
+                        }
 
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                margin-bottom: -35px;
-            }
-
-            .tracks-container {
-                margin-bottom: -140px;
+                        .tracks-container {
+                            margin-bottom: -140px;
 
             }
             
@@ -6391,18 +6303,13 @@
             }
 
             h2::before {
-                width: 300px;
-                height: 75px;
-                top: -4px;
-            }
+                            width: 300px;
+                            height: 75px;
+                            top: -4px;
+                        }
 
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                margin-bottom: -35px;
-            }
-            
-            .tracks-container {
-                margin-bottom: -140px;
+                        .tracks-container {
+                            margin-bottom: -140px;
 
             }
 
@@ -7274,9 +7181,7 @@
         <audio id="chest-sound" preload="auto">
             <source src="media/chest.mp3" type="audio/mpeg">
         </audio>
-        <audio id="stat-sound" preload="auto">
-            <source src="media/stat.mp3" type="audio/mpeg">
-        </audio>
+
         <audio id="about-img-sound" preload="auto">
             <source src="media/univ.mp3" type="audio/mpeg">
         </audio>
@@ -7413,36 +7318,7 @@
                         </p>
                     </div>
                 </div>
-                
-                
-                <h3 class="section-subheading" style="margin-bottom: -50px; margin-top: 90px;">SAARTHI-26 Stats</h3>
 
-                <div class="stats">
-                    <div class="stat-box">
-                        <span class="stat-number">21K+</span>
-                        <span class="stat-label">Registrations</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">2400+</span>
-                        <span class="stat-label">Participants</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">1200+</span>
-                        <span class="stat-label">Projects</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">100+</span>
-                        <span class="stat-label">Mentors</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">115+</span>
-                        <span class="stat-label">Cities</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">5+</span>
-                        <span class="stat-label">Countries</span>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -8788,13 +8664,12 @@
             // ==================================
 
             // Get all audio elements
-            const sounds = {
-                minecart: document.getElementById('minecart-sound'),
-                bee: document.getElementById('bee-sound'),
-                chest: document.getElementById('chest-sound'),
-                stat: document.getElementById('stat-sound'),
-                aboutImg: document.getElementById('about-img-sound')
-            };
+                        const sounds = {
+                            minecart: document.getElementById('minecart-sound'),
+                            bee: document.getElementById('bee-sound'),
+                            chest: document.getElementById('chest-sound'),
+                            aboutImg: document.getElementById('about-img-sound')
+                        };
 
             // Set volume for all sound effects
             Object.values(sounds).forEach(sound => {
@@ -8821,19 +8696,14 @@
             });
 
             // Add hover listeners to prize chests
-            document.querySelectorAll('.chest-wrapper').forEach(chest => {
-                chest.addEventListener('mouseenter', () => playSound('chest'));
-            });
+                        document.querySelectorAll('.chest-wrapper').forEach(chest => {
+                            chest.addEventListener('mouseenter', () => playSound('chest'));
+                        });
 
-            // Add hover listeners to stat boxes
-            document.querySelectorAll('.stat-box').forEach(stat => {
-                stat.addEventListener('mouseenter', () => playSound('stat'));
-            });
-
-            // Add hover listener to about section image - ADD THIS
-            document.querySelector('.about-image img')?.addEventListener('mouseenter', () => {
-                playSound('aboutImg');
-            });
+                        // Add hover listener to about section image - ADD THIS
+                        document.querySelector('.about-image img')?.addEventListener('mouseenter', () => {
+                            playSound('aboutImg');
+                        });
 
             console.log('✓ Hover sound effects initialized');
 
