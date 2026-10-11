@@ -3100,7 +3100,7 @@
                     width: 100%;
                     max-width: 100%;
                     flex: 1 1 100%;
-                    margin-left: -15px;
+                    margin-left: 0;
                 }
             }
 
@@ -3120,7 +3120,7 @@
                     width: 100%;
                     max-width: 100%;
                     flex: 1 1 100%;
-                    margin-left: 55px;
+                    margin-left: 0;
                 }
             }
 
@@ -3229,7 +3229,7 @@
                 position: absolute;
                 top: 0; left: 0;
                 width: 100%;
-                height: 10 0%;
+                height: 100%;
                 object-fit: cover;
                 transition: opacity 0.5s ease;
                 image-rendering: pixelated;
@@ -5025,9 +5025,9 @@
     <style>
         /* Tablets and smaller (≤768px) */
         @media (max-width: 768px) {
-            /* Enable horizontal scrolling where needed */
+            /* Keep the page viewport within the device width. */
             body {
-                overflow-x: auto;
+                overflow-x: hidden;
             }
             
             /* Hero Section - Fullscreen on tablet */
@@ -5037,7 +5037,8 @@
             }
             
             .hero-logo {
-                max-width: auto;
+                width: min(100%, 700px);
+                max-width: 100%;
                 height: 260px;
                 margin-top: -70px;
             }
@@ -5224,7 +5225,7 @@
             
             .track-row {
                 display: grid;
-                grid-template-columns: repeat(2, 1fr); /* CHANGED from flex to grid */
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 8px;
                 padding: 55px 0;
                 position: relative;
@@ -5252,7 +5253,8 @@
             /* MINECARTS - Force visibility on mobile, keep animations */
             .minecart-card {
                 flex: 0 0 calc(50% - 6px);
-                width: 200px;
+                width: 100%;
+                min-width: 0;
                 opacity: 1 !important; /* FORCE VISIBLE */
                 
                 margin-bottom: 60px;
@@ -5652,6 +5654,7 @@
             }
 
             .hero-logo {
+                width: 100%;
                 max-width: 390px;
                 height: auto;
                 margin-top: 10px;
@@ -5710,7 +5713,9 @@
             }
 
             #countdown > div {
-                width: 100% !important;
+                flex: 1 1 0;
+                width: auto !important;
+                min-width: 0;
                 max-width: none !important;
                 height: auto !important;
                 min-height: 38px;
@@ -6229,7 +6234,8 @@
 
             .hero-logo {
                 width: 100%;
-                height: 100%;
+                max-width: 100%;
+                height: auto;
                 margin-top: 0px;
             }
 
@@ -6756,6 +6762,82 @@
             }
         }
 
+        /* Keep fixed-width legacy cards inside narrow viewports. */
+        @media (max-width: 480px) {
+            .cards-grid {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .card-wrapper {
+                max-width: min(100%, 260px);
+            }
+
+            .card {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .minecart-body {
+                width: 100%;
+                max-width: 190px;
+            }
+
+            .open-innovation-banner {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .banner-sign {
+                width: auto;
+                max-width: calc(100vw - 110px);
+            }
+
+            .prize-row {
+                gap: 8px;
+                margin-left: 0;
+                margin-right: 0;
+                justify-content: space-evenly;
+            }
+
+            .prize-card {
+                min-width: 0;
+                flex: 1 1 0;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .chest-wrapper {
+                width: clamp(80px, 24vw, 125px);
+                height: clamp(80px, 24vw, 125px);
+            }
+
+            .chest-img {
+                width: 100%;
+                height: 100%;
+                margin-top: 0;
+            }
+
+            .prize-label,
+            .prize-amount {
+                margin-left: 0;
+                margin-right: 0;
+                min-width: 0;
+                width: 100%;
+            }
+
+            .prize-label {
+                font-size: clamp(7px, 2vw, 10px);
+            }
+
+            .prize-amount {
+                font-size: clamp(8px, 2.5vw, 12px);
+            }
+        }
+
         #timeline {
             background-image:
                 linear-gradient(
@@ -7126,7 +7208,7 @@
         }
     </style>
     </head>
-    <body style="overflow: hidden;">
+    <body>
         <!-- BOOTUP SCREEN -->
         <div id="bootup-screen" style="
         position:fixed;top:0;left:0;width:100%;height:100%;
@@ -7152,18 +7234,9 @@
                 animation: typeWriter 1.5s steps(10, end) forwards, blinkCursor 0.5s step-end infinite;
             }
         </style>
-        <div id="bootup-video" style="display: none;"></div>
         <div class="bootup-text-container">
             <h1 class="bootup-text">SAARTHI-26</h1>
         </div>
-        <script>
-            setTimeout(() => {
-                const el = document.getElementById('bootup-video');
-                if (el) el.dispatchEvent(new Event('ended'));
-            }, 3000);
-        </script>
-        <!-- Skip button -->
-        
         </div>
 
         <audio id="background-music" loop="">
@@ -8569,73 +8642,27 @@
             });
 
             /* ======================================================
-            SMOOTH SCROLL (FIXED FOR ANCHOR LINKS)
+            SMOOTH SCROLL FOR INTERNAL ANCHORS
             ====================================================== */
-            let currentScroll = window.scrollY;
-            let targetScroll = currentScroll;
-            let ease = 0.08;
-            let isUserScrolling = false;
-
-           /* window.addEventListener("wheel", e => {
-                e.preventDefault();
-                targetScroll += e.deltaY;
-                targetScroll = Math.max(
-                    0,
-                    Math.min(targetScroll, document.body.scrollHeight - window.innerHeight)
-                );
-                isUserScrolling = true;
-            }, { passive: false });*/
-                document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-        const targetId = a.getAttribute('href');
-        if (targetId.length > 1) {
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                history.pushState(null, null, targetId);
-            }
-        }
-    });
-});
-
-
-            function smoothScroll() {
-                if (isUserScrolling) {
-                    currentScroll += (targetScroll - currentScroll) * ease;
-                    window.scrollTo(0, currentScroll);
-                    
-                    if (Math.abs(targetScroll - currentScroll) < 0.5) {
-                        isUserScrolling = false;
-                    }
-                }
-                requestAnimationFrame(smoothScroll);
-            }
-
-            smoothScroll();
-
-            document.querySelectorAll('a[href^="#"]:not(#mlh-trust-badge)').forEach(a => {
-                a.addEventListener('click', e => {
-                    const targetId = a.getAttribute('href');
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', event => {
+                    const targetId = anchor.getAttribute('href');
                     if (!targetId || targetId === '#') return;
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (!targetElement) return;
-                    
-                    e.preventDefault();
-                    
-                    const targetPosition = targetElement.offsetTop - 100; 
-                    
-                    targetScroll = targetPosition;
-                    currentScroll = targetPosition;
-                    
-                    window.scrollTo(0, targetPosition);
-                    
-                    history.pushState(null, null, targetId);
+
+                    const target = document.querySelector(targetId);
+                    if (!target) return;
+
+                    event.preventDefault();
+                    const navOffset = 100;
+                    const targetPosition = Math.max(
+                        0,
+                        window.scrollY + target.getBoundingClientRect().top - navOffset
+                    );
+
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    history.pushState(null, '', targetId);
                 });
             });
-
-            smoothScroll();
 
 
             /* ======================================================
@@ -9219,53 +9246,32 @@
             })();
 
             /* ======================================================
-            BOOTUP SCREEN — plays once per session
+            BOOTUP SCREEN
             ====================================================== */
             (function initBootupScreen() {
-            const screen = document.getElementById('bootup-screen');
-            const video  = document.getElementById('bootup-video');
-            const skip   = document.getElementById('bootup-skip');
-            if (!screen || !video) return;
+                const screen = document.getElementById('bootup-screen');
+                if (!screen) return;
 
-            // Prevent body scroll while booting
-            document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                let dismissed = false;
 
-            function dismissBootup() {
-                screen.style.transition = 'opacity 0.6s ease';
-                screen.style.opacity = '0';
-                setTimeout(() => {
-                screen.remove();
-                document.body.style.overflow = '';
-                }, 650);
-            }
+                function dismissBootup() {
+                    if (dismissed) return;
+                    dismissed = true;
+                    screen.style.transition = 'opacity 0.6s ease';
+                    screen.style.opacity = '0';
 
-            // Auto-dismiss when video ends
-            video.addEventListener('ended', dismissBootup);
+                    setTimeout(() => {
+                        screen.remove();
+                        document.body.style.overflow = '';
+                    }, 650);
+                }
 
-            // Skip button
-            skip.addEventListener('click', dismissBootup);
-
-            // Fallback: dismiss after 10s if video fails
-            setTimeout(dismissBootup, 10000);
-
-            // iOS / mobile autoplay fix — unmute & play on first touch
-            function tryPlay() {
-                video.muted = true;
-                video.play().catch(() => {});
-                document.removeEventListener('touchstart', tryPlay);
-                document.removeEventListener('click', tryPlay);
-            }
-            document.addEventListener('touchstart', tryPlay, { once: true });
-            document.addEventListener('click', tryPlay, { once: true });
-
-            // Try immediate play
-            video.play().catch(() => {});
-
-            console.log('✓ Bootup screen initialized');
+                // Keep the intro short and always release the page scroll lock.
+                setTimeout(dismissBootup, 3000);
+                console.log('✓ Bootup screen initialized');
             })();
         </script>
-        <img class="flying-entity" alt="Flying Dragon" src="https://lh3.googleusercontent.com/pw/AP1GczPV701QojlTPppKTU5fRn4pSw94_Yh_U6spxRgmq1I1WtR7nQjxEpirl4UNy4I53aLpKYZqULLRuoWkL58Ew3xOBkzT6XA0vjYm9GzfXZ9s7xwY_KDb3XJPUWc6S8NaByK1CEI9VvQz6aeQnSg8bEam=w1126-h938-s-no-gm">
-
         <div id="toast" class="mc-toast">Coming Soon!</div>
 
         <!-- GIF Transition Overlay -->
