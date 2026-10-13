@@ -1348,10 +1348,12 @@
                 background-repeat: no-repeat;
             }
 
+            /* Anchored to the section's bottom edge (not a fixed top offset) so the
+               divider stays on the boundary when timeline entries are added. */
             #timeline::after {
                 content: "";
                 position: absolute;
-                top: 1286.2px;
+                bottom: 0;
                 left: 0;
 
                 width: 100%;
@@ -1365,7 +1367,8 @@
             .timeline-decoration-link {
                 position: absolute;
                 z-index: 100;
-                top: 1186px;
+                /* Keeps the cube centred on the bottom divider bar. */
+                bottom: -46px;
                 left: 300px;
                 display: block;
                 cursor: pointer;
