@@ -1274,6 +1274,88 @@
                 z-index: 1;
             }
 
+            /* ============================================
+            SECTION DIVIDER - white bar + cube after every section.
+            Anchored to each section's bottom edge, so it stays on the
+            boundary however tall the section's content grows.
+            ============================================ */
+            .section-bg > .section-divider {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 7px;
+                background: rgba(255, 255, 255, 0.9);
+                z-index: 20;
+                pointer-events: none;
+            }
+
+            .section-divider-cube {
+                position: absolute;
+                left: 50%;
+                /* The bar sits two-thirds of the way down the cube image. */
+                top: -100px;
+                transform: translateX(-50%);
+                display: block;
+                pointer-events: auto;
+                transition: transform 0.3s ease;
+            }
+
+            .section-divider-cube:hover {
+                transform: translateX(-50%) scale(1.05);
+            }
+
+            .section-divider-cube img {
+                display: block;
+                height: 150px;
+                width: auto;
+                image-rendering: pixelated;
+            }
+
+            /* These sections never used the generic dark overlay; keep their look. */
+            #timeline::before,
+            #why-attend::before,
+            #prizes::before,
+            #guests::before,
+            #benefits::before,
+            #sponsors::before,
+            #faq-preview::before {
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                /* Leave room above the bar for the cube, which rises into the section. */
+                section.section-bg {
+                    padding-bottom: 110px;
+                }
+
+                .section-bg > .section-divider {
+                    height: 5px;
+                }
+
+                .section-divider-cube {
+                    top: -70px;
+                }
+
+                .section-divider-cube img {
+                    height: 105px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .section-bg > .section-divider {
+                    height: 4px;
+                }
+
+                .section-divider-cube {
+                    top: -54px;
+                }
+
+                .section-divider-cube img {
+                    height: 80px;
+                }
+            }
+
             /* #about {
                 background-image: url('https://lh3.googleusercontent.com/pw/AP1GczMcGS1yt1wT5BKt2RRvmacdjuSxybrIVbCmbPYNzpdJ23P7dmlD_alt51XhLJl9wuVCOuLxSnlutwWM5j9SCRyKY03sG_YdH_8flssVSPrANbg7GTYnIYdtjleg35W8sEejN2f2wffVYbmKJhWLYEgE=w1080-h483-s-no-gm?authuser=0');
             }  */
@@ -1296,40 +1378,9 @@
                 background-repeat: no-repeat;
             }
 
-            #tracks::after {
-                content: "";
-                position: absolute;
-                top: 1414px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .tracks-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 1324px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .tracks-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .tracks-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            }
 
             #timeline {
                 background-image:
@@ -1350,41 +1401,9 @@
 
             /* Anchored to the section's bottom edge (not a fixed top offset) so the
                divider stays on the boundary when timeline entries are added. */
-            #timeline::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .timeline-decoration-link {
-                position: absolute;
-                z-index: 100;
-                /* Keeps the cube centred on the bottom divider bar. */
-                bottom: -46px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .timeline-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .timeline-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            } 
 
             #why-attend {
                 background-image:
@@ -1403,40 +1422,9 @@
                 background-repeat: no-repeat;
             }
 
-            #why-attend::after {
-                content: "";
-                position: absolute;
-                top: 1185px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .why-attend-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 1094px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .why-attend-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .why-attend-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            }
 
             #prizes {
                 background-image:
@@ -1455,40 +1443,9 @@
                 background-repeat: no-repeat;
             }
 
-            #prizes::after {
-                content: "";
-                position: absolute;
-                top: 1084px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .prizes-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 992px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .prizes-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .prizes-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            }
 
             #benefits {
                 background-image:
@@ -1507,40 +1464,9 @@
                 background-repeat: no-repeat;
             }
 
-            #benefits::after {
-                content: "";
-                position: absolute;
-                top: 1088.2px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .benefits-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 996px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .benefits-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .benefits-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            } 
 
             #sponsors {
                 background-image:
@@ -1559,40 +1485,9 @@
                 background-repeat: no-repeat;
             }
 
-            #sponsors::after {
-                content: "";
-                position: absolute;
-                top: 5414px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .sponsors-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 5320px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .sponsors-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .sponsors-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            }
             
             #guests {
                 background-image:
@@ -1611,40 +1506,9 @@
                 background-repeat: no-repeat;
             }
 
-            #guests::after {
-                content: "";
-                position: absolute;
-                top: 902px;
-                left: 0;
 
-                width: 100%;
-                height: 7px; /* adjust bar height */
 
-                z-index: 2;
 
-                background: rgba(255, 255, 255, 0.9);
-            }
-
-            .guests-decoration-link {
-                position: absolute;
-                z-index: 100;
-                top: 810px;
-                left: 300px;
-                display: block;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-            }
-
-            .guests-decoration-link:hover {
-                transform: scale(1.05);
-            }
-
-            .guests-decoration-link img {
-                width: 885px;
-                height: 150px;
-                object-fit: contain;
-                image-rendering: pixelated;
-            }
 
             /* Mobile (≤480px) - Section Lines */
             @media (max-width: 480px) {
@@ -1682,139 +1546,22 @@
                 background-position: center;
                 background-repeat: no-repeat;
                 }
-                #tracks::after,
-                #why-attend::after,
-                #prizes::after,
-                #benefits::after,
-                #guests::after,
-                #timeline::after,
-                #sponsors::after {
-                    height: 4px;
-                    display: none;
-                }
             }
 
-            /* Very small (≤400px) - Section Lines */
-            @media (max-width: 400px) {
-                #tracks::after,
-                #why-attend::after,
-                #prizes::after,
-                #benefits::after,
-                #guests::after,
-                #timeline::after,
-                #sponsors::after {
-                    height: 3px;
-                    display: none;
-                }
-            }
 
-            /* Mobile (≤480px) - Decoration Links */
+
+
+                        /* Fixed mobile heights for sections with absolutely positioned content. */
             @media (max-width: 480px) {
-                .tracks-decoration-link,
-                .why-attend-decoration-link,
-                .prizes-decoration-link,
-                .sponsors-decoration-link {
-                    display: none;
-                }
-                
-                .tracks-decoration-link img,
-                .why-attend-decoration-link img,
-                .prizes-decoration-link img,
-                .sponsors-decoration-link img {
-                    display: none;
-                    max-width:100px;
-                    max-height:100px;
-                }
-            }
-
-            /* Very small (≤400px) - Decoration Links */
-            @media (max-width: 400px) {
-                .tracks-decoration-link,
-                .why-attend-decoration-link,
-                .prizes-decoration-link,
-                .sponsors-decoration-link {
-                    display: none;
-                    bottom: -60px;
-                }
-                
-                .tracks-decoration-link img,
-                .why-attend-decoration-link img,
-                .prizes-decoration-link img,
-                .sponsors-decoration-link img {
-                    display: none;
-                    width: 320px;
-                }
-            }
-
-            /* ============================================
-            MOBILE SECTION SEPARATORS - TRACKS, WHY ATTEND, PRIZES, SPONSORS
-            ============================================ */
-
-            /* Base styles - hidden by default */
-            #faq-preview::before,
-            #why-attend::before,
-            #prizes::before,
-            #guests::before,
-            #benefits::before,
-            #sponsors::before {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 0;
-                background: rgba(255, 255, 255, 0.9);
-                z-index: 10;
-                display: none;
-            }
-
-            /* Tablets (≤768px) */
-            @media (max-width: 768px) {
-                #tracks::before,
-                #faq-preview::before,
-                #why-attend::before,
-                #guests::before,
-                #prizes::before,
-                #benefits::before,
-                #sponsors::before {
-                    display: block;
-                    height: 5px;
-                }
-            }
-
-            /* Mobile phones (≤480px) */
-            @media (max-width: 480px) {
-                #tracks::before,
-                #faq-preview::before,
-                #why-attend::before,
-                #guests::before,
-                #prizes::before,
-                #benefits::before,
-                #sponsors::before {
-                    height: 4px;
-                }
                 #sponsors {
                     height: 3540px;
                 }
                 #benefits {
                     height: 1760px;
                 }
-                
-                
             }
 
-            /* Very small screens (≤400px) */
             @media (max-width: 400px) {
-                #faq-preview::before,
-                #tracks::before,
-                #why-attend::before,
-                #benefits::before,
-                #prizes::before,
-                #guests::before,
-                #sponsors::before {
-                    height: 3px;
-                }
-
                 #sponsors {
                     height: 2700px;
                 }
@@ -4649,7 +4396,6 @@
                     rgb(26, 13, 48) 45%,
                     rgb(18, 9, 34) 100%
                 );
-                border-top: 5px solid rgba(255, 255, 255, 0.9);
             }
 
             .committee-intro {
@@ -6943,16 +6689,6 @@
             position: relative;
         }
 
-        #timeline::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.9);
-            z-index: 10;
-        }
 
         .timeline-wrapper {
             max-width: 1300px;
@@ -7484,13 +7220,13 @@
                 </div>
 
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
     <!-- Inside #tracks section, replace everything inside the section -->
         <section id="tracks" class="section-bg">
-            <a href="#home" class="tracks-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto;">
                 <h2 data-corner-text="Dream it, Build it !!">HACKATHON TRACKS</h2>
                 
@@ -7597,13 +7333,13 @@
                     </div>
                 </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         
         <section id="timeline" class="section-bg">
-             <a href="#home" class="timeline-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div class="timeline-wrapper">
                 <h2 data-corner-text="Tick Tock Hack!!" style="margin-top: -20px;">TIMELINE</h2>
 
@@ -7866,13 +7602,13 @@
 
                                     </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <!-- Why Attend Section --> 
         <section id="why-attend" class="section-bg">
-            <a href="#home" class="why-attend-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto; margin-top: -50px;">
                 <h2 data-corner-text="Hop On!! Limited Seats">WHY ATTEND?</h2>
                 
@@ -7941,13 +7677,13 @@
                     </div>
                 </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <!-- Prize Pool Section -->
         <section id="prizes" class="section-bg">
-            <a href="#home" class="prizes-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto; margin-top: -40px;">
                 <h2 data-corner-text="Win big, Cash up !!">PRIZE POOL</h2>
                 <div class="prizes">
@@ -8043,6 +7779,9 @@
                         </div>
                 </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <!-- Our Committee Section -->
@@ -8107,12 +7846,12 @@
                     </div>
                 </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <section id="guests" class="section-bg">
-            <a href="#home" class="guests-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto;">
                 <h2 data-corner-text="Meet the Legends">GUESTS &amp; JUDGES</h2>
                 <div class="sponsors-tba-container">
@@ -8123,13 +7862,13 @@
                     </p>
                 </div>
             </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <!-- Sponsors Benefit Section -->
         <section id="benefits" class="section-bg" style="padding: 80px 20px;">
-            <a href="#home" class="benefits-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto;">
                 <h2 data-corner-text="Get the Best!!">SPONSOR BENEFITS</h2>
                 
@@ -8148,13 +7887,13 @@
                 </div>
             </div>
             
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
+            </div>
         </section>
 
         <!-- Sponsors Section -->
         <section id="sponsors" class="section-bg">
-            <a href="#home" class="sponsors-decoration-link">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="Decoration">
-            </a>
             <div style="max-width: 1400px; margin: 0 auto;">
                 
                 <h2 data-corner-text="The MVP group" style="margin-top: -22px;">OUR SPONSORS</h2>
@@ -8177,6 +7916,9 @@
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Diamond" class="popup-image">
                     </div>
                 </div>
+            </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
             </div>
         </section>
 
@@ -8239,6 +7981,9 @@
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczMeqenNSDCEYEvZ8vPHzJRrkSk9UoakdEVllKTU-kgOC1Un8F6jjOyTdJNAtB9Wp2Q3VnTpijka2PbFKWGw_1kF1nSr65_fyrqLXAG_E5RhhCxrJpnMrqWb3CZ0aDYblwLMbcQ2GBFD96rifvy11Vp3=w158-h158-s-no-gm?authuser=0" alt="Icon" class="popup-image">
                     </div>
                 </div>
+            </div>
+            <div class="section-divider">
+                <a href="#home" class="section-divider-cube" aria-label="Back to top"><img src="https://lh3.googleusercontent.com/pw/AP1GczOzO6DSU7gKtIzYnhQavNRsN1RJwRCXo8sZbRnb41kS_Iw16VGpnz2TqdNhxQYrmxExCtTe9qI5I8ul5e9PdpfsySO_i6bEWSpiiFDki8KUw7ALel21hUubxo7o5ww91Gn_-Vu9XKcnM4Mle7u-wUbP=w885-h938-s-no-gm?authuser=0" alt="" loading="lazy"></a>
             </div>
         </section>
 
