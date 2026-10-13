@@ -765,8 +765,10 @@
             .countdown-card {
                 background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPEriaY5PSmrTgJNQYqowfF7FXAGoqZTkInKkLrAid_5hHCUXzUo0y27FqjcFn2tlJzoNLjcbSNlT7j91x3kx5bgYPymMAdpB2DmPzuhJsf5xjsTfjP02x2o-GW4vvOin7xNSK2En-ZFz9u3nGXK8h8=w889-h287-s-no-gm?authuser=0');
                 background-size: cover;
-                height: 160px;
+                box-sizing: border-box;
+                min-height: 160px;
                 border: 2px solid #ffffff;
+                width: calc(100% - 32px);
                 max-width: 665px;
                 margin: 25px auto 0;
                 padding: 22px 35px;
@@ -805,26 +807,120 @@
                 text-shadow: 3px 3px 0 #000000;
             }
 
+            .hero-title {
+                text-align: center;
+                position: relative;
+                z-index: 10;
+                padding: 0 16px;
+            }
+
+            .hero-title h1 {
+                color: #fff;
+                font-family: 'Press Start 2P', monospace;
+                font-size: clamp(2rem, 5vw, 5rem);
+                line-height: 1.2;
+                text-shadow: 4px 4px 0 #555;
+                margin-bottom: 20px;
+                white-space: nowrap;
+            }
+
+            .hero-title h2 {
+                color: #ccc;
+                font-family: 'Press Start 2P', monospace;
+                font-size: clamp(1rem, 2vw, 2rem);
+                line-height: 1.5;
+                text-shadow: 2px 2px 0 #555;
+                /* The decorative divider sits just below; a wrapped line would collide with it. */
+                white-space: nowrap;
+            }
+
+            @media (max-width: 480px) {
+                .hero-title h1 {
+                    /* Press Start 2P glyphs are ~1em wide; 10 chars must fit the viewport. */
+                    font-size: clamp(1.25rem, 8vw, 2rem);
+                    margin-bottom: 12px;
+                }
+
+                .hero-title h2 {
+                    /* 27 characters at ~1em each must fit within the 16px side gutters. */
+                    font-size: clamp(0.55rem, 3vw, 1rem);
+                }
+            }
+
+            /* Each unit is a column (number above label) in a 4-column grid,
+               so digits and labels can never sit on top of each other. */
             .countdown {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, minmax(70px, 100px));
                 gap: 30px;
                 justify-content: center;
                 font-size: 10px;
             }
 
-            .countdown div {
+            .countdown > div {
+                box-sizing: border-box;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
                 background: rgba(0,0,0,0.7);
-                padding: 10px 10px;
+                padding: 10px;
                 border: 2px solid #ffffff;
-                min-width: 70px;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+                text-align: center;
+            }
+
+            /* "EVENT STARTED" replaces the four units with a single div. */
+            .countdown > div:only-child {
+                grid-column: 1 / -1;
             }
 
             .countdown span {
                 display: block;
                 font-size: 12px;
-                margin-top: 12px;
+                line-height: 1.2;
+                white-space: nowrap;
                 color: #ffffff;
+            }
+
+            @media (max-width: 768px) {
+                .countdown-card {
+                    width: min(calc(100% - 32px), 380px);
+                    min-height: 0;
+                    padding: 10px 12px 12px;
+                    margin: 20px auto 0;
+                }
+
+                .countdown-card h1 {
+                    margin: 0 0 10px;
+                    font-size: clamp(12px, 3.8vw, 15px);
+                    text-shadow: 3px 3px #6f00ff;
+                }
+
+                .countdown {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    gap: 6px;
+                }
+
+                .countdown > div {
+                    gap: 5px;
+                    padding: 6px 2px;
+                }
+
+                .countdown > div span:first-child {
+                    font-size: clamp(12px, 4vw, 16px);
+                }
+
+                .countdown > div span:last-child {
+                    font-size: clamp(7px, 2.2vw, 9px);
+                }
+
+                .countdown > div:only-child {
+                    font-size: clamp(12px, 4vw, 18px) !important;
+                    white-space: normal;
+                }
             }
 
             .stone-buttons {
@@ -5049,56 +5145,7 @@
                 margin-top: 7px;
             }
             
-            /* FIXED COUNTDOWN STRUCTURE - SMALLER TEXT */
-            .countdown-card {
-                width: 320px;
-                height: 108px;
-                padding: 8px 12px;
-                margin: 20px auto 0;
-            }
-            
-            .countdown-card h2 {
-                font-size: 8px;
-                margin-bottom: 8px;
-            }
-
-            .countdown-card h1 {
-                margin-top: 8px;
-                font-size: 15px;
-                text-shadow: 3px 3px #6f00ff;
-            }
-            
-            .countdown {
-                margin-top: -10px;
-                display: flex;
-                gap: 5px;
-                justify-content: center;
-                font-size: 6px;
-                flex-wrap: nowrap;
-            }
-            
-            .countdown div {
-                /* min-width: 32px; */
-                margin-top: 8px;
-                max-width: 52px;
-                max-height: 52px;
-                padding: 3px 2px;
-                border: 2px solid #ffffff;
-                box-sizing: border-box;
-            }
-            
-            .countdown div span:first-child {
-                font-size: 15px;
-                line-height: 1;
-                display: block;
-            }
-            
-            .countdown span {
-                font-size: 9px;
-                margin-top: 3px;
-                display: block;
-                line-height: 1.1;
-            }
+            /* Countdown responsive rules live next to the base .countdown styles. */
             
             .stone-buttons {
                 gap: 20px;
@@ -5665,80 +5712,6 @@
                 top: 30%;
                 margin-top: 14px;
             }
-            
-            .countdown-card {
-                max-width: 310px;
-                height: 95px;
-                padding: 5px 8px;
-                margin-top: 15px;
-            }
-
-            .countdown-card h1 {
-                font-size: 13.5px;
-                text-shadow: 3px 3px #6f00ff;
-            }
-            
-            .countdown-card h2 {
-                font-size: 4.5px !important;
-                margin-bottom: 6px;
-            }
-            
-            .countdown div {
-                width: 15px;
-                height: 35px;
-            }
-
-            .countdown > div {
-                width: 100%;
-                height: auto;
-                min-height: 38px;
-                padding: 5px 3px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .countdown > div span {
-                display: block;
-                max-width: 100%;
-                font-size: clamp(.65rem, 3.5vw, 1rem) !important;
-                letter-spacing: 1px !important;
-                line-height: 1.25;
-                text-align: center;
-                white-space: normal;
-            }
-            
-            .countdown div span:first-child {
-                font-size: 10px;
-            }
-
-            #countdown > div {
-                flex: 1 1 0;
-                width: auto !important;
-                min-width: 0;
-                max-width: none !important;
-                height: auto !important;
-                min-height: 38px;
-                padding: 5px 3px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #countdown > div span {
-                width: auto !important;
-                max-width: 100%;
-                font-size: clamp(.65rem, 3.5vw, 1rem) !important;
-                letter-spacing: 1px !important;
-                line-height: 1.25;
-                text-align: center;
-                white-space: normal;
-            }
-            
-            .countdown span {
-                font-size: 9px;
-                width: 66px;
-            }
 
             .stone-buttons {
                 gap: 20px;
@@ -6243,37 +6216,6 @@
                 height: 170px;
                 top: 0%;
                 margin-top: 7px;
-            }
-            
-            .countdown-card {
-                max-width: 360px;
-                height: 95px;
-                padding: 5px 8px;
-                margin-top: 15px;
-            }
-
-            .countdown-card h1 {
-                font-size: 13.5px;
-                text-shadow: 3px 3px #6f00ff;
-            }
-            
-            .countdown-card h2 {
-                font-size: 4.5px !important;
-                margin-bottom: 6px;
-            }
-            
-            .countdown div {
-                max-width: 25px !important;
-                height: 37px;
-            }
-            
-            .countdown div span:first-child {
-                font-size: 10px;
-            }
-            
-            .countdown span {
-                font-size: 9px;
-                width: 60px;
             }
 
             .stone-buttons {
@@ -7343,9 +7285,9 @@
             
             <div class="hero-logo-wrapper">
                 <div class="hero-logo-bg-box"></div>
-                <div style="text-align: center; position: relative; z-index: 10;">
-                    <h1 style="color: #fff; font-family: 'Press Start 2P', monospace; font-size: clamp(2rem, 5vw, 5rem); text-shadow: 4px 4px 0 #555; margin-bottom: 20px;">SAARTHI-26</h1>
-                    <h2 style="color: #ccc; font-family: 'Press Start 2P', monospace; font-size: clamp(1rem, 2vw, 2rem); text-shadow: 2px 2px 0 #555;">DATES: Oct 31 - Nov 2, 2026</h2>
+                <div class="hero-title">
+                    <h1>SAARTHI-26</h1>
+                    <h2>DATES: Oct 31 - Nov 2, 2026</h2>
                 </div>
             </div>
             <div class="countdown-card">
