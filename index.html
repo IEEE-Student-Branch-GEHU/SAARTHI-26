@@ -29,7 +29,7 @@
             --mist: #F3F7FA;          /* alternate section background */
             --gold: #E5A50A;          /* prizes only */
             --silver: #9AA8B6;
-            --bronze: #B9783F;
+            --bronze: #C68A52;
 
             --font: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
             --pixel: 'Press Start 2P', monospace;
@@ -65,7 +65,8 @@
 
         img { max-width: 100%; display: block; }
         a { color: var(--blue); }
-        h1, h2, h3 { color: var(--navy); line-height: 1.2; margin: 0; }
+        h1, h2, h3, h4 { color: var(--navy); line-height: 1.2; margin: 0; text-wrap: balance; }
+        a, button, summary, [tabindex] { touch-action: manipulation; }
         p { margin: 0; }
 
         :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
@@ -100,6 +101,8 @@
         .btn-secondary:hover { background: var(--blue-50); }
         .btn:active { transform: translateY(1px); }
         .btn-sm { min-height: 40px; padding: 8px 16px; font-size: 15px; }
+        .link-btn { background: none; border: 0; padding: 0; font: inherit; color: #fff; cursor: pointer; }
+        .link-btn:hover { text-decoration: underline; }
 
         /* ==========================================================
            HEADER
@@ -258,7 +261,14 @@
         /* ==========================================================
            TAGLINE BAND (marquee)
            ========================================================== */
-        .band { background: var(--navy); color: #fff; overflow: hidden; padding: 16px 0; }
+        .band { position: relative; background: var(--navy); color: #fff; overflow: hidden; padding: 16px 0; }
+        .band.is-paused .band-track { animation-play-state: paused; }
+        .band-toggle {
+            position: absolute; right: 0; top: 0; bottom: 0; z-index: 1;
+            width: 60px; border: 0; cursor: pointer;
+            background: var(--navy); color: #fff; box-shadow: -24px 0 20px var(--navy);
+        }
+        .band-toggle:hover { background: var(--blue); }
         .band-track { display: flex; width: max-content; animation: band 48s linear infinite; }
         .band-track ul { display: flex; align-items: center; gap: 28px; margin: 0; padding: 0 14px; list-style: none; }
         .band-track li { font-size: 18px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
@@ -387,6 +397,7 @@
             padding: 28px 20px 24px; text-align: center;
             transition: box-shadow .25s ease;
         }
+        .prize { cursor: pointer; }
         .prize:hover, .prize:focus-within { box-shadow: var(--shadow); }
         .prize.first { --rank: var(--gold); padding-top: 44px; padding-bottom: 36px; }
         .prize.second { --rank: var(--silver); }
@@ -510,11 +521,13 @@
         .footer-brand p { font-size: 15px; max-width: 320px; }
         .site-footer h2 { color: #fff; font-size: 16px; margin-bottom: 14px; }
         .site-footer ul { list-style: none; margin: 0; padding: 0; }
-        .site-footer li + li { margin-top: 8px; }
+        .site-footer li + li { margin-top: 4px; }
+        /* Pad footer links to a 24px+ pointer target (WCAG 2.5.8). */
+        .site-footer li a, .site-footer li .link-btn, .site-footer address a { display: inline-block; padding: 4px 0; }
         .site-footer address { font-style: normal; font-size: 15px; line-height: 1.7; }
         .socials { display: flex; gap: 10px; margin-top: 22px; }
         .socials a {
-            width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+            width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
             background: rgba(255,255,255,.1); color: #fff; font-size: 17px;
             transition: background-color .2s ease;
         }
@@ -542,6 +555,7 @@
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             .band-track { animation: none; }
+            .band-toggle { display: none; }
             *, *::before, *::after { transition-duration: .01ms !important; }
         }
     </style>
@@ -596,7 +610,7 @@
                         <a class="btn btn-primary" href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">
                             Apply with Unstop <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                         </a>
-                        <a class="btn btn-secondary" href="#" data-soon="The community link will be shared soon.">Join the community</a>
+                        <button class="btn btn-secondary" type="button" data-soon="The community link will be shared soon.">Join the community</button>
                     </div>
                 </div>
 
@@ -607,8 +621,9 @@
             </div>
         </section>
 
-        <div class="band" aria-hidden="true">
-            <div class="band-track">
+        <div class="band">
+            <button class="band-toggle" type="button" aria-label="Pause scrolling taglines"><i class="fa-solid fa-pause" aria-hidden="true"></i></button>
+            <div class="band-track" aria-hidden="true">
                 <ul><li>Innovate</li><li class="sep"></li><li>Elevate</li><li class="sep"></li><li>Transform</li><li class="sep"></li><li>Technology with purpose</li><li class="sep"></li><li>Innovation with impact</li><li class="sep"></li><li>Innovate</li><li class="sep"></li><li>Elevate</li><li class="sep"></li><li>Transform</li><li class="sep"></li></ul>
                 <ul><li>Innovate</li><li class="sep"></li><li>Elevate</li><li class="sep"></li><li>Transform</li><li class="sep"></li><li>Technology with purpose</li><li class="sep"></li><li>Innovation with impact</li><li class="sep"></li><li>Innovate</li><li class="sep"></li><li>Elevate</li><li class="sep"></li><li>Transform</li><li class="sep"></li></ul>
             </div>
@@ -750,7 +765,7 @@
                     <p>Prize amounts will be announced soon. Hover over or select a chest to open it.</p>
                 </div>
 
-                <ol class="podium">
+                <ul class="podium">
                     <li class="prize second" tabindex="0">
                         <span class="place" aria-hidden="true">2</span>
                         <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczNu_H5PVobUGKHQkuX0j_QQtF_N5AV7ezccjknQ0oHH8mRJslsN9h1DglGhHoIX_ZK6gd7nQLWTLk8anZdHajEDnFfaTDfcU8H5r4wd-Hxi7qZoH2y2BdWziMxdqBWb2Bm25twGCUwRLWSYrRbC6qUX=w273-h246-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczOUx7jS6BjysWc4E9ccmAONBxbf0I2UMQ4c7xYwHIJiBpnpr4KgfY5DlBuW5F-_jWHFGFUyBh546ClFqFX2bhu9IW86mAYoCfYfuO1BnNfSvaTL-RXnbvyp-xvxTTLl2sDpBKeB7p6O-3kCaMk08QZL=w560-h491-s-no-gm?authuser=0" alt=""></div>
@@ -769,7 +784,7 @@
                         <h3>3rd place</h3>
                         <p class="amount" data-amount="TBD">To be announced</p>
                     </li>
-                </ol>
+                </ul>
 
                 <ul class="specials">
                     <li class="prize" tabindex="0">
@@ -801,6 +816,7 @@
                 </div>
 
                 <div class="committee-group">
+                    <h3 class="visually-hidden">Patrons and convener</h3>
                     <ul class="people people-lead">
                         <li class="person">
                             <img src="images/committee/kamal-ghanshala.jpg" alt="Prof. (Dr.) Kamal Ghanshala" width="88" height="88" loading="lazy">
@@ -865,7 +881,7 @@
                         <span class="status">Announcing soon</span>
                         <h3>Sponsors &amp; partners</h3>
                         <p>Interested in sponsoring SAARTHI-26? Sponsorship details will be shared here.</p>
-                        <a class="btn btn-secondary btn-sm" href="#" data-soon="Sponsorship details will be shared soon.">Become a sponsor</a>
+                        <button class="btn btn-secondary btn-sm" type="button" data-soon="Sponsorship details will be shared soon.">Become a sponsor</button>
                     </li>
                 </ul>
             </div>
@@ -924,7 +940,7 @@
                         <li><a href="#committee">Committee</a></li>
                         <li><a href="#faq">FAQs</a></li>
                         <li><a href="https://linktr.ee/IEEE_SB_GEHU" target="_blank" rel="noopener noreferrer">Linktree</a></li>
-                        <li><a href="#" data-soon="The SAARTHI-25 archive will be added soon.">SAARTHI-25 archive</a></li>
+                        <li><button class="link-btn" type="button" data-soon="The SAARTHI-25 archive will be added soon.">SAARTHI-25 archive</button></li>
                     </ul>
                 </nav>
                 <div>
@@ -1056,6 +1072,17 @@
             });
         })();
 
+        /* ---------- Tagline band pause (moving content needs a stop control) ---------- */
+        (function initBand() {
+            const band = document.querySelector('.band');
+            const btn = band.querySelector('.band-toggle');
+            btn.addEventListener('click', () => {
+                const paused = band.classList.toggle('is-paused');
+                btn.setAttribute('aria-label', paused ? 'Play scrolling taglines' : 'Pause scrolling taglines');
+                btn.querySelector('i').className = paused ? 'fa-solid fa-play' : 'fa-solid fa-pause';
+            });
+        })();
+
         /* ---------- Voxel cube (hero) ---------- */
         function reduceMotion() {
             return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1132,7 +1159,7 @@
                   stagger: (index, target) => parseFloat(target.dataset.delay)
               }, .15)
               .to(voxelCubes.filter(c => c.dataset.accent), {
-                  y: -10, duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: -1
+                  y: -10, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 3
               }, '+=.2');
 
             // 2. Tracks: a light staggered entrance (the old minecart slide-in, made quiet).
