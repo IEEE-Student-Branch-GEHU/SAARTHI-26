@@ -225,14 +225,28 @@
         .hero {
             position: relative; overflow: hidden;
             padding: clamp(48px, 7vw, 96px) 0 clamp(56px, 8vw, 104px);
+            background: linear-gradient(180deg, #fff 0%, var(--blue-50) 100%);
+        }
+        /* Animated backdrop: a slowly drifting grid and soft colour glows. Only transforms move,
+           so it stays on the compositor. Paused off-screen (script) and stopped for reduced motion. */
+        .hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .hero-bg::before {
+            content: ""; position: absolute; inset: -32px;
             background:
                 linear-gradient(rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
-                linear-gradient(90deg, rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
-                radial-gradient(420px 320px at 78% 42%, rgba(15, 139, 141, .10), transparent 70%),
-                radial-gradient(360px 300px at 92% 78%, rgba(106, 75, 196, .10), transparent 70%),
-                radial-gradient(300px 260px at 64% 20%, rgba(229, 165, 10, .10), transparent 70%),
-                linear-gradient(180deg, #fff 0%, var(--blue-50) 100%);
+                linear-gradient(90deg, rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px;
+            animation: grid-drift 14s linear infinite;
         }
+        .orb {
+            position: absolute; border-radius: 50%; will-change: transform;
+            animation: orb-float 24s ease-in-out infinite alternate;
+        }
+        .orb-teal   { width: 460px; height: 460px; right: 8%;  top: 6%;     background: radial-gradient(circle, rgba(15, 139, 141, .20), transparent 68%); }
+        .orb-violet { width: 400px; height: 400px; right: -5%; bottom: -8%; background: radial-gradient(circle, rgba(106, 75, 196, .20), transparent 68%); animation-duration: 30s; animation-delay: -9s; }
+        .orb-amber  { width: 320px; height: 320px; right: 36%; top: -10%;   background: radial-gradient(circle, rgba(229, 165, 10, .18), transparent 68%); animation-duration: 27s; animation-delay: -15s; }
+        .hero.is-idle .hero-bg::before, .hero.is-idle .orb { animation-play-state: paused; }
+        @keyframes grid-drift { to { transform: translate(32px, 32px); } }
+        @keyframes orb-float { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-44px, 32px, 0) scale(1.14); } }
         .hero::after {
             /* Fade the grid out towards the left so the text sits on clean white. */
             content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -859,8 +873,56 @@
         }
         .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+        /* ==========================================================
+           HOVER MOTION
+           Pointer devices only (no sticky hover on touch) and skipped when reduced motion is
+           requested. Small, quick and consistent: lift for cards, nudge for icons and links.
+           ========================================================== */
+        @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+            .btn i { transition: transform .25s ease; }
+            .btn:hover i.fa-arrow-up-right-from-square { transform: translate(2px, -2px); }
+
+            .glance li { transition: transform .25s ease, box-shadow .25s ease; }
+            .glance li:hover { transform: translateY(-4px); box-shadow: 0 14px 28px color-mix(in srgb, var(--c) 24%, transparent); }
+
+            .pass { transition: transform .3s ease, box-shadow .3s ease; }
+            .pass:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(11, 37, 64, .06), 0 26px 56px rgba(11, 37, 64, .18); }
+
+            .step::before { transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+            .step:hover::before { transform: scale(1.12) rotate(-6deg); }
+
+            .tab { transition: color .2s ease, background-color .2s ease; }
+            .tab:hover { background: color-mix(in srgb, var(--c, var(--blue)) 8%, transparent); }
+            .schedule .ico { transition: transform .25s cubic-bezier(.34, 1.56, .64, 1); }
+            .schedule .what { transition: transform .25s ease; }
+            .schedule li:hover .ico { transform: scale(1.14); }
+            .schedule li:hover .what { transform: translateX(4px); }
+
+            .reasons i { transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+            .reasons li:hover i { transform: translateY(-3px) rotate(-8deg) scale(1.06); }
+            .chips span { transition: background-color .2s ease, border-color .2s ease; }
+            .reasons li:hover .chips span { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .4); }
+
+            .person img { transition: box-shadow .25s ease; }
+            .person:hover img { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--c, var(--blue)); }
+
+            .upcoming li { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+            .upcoming li:hover { transform: translateY(-3px); border-style: solid; border-color: var(--blue); box-shadow: var(--shadow); }
+
+            .faq summary { transition: color .2s ease; }
+            .faq summary:hover { color: var(--blue); }
+            .help-card a i { transition: transform .2s ease; }
+            .help-card a:hover i { transform: scale(1.2); }
+
+            .socials a { transition: background-color .2s ease, transform .25s cubic-bezier(.34, 1.56, .64, 1); }
+            .socials a:hover { transform: translateY(-4px); }
+            .site-footer li a { transition: transform .2s ease; }
+            .site-footer li a:hover { transform: translateX(4px); }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
+            .hero-bg::before, .orb { animation: none; }
             .band-track { animation: none; }
             .band-toggle { display: none; }
             *, *::before, *::after { transition-duration: .01ms !important; }
@@ -896,6 +958,7 @@
     <main id="main">
         <!-- HERO -->
         <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-bg" aria-hidden="true"><span class="orb orb-teal"></span><span class="orb orb-violet"></span><span class="orb orb-amber"></span></div>
             <div class="wrap">
                 <div class="hero-copy">
                     <p class="hero-presenter"><strong>IEEE Student Branch, GEHU</strong> presents</p>
@@ -1485,6 +1548,13 @@
                 clearTimeout(hideTimer);
                 hideTimer = setTimeout(() => toast.classList.remove('show'), 2800);
             });
+        })();
+
+        /* ---------- Pause the hero backdrop while it is off-screen ---------- */
+        (function initHeroIdle() {
+            const hero = document.querySelector('.hero');
+            // A batch can hold several entries (e.g. the initial one and a later scroll); the last is current.
+            new IntersectionObserver(entries => hero.classList.toggle('is-idle', !entries[entries.length - 1].isIntersecting)).observe(hero);
         })();
 
         /* ---------- Tagline band pause (moving content needs a stop control) ---------- */
