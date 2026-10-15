@@ -28,6 +28,14 @@
             --paper: #FFFFFF;
             --mist: #F3F7FA;          /* alternate section background */
             --gold: #E5A50A;          /* prizes only */
+
+            /* Accent set, sampled from the track logos. Each accent has a base
+               (fills, borders) and an ink variant that passes 4.5:1 as text. */
+            --c-blue: #00629B;   --c-blue-ink: #00629B;   --c-blue-tint: #E6F1F8;
+            --c-teal: #0F8B8D;   --c-teal-ink: #0B6E70;   --c-teal-tint: #E3F4F3;
+            --c-violet: #6A4BC4; --c-violet-ink: #5A3DB0; --c-violet-tint: #EEEAF9;
+            --c-amber: #E5A50A;  --c-amber-ink: #8A5A00;  --c-amber-tint: #FDF4DE;
+            --c-coral: #E0603F;  --c-coral-ink: #B4432A;  --c-coral-tint: #FCECE7;
             --silver: #9AA8B6;
             --bronze: #C68A52;
 
@@ -79,6 +87,12 @@
         }
         .skip-link:focus { top: 12px; }
 
+        .acc-blue   { --c: var(--c-blue);   --c-ink: var(--c-blue-ink);   --c-tint: var(--c-blue-tint); }
+        .acc-teal   { --c: var(--c-teal);   --c-ink: var(--c-teal-ink);   --c-tint: var(--c-teal-tint); }
+        .acc-violet { --c: var(--c-violet); --c-ink: var(--c-violet-ink); --c-tint: var(--c-violet-tint); }
+        .acc-amber  { --c: var(--c-amber);  --c-ink: var(--c-amber-ink);  --c-tint: var(--c-amber-tint); }
+        .acc-coral  { --c: var(--c-coral);  --c-ink: var(--c-coral-ink);  --c-tint: var(--c-coral-tint); }
+
         .visually-hidden {
             position: absolute; width: 1px; height: 1px; overflow: hidden;
             clip: rect(0 0 0 0); white-space: nowrap;
@@ -121,7 +135,18 @@
             font: 13px/1 var(--pixel); color: var(--navy); text-decoration: none;
             margin-right: auto;
         }
-        .brand::before { content: ""; width: 22px; height: 25px; background: var(--cube) no-repeat center / contain; }
+        .brand::before {
+            content: ""; width: 22px; height: 25px; background: var(--cube) no-repeat center / contain;
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+        .brand:hover::before, .brand:focus-visible::before { transform: translateY(-4px) scale(1.12); }
+
+        /* Reading progress, in the accent spectrum. */
+        .progress {
+            position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+            background: linear-gradient(90deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-coral), var(--c-amber));
+            transform-origin: 0 50%; transform: scaleX(0);
+        }
 
         .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
         .nav-links a {
@@ -190,6 +215,9 @@
             background:
                 linear-gradient(rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
                 linear-gradient(90deg, rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
+                radial-gradient(420px 320px at 78% 42%, rgba(15, 139, 141, .10), transparent 70%),
+                radial-gradient(360px 300px at 92% 78%, rgba(106, 75, 196, .10), transparent 70%),
+                radial-gradient(300px 260px at 64% 20%, rgba(229, 165, 10, .10), transparent 70%),
                 linear-gradient(180deg, #fff 0%, var(--blue-50) 100%);
         }
         .hero::after {
@@ -244,14 +272,23 @@
 
         .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-        .hero-visual { position: relative; display: flex; justify-content: center; }
-        .voxel { width: min(100%, 440px); height: auto; overflow: visible; }
+        .hero-visual { position: relative; display: flex; flex-direction: column; align-items: center; perspective: 900px; }
+        .voxel-stage { position: relative; width: min(100%, 440px); transform-style: preserve-3d; }
+        .voxel { width: 100%; height: auto; overflow: visible; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .voxel .cube { transition: filter .2s ease; }
+        .voxel .cube:hover { filter: brightness(1.08); }
+        .voxel-hint { margin-top: 6px; font-size: 14px; color: var(--slate); }
+
+        /* Loose voxels around the cube; they drift with the pointer (parallax). */
+        .floater { position: absolute; width: var(--s, 22px); height: calc(var(--s, 22px) * 1.14); pointer-events: none; }
+        .floater svg { width: 100%; height: 100%; display: block; }
 
         @media (max-width: 900px) {
             .hero::after { background: rgba(255,255,255,.82); }
             .hero .wrap { grid-template-columns: 1fr; }
             .hero-visual { order: -1; }
-            .voxel { width: min(64vw, 260px); }
+            .voxel-stage { width: min(64vw, 260px); }
+            .voxel-hint { font-size: 13px; }
         }
         @media (max-width: 420px) {
             .countdown { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
@@ -294,6 +331,41 @@
         @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } }
 
         /* ==========================================================
+           JOURNEY (how it works): a real sequence, so it is numbered
+           ========================================================== */
+        .journey {
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px;
+            list-style: none; margin: 0; padding: 0; counter-reset: step; position: relative;
+        }
+        .journey::before {
+            /* The connecting line runs behind the step numbers. */
+            content: ""; position: absolute; left: 24px; right: calc(20% - 43.2px); top: 23px; height: 2px; /* first to last circle centre */
+            background: linear-gradient(90deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-amber), var(--c-coral));
+            opacity: .35;
+        }
+        .step { position: relative; counter-increment: step; }
+        .step::before {
+            content: counter(step);
+            display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+            background: var(--c-ink); color: #fff; font-weight: 700; font-size: 18px;
+            box-shadow: 0 0 0 6px var(--step-ring, var(--paper));
+            margin-bottom: 18px; position: relative;
+        }
+        .section-alt .step { --step-ring: var(--mist); }
+        .step h3 { font-size: 18px; margin-bottom: 6px; }
+        .step p { color: var(--slate); font-size: 15.5px; }
+        .step a { font-weight: 600; color: var(--c-ink); }
+
+        @media (max-width: 960px) {
+            .journey { grid-template-columns: 1fr; gap: 0; }
+            .journey::before { left: 23px; right: auto; top: 24px; bottom: 24px; width: 2px; height: auto;
+                background: linear-gradient(180deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-amber), var(--c-coral)); }
+            .step { display: grid; grid-template-columns: 48px 1fr; column-gap: 20px; padding-bottom: 28px; }
+            .step::before { grid-row: span 2; margin: 0; }
+            .step:last-child { padding-bottom: 0; }
+        }
+
+        /* ==========================================================
            TRACKS
            ========================================================== */
         .tracks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
@@ -301,11 +373,15 @@
             background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
             padding: 24px 20px 22px;
             display: flex; flex-direction: column; gap: 18px;
-            border-top: 3px solid var(--blue);
-            transition: box-shadow .25s ease, transform .25s ease;
+            border-top: 3px solid var(--c, var(--blue));
+            transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease;
         }
-        .track:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-        .track img { width: 88px; height: 88px; object-fit: contain; image-rendering: pixelated; }
+        .track:hover { box-shadow: var(--shadow); transform: translateY(-3px); background: var(--c-tint, var(--paper)); }
+        .track img {
+            width: 88px; height: 88px; object-fit: contain; image-rendering: pixelated;
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+        .track:hover img { transform: translateY(-4px) rotate(-3deg); }
         .track h3 { font-size: 17px; font-weight: 600; }
 
         .callout {
@@ -332,7 +408,11 @@
             font: 600 16px/1.2 var(--font); color: var(--slate); text-align: left; cursor: pointer;
         }
         .tab small { display: block; font-weight: 400; font-size: 14px; margin-top: 2px; }
-        .tab[aria-selected="true"] { color: var(--blue); border-bottom-color: var(--blue); }
+        .tab[aria-selected="true"] { color: var(--c-ink, var(--blue)); border-bottom-color: var(--c, var(--blue)); }
+        .tab::before {
+            content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px;
+            background: var(--c, var(--blue)); vertical-align: 1px;
+        }
         .tab:hover { color: var(--navy); }
 
         .schedule { list-style: none; margin: 0; padding: 0; max-width: 820px; }
@@ -345,10 +425,10 @@
         .schedule .ico {
             width: 40px; height: 40px; border-radius: 50%;
             display: grid; place-items: center;
-            background: var(--blue-50); color: var(--blue); font-size: 16px;
+            background: var(--c-tint, var(--blue-50)); color: var(--c-ink, var(--blue)); font-size: 16px;
         }
         .schedule .what { color: var(--ink); }
-        .schedule .key .ico { background: var(--blue); color: #fff; }
+        .schedule .key .ico { background: var(--c-ink, var(--blue)); color: #fff; }
         .schedule .key .what { font-weight: 600; color: var(--navy); }
 
         @media (max-width: 520px) {
@@ -365,7 +445,7 @@
         .reasons li:last-child { border-right: 0; }
         .reasons i {
             width: 48px; height: 48px; display: grid; place-items: center;
-            background: var(--blue-50); color: var(--blue); border-radius: var(--radius); font-size: 20px;
+            background: var(--c-tint, var(--blue-50)); color: var(--c-ink, var(--blue)); border-radius: var(--radius); font-size: 20px;
             margin-bottom: 18px;
         }
         .reasons h3 { font-size: 18px; margin-bottom: 8px; }
@@ -492,8 +572,64 @@
         @media (max-width: 900px) { .upcoming { grid-template-columns: 1fr; } }
 
         /* ==========================================================
+           CALL TO ACTION BAND
+           ========================================================== */
+        .cta {
+            position: relative; overflow: hidden; color: #fff;
+            background:
+                radial-gradient(500px 300px at 85% 20%, rgba(15, 139, 141, .55), transparent 70%),
+                radial-gradient(420px 280px at 10% 100%, rgba(106, 75, 196, .55), transparent 70%),
+                var(--navy);
+            padding: clamp(56px, 8vw, 88px) 0;
+        }
+        .cta::after {
+            /* The pixel grid from the hero, inverted. */
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background:
+                linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 32px 32px,
+                linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 32px 32px;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
+            mask-image: linear-gradient(90deg, transparent, #000 60%);
+        }
+        .cta .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
+        .cta h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); }
+        .cta p { margin-top: 12px; color: #D5E2EE; font-size: 18px; max-width: 560px; }
+        .cta .days { color: #fff; font-weight: 700; }
+        .cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        .cta .btn-primary { background: var(--c-amber); border-color: var(--c-amber); color: var(--navy); }
+        .cta .btn-primary:hover { background: #F2B829; border-color: #F2B829; }
+        .cta .btn-secondary { color: #fff; border-color: rgba(255,255,255,.6); }
+        .cta .btn-secondary:hover { background: rgba(255,255,255,.1); }
+        @media (max-width: 760px) { .cta .wrap { grid-template-columns: 1fr; } }
+
+        /* ==========================================================
            FAQ
            ========================================================== */
+        .faq-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+        .help-card {
+            background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+            border-top: 3px solid var(--c-teal); padding: 24px;
+            position: sticky; top: calc(var(--header-h) + 24px);
+        }
+        .help-card h3 { font-size: 19px; margin-bottom: 8px; }
+        .help-card p { color: var(--slate); font-size: 16px; }
+        .help-card ul { list-style: none; margin: 18px 0 0; padding: 0; }
+        .help-card li + li { margin-top: 6px; }
+        .help-card a { display: inline-flex; align-items: center; gap: 10px; padding: 6px 0; font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+        .help-card a:hover { text-decoration: underline; }
+        .help-card i { width: 18px; text-align: center; }
+        @media (max-width: 860px) { .faq-layout { grid-template-columns: 1fr; } .help-card { position: static; } }
+
+        /* Back to top */
+        .to-top {
+            position: fixed; right: 20px; bottom: 20px; z-index: 90;
+            width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+            background: var(--navy); color: #fff; font-size: 18px; box-shadow: var(--shadow);
+            opacity: 0; transform: translateY(12px); pointer-events: none;
+            transition: opacity .2s ease, transform .2s ease, background-color .2s ease;
+        }
+        .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+        .to-top:hover { background: var(--blue); }
         .faq { max-width: 820px; }
         .faq details { border-bottom: 1px solid var(--line); }
         .faq details:first-child { border-top: 1px solid var(--line); }
@@ -583,6 +719,7 @@
                 <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
         </div>
+        <div class="progress" id="progress" aria-hidden="true"></div>
     </header>
 
     <main id="main">
@@ -615,8 +752,16 @@
                 </div>
 
                 <div class="hero-visual" aria-hidden="true">
-                    <!-- Isometric voxel cube; cubelets are generated and assembled in JS. -->
-                    <svg class="voxel" id="voxel" viewBox="-150 -150 300 300"></svg>
+                    <div class="voxel-stage" id="voxel-stage">
+                        <!-- Isometric voxel cube; cubelets are generated and assembled in JS. -->
+                        <svg class="voxel" id="voxel" viewBox="-150 -150 300 300"></svg>
+                        <span class="floater acc-teal"   data-depth="1.6" style="--s:26px; left:2%;  top:14%"></span>
+                        <span class="floater acc-violet" data-depth="2.4" style="--s:18px; left:86%; top:8%"></span>
+                        <span class="floater acc-amber"  data-depth="1.2" style="--s:22px; left:92%; top:58%"></span>
+                        <span class="floater acc-coral"  data-depth="2.0" style="--s:16px; left:6%;  top:70%"></span>
+                        <span class="floater acc-blue"   data-depth="2.8" style="--s:14px; left:48%; top:-4%"></span>
+                    </div>
+                    <p class="voxel-hint">Click a block to repaint it</p>
                 </div>
             </div>
         </section>
@@ -654,22 +799,41 @@
 
         <div class="divider" aria-hidden="true"></div>
 
+        <!-- HOW IT WORKS -->
+        <section class="section section-alt" id="how-it-works" aria-labelledby="journey-title">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2 id="journey-title">How it works</h2>
+                    <p>From registration to the closing ceremony, here's what your team's weekend looks like.</p>
+                </div>
+                <ol class="journey">
+                    <li class="step acc-blue"><h3>Apply</h3><p>Register your team on <a href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">Unstop</a>. Applications are open now.</p></li>
+                    <li class="step acc-teal"><h3>Check in</h3><p>31 Oct, from 9:00 AM at Graphic Era Hill University, Dehradun.</p></li>
+                    <li class="step acc-violet"><h3>Build</h3><p>Hacking starts at 12:00 PM, with mentoring rounds through the night.</p></li>
+                    <li class="step acc-amber"><h3>Submit</h3><p>Upload your project on Unstop on 1 Nov, by 12:30 PM.</p></li>
+                    <li class="step acc-coral"><h3>Demo &amp; win</h3><p>Present to the judges. Prizes are awarded at 3:00 PM on 2 Nov.</p></li>
+                </ol>
+            </div>
+        </section>
+
+        <div class="divider" aria-hidden="true"></div>
+
         <!-- TRACKS -->
-        <section class="section section-alt" id="tracks" aria-labelledby="tracks-title">
+        <section class="section" id="tracks" aria-labelledby="tracks-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="tracks-title">Hackathon tracks</h2>
                     <p>Pick the problem space your team wants to work in. Each track is judged on its own.</p>
                 </div>
                 <ul class="tracks">
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczMuaQNdg3vs_x-w_DwJFLG2oqj7mjiaYfLCnHUE-Kn5VoWbbUJ9PfzFebkZEuHMKOvZkIT185tacwzk1LzpW28Tn9hQNA43z1eLh7DRMlQI3zgT_4_9aYxLkN9SuoQapZcI92nQp66gbRjiwW5V9JaN=w512-h575-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>AI, ML &amp; Intelligent Systems</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczPXaL6q5ZXpgK8SEGfCWgwleKnTNTwyhbJ5_so03NKuE1GjfgI7d3TT4kxjws6kgDKa-ZYsV2-cvoJUj5aN6l3Ma7YEwDuivedwGzES9cvMkTzsvYImJtel_x7KAiiHvqtzZMN8sYPOdFjbTlKp92et=w512-h449-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Healthcare, Wellness &amp; Assistive Technology</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczMiDkz2S2JgoZaZYuLadsFeJUR8lpXwp-pquLZ8TzGISKfkhnVw9a-ZoHxNmMaOZAH60GdaBHxZkdnoHmRz3A8-GA7XGAAN26VhIj0l00Hj8sPBP50yfqFTr1iLMT2BN7Q71LDOSJ-Pw6eXUaQQYr0d=w512-h508-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Smart Cities, Mobility &amp; Public Safety</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczOpQuBzxugRArOfHWaKpXjU2gqNIyNj54xJl_NFx32q3GvreNgzUTRMFhWGAtZoP1ujsxXuRNbBfPQ8JoACeV6A0qS07Fb8G6Z6uLCCiLmcrBuhTjEyxj0fMfv5_Rwoo5ma_3okwnn2odjeEVFCdfZu=w512-h538-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Sustainability, Climate &amp; Clean Technology</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNBey59i7uLdauw9XoOzFfmfBg-rO0A0Qs1nfU-L62CxaSc54VF5fq86Yfv9FncHlFDmIJ_vtWdm01L2V1Zil5zKJH_jWx9-MRuKcsCamTAU9KgRYxpMBW4yowUOHpRjycuViuik43kc9xFtCOPeQD=w382-h382-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Agriculture, Rural Innovation &amp; Food Security</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczM-C8fRTQFVNRKqZ5KtvR3ys23Vjdl7SDmXOLtT2-BwcItVPXG8MJzb0AzHo70O6xM-qSceWl8-M70tKSWTyfWdpQlYxfIhD01Um_gXh2OdLyX0PFyjX_o8-7dAVsklHjOv3IkcsZz-oI5pBi1PNZz4=w512-h567-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Education, FinTech &amp; Digital Inclusion</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczO_teoBV6j4Q2rsDTQ_pU2p-D6tWIfCQEz2FuRfzzrIGIwN7vjJKsOdGUpmjn02-ubJbwWun8wKZFMF5zgFWYcgKgfRQCtgq96T_WJku5ED2zknp3pR-BtjLH8dwgypZhdC3prKVfMMB23mPxlgohJl=w512-h554-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Cybersecurity, Privacy &amp; Emerging Technology</h3></li>
-                    <li class="track"><img src="https://lh3.googleusercontent.com/pw/AP1GczOmoh9lr8wLhCpAojhzkmBX4PotMBn1poGLRwtru5buY2oiXA5-_3eOm0gSJJdipHkx8jSaz4GhVr5Uuom8qdM94oI0EixS81a9mcmXWa9sm-NZPJsVXkLRWaAZQWbRZBgNYfOaVJUuiaho0ecOioFT=w512-h526-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Open Innovation</h3></li>
+                    <li class="track acc-blue"><img src="https://lh3.googleusercontent.com/pw/AP1GczMuaQNdg3vs_x-w_DwJFLG2oqj7mjiaYfLCnHUE-Kn5VoWbbUJ9PfzFebkZEuHMKOvZkIT185tacwzk1LzpW28Tn9hQNA43z1eLh7DRMlQI3zgT_4_9aYxLkN9SuoQapZcI92nQp66gbRjiwW5V9JaN=w512-h575-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>AI, ML &amp; Intelligent Systems</h3></li>
+                    <li class="track acc-coral"><img src="https://lh3.googleusercontent.com/pw/AP1GczPXaL6q5ZXpgK8SEGfCWgwleKnTNTwyhbJ5_so03NKuE1GjfgI7d3TT4kxjws6kgDKa-ZYsV2-cvoJUj5aN6l3Ma7YEwDuivedwGzES9cvMkTzsvYImJtel_x7KAiiHvqtzZMN8sYPOdFjbTlKp92et=w512-h449-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Healthcare, Wellness &amp; Assistive Technology</h3></li>
+                    <li class="track acc-violet"><img src="https://lh3.googleusercontent.com/pw/AP1GczMiDkz2S2JgoZaZYuLadsFeJUR8lpXwp-pquLZ8TzGISKfkhnVw9a-ZoHxNmMaOZAH60GdaBHxZkdnoHmRz3A8-GA7XGAAN26VhIj0l00Hj8sPBP50yfqFTr1iLMT2BN7Q71LDOSJ-Pw6eXUaQQYr0d=w512-h508-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Smart Cities, Mobility &amp; Public Safety</h3></li>
+                    <li class="track acc-teal"><img src="https://lh3.googleusercontent.com/pw/AP1GczOpQuBzxugRArOfHWaKpXjU2gqNIyNj54xJl_NFx32q3GvreNgzUTRMFhWGAtZoP1ujsxXuRNbBfPQ8JoACeV6A0qS07Fb8G6Z6uLCCiLmcrBuhTjEyxj0fMfv5_Rwoo5ma_3okwnn2odjeEVFCdfZu=w512-h538-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Sustainability, Climate &amp; Clean Technology</h3></li>
+                    <li class="track acc-amber"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNBey59i7uLdauw9XoOzFfmfBg-rO0A0Qs1nfU-L62CxaSc54VF5fq86Yfv9FncHlFDmIJ_vtWdm01L2V1Zil5zKJH_jWx9-MRuKcsCamTAU9KgRYxpMBW4yowUOHpRjycuViuik43kc9xFtCOPeQD=w382-h382-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Agriculture, Rural Innovation &amp; Food Security</h3></li>
+                    <li class="track acc-blue"><img src="https://lh3.googleusercontent.com/pw/AP1GczM-C8fRTQFVNRKqZ5KtvR3ys23Vjdl7SDmXOLtT2-BwcItVPXG8MJzb0AzHo70O6xM-qSceWl8-M70tKSWTyfWdpQlYxfIhD01Um_gXh2OdLyX0PFyjX_o8-7dAVsklHjOv3IkcsZz-oI5pBi1PNZz4=w512-h567-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Education, FinTech &amp; Digital Inclusion</h3></li>
+                    <li class="track acc-coral"><img src="https://lh3.googleusercontent.com/pw/AP1GczO_teoBV6j4Q2rsDTQ_pU2p-D6tWIfCQEz2FuRfzzrIGIwN7vjJKsOdGUpmjn02-ubJbwWun8wKZFMF5zgFWYcgKgfRQCtgq96T_WJku5ED2zknp3pR-BtjLH8dwgypZhdC3prKVfMMB23mPxlgohJl=w512-h554-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Cybersecurity, Privacy &amp; Emerging Technology</h3></li>
+                    <li class="track acc-violet"><img src="https://lh3.googleusercontent.com/pw/AP1GczOmoh9lr8wLhCpAojhzkmBX4PotMBn1poGLRwtru5buY2oiXA5-_3eOm0gSJJdipHkx8jSaz4GhVr5Uuom8qdM94oI0EixS81a9mcmXWa9sm-NZPJsVXkLRWaAZQWbRZBgNYfOaVJUuiaho0ecOioFT=w512-h526-s-no-gm?authuser=0" alt="" width="88" height="88" loading="lazy"><h3>Open Innovation</h3></li>
                 </ul>
                 <p class="callout"><strong>Open Innovation</strong> is for teams whose idea doesn't fit the other seven tracks.</p>
             </div>
@@ -678,7 +842,7 @@
         <div class="divider" aria-hidden="true"></div>
 
         <!-- TIMELINE -->
-        <section class="section" id="timeline" aria-labelledby="timeline-title">
+        <section class="section section-alt" id="timeline" aria-labelledby="timeline-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="timeline-title">Timeline</h2>
@@ -686,12 +850,12 @@
                 </div>
 
                 <div class="tabs" role="tablist" aria-label="Event days">
-                    <button class="tab" role="tab" id="tab-1" aria-controls="day-1" aria-selected="true">Day 1<small>Sat, 31 Oct</small></button>
-                    <button class="tab" role="tab" id="tab-2" aria-controls="day-2" aria-selected="false" tabindex="-1">Day 2<small>Sun, 1 Nov</small></button>
-                    <button class="tab" role="tab" id="tab-3" aria-controls="day-3" aria-selected="false" tabindex="-1">Day 3<small>Mon, 2 Nov</small></button>
+                    <button class="tab acc-blue" role="tab" id="tab-1" aria-controls="day-1" aria-selected="true">Day 1<small>Sat, 31 Oct</small></button>
+                    <button class="tab acc-violet" role="tab" id="tab-2" aria-controls="day-2" aria-selected="false" tabindex="-1">Day 2<small>Sun, 1 Nov</small></button>
+                    <button class="tab acc-teal" role="tab" id="tab-3" aria-controls="day-3" aria-selected="false" tabindex="-1">Day 3<small>Mon, 2 Nov</small></button>
                 </div>
 
-                <div role="tabpanel" id="day-1" aria-labelledby="tab-1" tabindex="0">
+                <div class="acc-blue" role="tabpanel" id="day-1" aria-labelledby="tab-1" tabindex="0">
                     <ol class="schedule">
                         <li><time>09:00 AM</time><span class="ico"><i class="fa-solid fa-bus" aria-hidden="true"></i></span><span class="what">Check-in &amp; participant reporting starts</span></li>
                         <li class="key"><time>10:30 AM</time><span class="ico"><i class="fa-solid fa-microphone" aria-hidden="true"></i></span><span class="what">Opening ceremony</span></li>
@@ -707,7 +871,7 @@
                         <li><time>11:30 PM</time><span class="ico"><i class="fa-solid fa-user-group" aria-hidden="true"></i></span><span class="what">Mentoring round 2</span></li>
                     </ol>
                 </div>
-                <div role="tabpanel" id="day-2" aria-labelledby="tab-2" tabindex="0" hidden>
+                <div class="acc-violet" role="tabpanel" id="day-2" aria-labelledby="tab-2" tabindex="0" hidden>
                     <ol class="schedule">
                         <li><time>01:00 AM</time><span class="ico"><i class="fa-solid fa-cookie-bite" aria-hidden="true"></i></span><span class="what">Midnight snacks</span></li>
                         <li><time>01:30 AM</time><span class="ico"><i class="fa-solid fa-gamepad" aria-hidden="true"></i></span><span class="what">Midnight games</span></li>
@@ -722,7 +886,7 @@
                         <li><time>07:30 PM</time><span class="ico"><i class="fa-solid fa-bus" aria-hidden="true"></i></span><span class="what">Bus departure</span></li>
                     </ol>
                 </div>
-                <div role="tabpanel" id="day-3" aria-labelledby="tab-3" tabindex="0" hidden>
+                <div class="acc-teal" role="tabpanel" id="day-3" aria-labelledby="tab-3" tabindex="0" hidden>
                     <ol class="schedule">
                         <li><time>08:00 AM</time><span class="ico"><i class="fa-solid fa-mug-saucer" aria-hidden="true"></i></span><span class="what">Breakfast</span></li>
                         <li><time>09:00 AM</time><span class="ico"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></span><span class="what">Final project refinement &amp; demo prep</span></li>
@@ -739,18 +903,18 @@
         <div class="divider" aria-hidden="true"></div>
 
         <!-- WHY ATTEND -->
-        <section class="section section-alt" id="why-attend" aria-labelledby="why-title">
+        <section class="section" id="why-attend" aria-labelledby="why-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="why-title">Why attend</h2>
                     <p>From coding marathons to keynotes and workshops, SAARTHI is where ideas turn into impact. Each edition grows stronger; be part of the next one.</p>
                 </div>
                 <ul class="reasons">
-                    <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><h3>Build</h3><p>Solve real-world problems with practical impact.</p></li>
-                    <li><i class="fa-solid fa-building" aria-hidden="true"></i><h3>Industry</h3><p>Interact with tech leaders and innovators.</p></li>
-                    <li><i class="fa-solid fa-people-group" aria-hidden="true"></i><h3>Network</h3><p>Connect with like-minded builders and creators.</p></li>
-                    <li><i class="fa-solid fa-briefcase" aria-hidden="true"></i><h3>Careers</h3><p>Explore jobs, internships and mentorships.</p></li>
-                    <li><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><h3>Community</h3><p>Food, swag and a weekend with people who build.</p></li>
+                    <li class="acc-blue"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><h3>Build</h3><p>Solve real-world problems with practical impact.</p></li>
+                    <li class="acc-violet"><i class="fa-solid fa-building" aria-hidden="true"></i><h3>Industry</h3><p>Interact with tech leaders and innovators.</p></li>
+                    <li class="acc-teal"><i class="fa-solid fa-people-group" aria-hidden="true"></i><h3>Network</h3><p>Connect with like-minded builders and creators.</p></li>
+                    <li class="acc-amber"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><h3>Careers</h3><p>Explore jobs, internships and mentorships.</p></li>
+                    <li class="acc-coral"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><h3>Community</h3><p>Food, swag and a weekend with people who build.</p></li>
                 </ul>
             </div>
         </section>
@@ -758,7 +922,7 @@
         <div class="divider" aria-hidden="true"></div>
 
         <!-- PRIZES -->
-        <section class="section" id="prizes" aria-labelledby="prizes-title">
+        <section class="section section-alt" id="prizes" aria-labelledby="prizes-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="prizes-title">Prizes</h2>
@@ -808,7 +972,7 @@
         <div class="divider" aria-hidden="true"></div>
 
         <!-- COMMITTEE -->
-        <section class="section section-alt" id="committee" aria-labelledby="committee-title">
+        <section class="section" id="committee" aria-labelledby="committee-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="committee-title">Our committee</h2>
@@ -860,7 +1024,7 @@
         <div class="divider" aria-hidden="true"></div>
 
         <!-- GUESTS, SPONSOR BENEFITS, SPONSORS -->
-        <section class="section" id="announcements" aria-labelledby="announce-title">
+        <section class="section section-alt" id="announcements" aria-labelledby="announce-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="announce-title">Guests, judges &amp; sponsors</h2>
@@ -887,14 +1051,29 @@
             </div>
         </section>
 
-        <div class="divider" aria-hidden="true"></div>
+        <!-- CALL TO ACTION -->
+        <section class="cta" aria-labelledby="cta-title">
+            <div class="wrap">
+                <div>
+                    <h2 id="cta-title">Applications are open</h2>
+                    <p id="cta-text">Register your team on Unstop. Check-in is on 31 October at Graphic Era Hill University.</p>
+                </div>
+                <div class="cta-actions">
+                    <a class="btn btn-primary" href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">
+                        Apply with Unstop <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-secondary" href="#timeline">See the timeline</a>
+                </div>
+            </div>
+        </section>
 
         <!-- FAQ -->
-        <section class="section section-alt" id="faq" aria-labelledby="faq-title">
+        <section class="section" id="faq" aria-labelledby="faq-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="faq-title">Frequently asked questions</h2>
                 </div>
+                <div class="faq-layout">
                 <div class="faq">
                     <details>
                         <summary>What is SAARTHI-26?</summary>
@@ -912,6 +1091,16 @@
                         <summary>How do I register?</summary>
                         <p>Select <a href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">Apply with Unstop</a> on this page and complete the registration on Unstop.</p>
                     </details>
+                </div>
+                <aside class="help-card" aria-labelledby="help-title">
+                    <h3 id="help-title">Still have a question?</h3>
+                    <p>Write to the organising team and we'll get back to you.</p>
+                    <ul>
+                        <li><a href="mailto:gehuieeesb@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>gehuieeesb@gmail.com</a></li>
+                        <li><a href="https://www.instagram.com/ieee_gehu" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i>Message us on Instagram</a></li>
+                        <li><a href="https://discord.gg/vwTyhWBXjh" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord" aria-hidden="true"></i>Ask on Discord</a></li>
+                    </ul>
+                </aside>
                 </div>
             </div>
         </section>
@@ -935,6 +1124,7 @@
                     <h2 id="footer-links">Quick links</h2>
                     <ul>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#how-it-works">How it works</a></li>
                         <li><a href="#tracks">Tracks</a></li>
                         <li><a href="#prizes">Prizes</a></li>
                         <li><a href="#committee">Committee</a></li>
@@ -960,6 +1150,7 @@
         </div>
     </footer>
 
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -1083,31 +1274,66 @@
             });
         })();
 
+        /* ---------- Scroll progress + back to top ---------- */
+        (function initScrollUi() {
+            const bar = document.getElementById('progress');
+            const toTop = document.getElementById('to-top');
+            let ticking = false;
+            function update() {
+                const max = document.documentElement.scrollHeight - innerHeight;
+                bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+                toTop.classList.toggle('show', scrollY > 900);
+                ticking = false;
+            }
+            addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+            toTop.addEventListener('click', () => {
+                scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' });
+                document.querySelector('.brand').focus({ preventScroll: true });
+            });
+            update();
+        })();
+
+        /* ---------- CTA: days until check-in ---------- */
+        (function initCtaDays() {
+            const days = Math.ceil((new Date('2026-10-31T09:00:00') - Date.now()) / 86400000);
+            const text = document.getElementById('cta-text');
+            if (days > 1) text.textContent = `Register your team on Unstop. Check-in opens in ${days} days, on 31 October at Graphic Era Hill University.`;
+            else if (days === 1) text.textContent = 'Register your team on Unstop. Check-in opens tomorrow at Graphic Era Hill University.';
+        })();
+
         /* ---------- Voxel cube (hero) ---------- */
         function reduceMotion() {
             return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         }
 
-        const voxelCubes = (function buildVoxel() {
+        // Face shades per accent: top (lit), left (base), right (shadow).
+        const PALETTE = [
+            { top: '#5BB0DD', left: '#00629B', right: '#004E7C' },   // IEEE blue
+            { top: '#4CC3BE', left: '#0F8B8D', right: '#0A6B6D' },   // teal
+            { top: '#9C86E6', left: '#6A4BC4', right: '#53399E' },   // violet
+            { top: '#F2B829', left: '#C98C05', right: '#A87404' },   // amber
+            { top: '#F28B6E', left: '#E0603F', right: '#B9482B' }    // coral
+        ];
+        const NS = 'http://www.w3.org/2000/svg';
+
+        function face(points, fill, stroke) {
+            const p = document.createElementNS(NS, 'polygon');
+            p.setAttribute('points', points.map(pt => pt.join(',')).join(' '));
+            p.setAttribute('fill', fill);
+            p.setAttribute('stroke', stroke || '#ffffff');
+            p.setAttribute('stroke-width', '1.2');
+            p.setAttribute('stroke-linejoin', 'round');
+            return p;
+        }
+
+        const voxel = (function buildVoxel() {
             const svg = document.getElementById('voxel');
-            const NS = 'http://www.w3.org/2000/svg';
             const N = 3, S = 34;                       // 3x3x3 cubelets, edge length
             const cx = Math.cos(Math.PI / 6) * S, cy = Math.sin(Math.PI / 6) * S;
-            const shades = { top: '#5BB0DD', left: '#00629B', right: '#004E7C' };
             const cubes = [];
 
             // Project grid position (i, j, k) to the screen; k is height.
             const P = (i, j, k) => [(i - j) * cx, (i + j) * cy - k * S - 30];
-
-            function face(points, fill) {
-                const p = document.createElementNS(NS, 'polygon');
-                p.setAttribute('points', points.map(pt => pt.join(',')).join(' '));
-                p.setAttribute('fill', fill);
-                p.setAttribute('stroke', '#ffffff');
-                p.setAttribute('stroke-width', '1.2');
-                p.setAttribute('stroke-linejoin', 'round');
-                return p;
-            }
 
             // Painter's order: depth towards the viewer is i + j + k, so draw ascending.
             const order = [];
@@ -1116,23 +1342,28 @@
 
             order.forEach(([i, j, k]) => {
                 // Skip cubelets that are fully hidden by neighbours (interior/back), to keep the DOM small.
-                const visible = i === N - 1 || j === N - 1 || k === N - 1;
-                if (!visible) return;
+                if (!(i === N - 1 || j === N - 1 || k === N - 1)) return;
+                // Two layers: the outer group takes build/ripple motion, the inner one takes hover lift.
                 const g = document.createElementNS(NS, 'g');
+                const lift = document.createElementNS(NS, 'g');
+                g.setAttribute('class', 'cube');
                 const top = [P(i, j, k + 1), P(i + 1, j, k + 1), P(i + 1, j + 1, k + 1), P(i, j + 1, k + 1)];
                 const left = [P(i, j + 1, k + 1), P(i + 1, j + 1, k + 1), P(i + 1, j + 1, k), P(i, j + 1, k)];
                 const right = [P(i + 1, j, k + 1), P(i + 1, j + 1, k + 1), P(i + 1, j + 1, k), P(i + 1, j, k)];
-                // One accent cubelet on the top layer, in IEEE gold, as the "placed" block.
-                const accent = i === 2 && j === 2 && k === 2;
-                g.appendChild(face(left, accent ? '#C98C05' : shades.left));
-                g.appendChild(face(right, accent ? '#A87404' : shades.right));
-                g.appendChild(face(top, accent ? '#F2B829' : shades.top));
-                g.dataset.layer = k;
-                if (accent) g.dataset.accent = '1';
-                // Build order: bottom layer first, back to front within a layer.
-                g.dataset.delay = (k * .38 + (i + j) * .06).toFixed(2);
+                // One accent cubelet on the top layer, in gold, as the "placed" block.
+                const colour = (i === 2 && j === 2 && k === 2) ? 3 : 0;
+                const faces = {
+                    left: face(left, PALETTE[colour].left),
+                    right: face(right, PALETTE[colour].right),
+                    top: face(top, PALETTE[colour].top)
+                };
+                lift.append(faces.left, faces.right, faces.top);
+                g.appendChild(lift);
                 svg.appendChild(g);
-                cubes.push(g);
+                // Centre of the top face, in SVG units, for proximity and ripple distances.
+                const c = top.reduce((a, pt) => [a[0] + pt[0] / 4, a[1] + pt[1] / 4], [0, 0]);
+                cubes.push({ g, lift, faces, i, j, k, x: c[0], y: c[1], colour,
+                             delay: k * .38 + (i + j) * .06 });
             });
 
             // Shadow under the cube.
@@ -1142,7 +1373,28 @@
             shadow.setAttribute('fill', 'rgba(11,37,64,.10)');
             svg.insertBefore(shadow, svg.firstChild);
 
-            return cubes;
+            // Small loose voxels around the stage, coloured by their accent class.
+            document.querySelectorAll('.floater').forEach((el, n) => {
+                const pal = PALETTE[[1, 2, 3, 4, 0][n % 5]];
+                const mini = document.createElementNS(NS, 'svg');
+                mini.setAttribute('viewBox', '0 0 28 32');
+                mini.append(
+                    face([[14, 0], [28, 8], [14, 16], [0, 8]], pal.top, 'none'),
+                    face([[0, 8], [14, 16], [14, 32], [0, 24]], pal.left, 'none'),
+                    face([[28, 8], [14, 16], [14, 32], [28, 24]], pal.right, 'none')
+                );
+                el.appendChild(mini);
+            });
+
+            function paint(cube, colour) {
+                cube.colour = colour;
+                const pal = PALETTE[colour];
+                cube.faces.top.setAttribute('fill', pal.top);
+                cube.faces.left.setAttribute('fill', pal.left);
+                cube.faces.right.setAttribute('fill', pal.right);
+            }
+
+            return { svg, cubes, paint };
         })();
 
         /* ---------- Motion (GSAP) ---------- */
@@ -1151,16 +1403,17 @@
         const mm = gsap.matchMedia();
 
         mm.add('(prefers-reduced-motion: no-preference)', () => {
+            const outer = voxel.cubes.map(c => c.g);
+
             // 1. Hero: cubelets drop in layer by layer, like blocks being placed.
-            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: enableCubeInteraction });
             tl.from('.hero-copy > *', { opacity: 0, y: 16, duration: .6, stagger: .06 })
-              .from(voxelCubes, {
+              .from(outer, {
                   y: -120, opacity: 0, duration: .55, ease: 'back.out(1.6)',
-                  stagger: (index, target) => parseFloat(target.dataset.delay)
+                  stagger: (index) => voxel.cubes[index].delay
               }, .15)
-              .to(voxelCubes.filter(c => c.dataset.accent), {
-                  y: -10, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 3
-              }, '+=.2');
+              .from('.floater', { scale: 0, opacity: 0, duration: .5, ease: 'back.out(2)', stagger: .08 }, '-=.3')
+              .from('.voxel-hint', { opacity: 0, duration: .4 }, '-=.2');
 
             // 2. Tracks: a light staggered entrance (the old minecart slide-in, made quiet).
             gsap.from('.track', {
@@ -1169,7 +1422,13 @@
                 scrollTrigger: { trigger: '.tracks', start: 'top 82%', once: true }
             });
 
-            // 3. Prizes: chests drop onto their cards and burst a few pixel sparkles.
+            // 3. Journey: the steps light up in order, once.
+            gsap.from('.step', {
+                opacity: 0, x: -12, duration: .45, ease: 'power2.out', stagger: .1,
+                scrollTrigger: { trigger: '.journey', start: 'top 80%', once: true }
+            });
+
+            // 4. Prizes: chests drop onto their cards and burst a few pixel sparkles.
             const chests = gsap.utils.toArray('.prize .chest');
             ScrollTrigger.create({
                 trigger: '#prizes', start: 'top 70%', once: true,
@@ -1180,6 +1439,82 @@
                     chests.forEach((chest, n) => gsap.delayedCall(.55 + n * .12, () => sparkle(chest)));
                 }
             });
+
+            const cleanups = [];
+            function enableCubeInteraction() {
+                const stage = document.getElementById('voxel-stage');
+                const svg = voxel.svg;
+                stage.dataset.interactive = 'true';
+                const topLayer = voxel.cubes.filter(c => c.k === 2);
+                const liftTo = new Map(topLayer.map(c => [c, gsap.quickTo(c.lift, 'y', { duration: .35, ease: 'power3.out' })]));
+                const rotX = gsap.quickTo(stage, 'rotationX', { duration: .8, ease: 'power3.out' });
+                const rotY = gsap.quickTo(stage, 'rotationY', { duration: .8, ease: 'power3.out' });
+                const floaters = gsap.utils.toArray('.floater').map(el => ({
+                    depth: parseFloat(el.dataset.depth),
+                    x: gsap.quickTo(el, 'x', { duration: 1, ease: 'power3.out' }),
+                    y: gsap.quickTo(el, 'y', { duration: 1, ease: 'power3.out' })
+                }));
+
+                // Whole-screen reaction: the cube tilts towards the pointer and loose voxels drift.
+                function onMove(e) {
+                    const nx = e.clientX / innerWidth * 2 - 1;      // -1 (left) .. 1 (right)
+                    const ny = e.clientY / innerHeight * 2 - 1;     // -1 (top) .. 1 (bottom)
+                    rotY(nx * 14);
+                    rotX(-ny * 10);
+                    floaters.forEach(f => { f.x(nx * f.depth * 12); f.y(ny * f.depth * 12); });
+
+                    // Top blocks near the pointer rise like keys.
+                    const ctm = svg.getScreenCTM();
+                    if (!ctm) return;
+                    const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
+                    topLayer.forEach(c => {
+                        const d = Math.hypot(pt.x - c.x, pt.y - c.y);
+                        liftTo.get(c)(-18 * Math.max(0, 1 - d / 52));
+                    });
+                }
+                function onLeave() {
+                    rotX(0); rotY(0);
+                    floaters.forEach(f => { f.x(0); f.y(0); });
+                    topLayer.forEach(c => liftTo.get(c)(0));
+                }
+
+                // Click or tap a block: repaint it and send a ripple through the cube.
+                function onClick(e) {
+                    const g = e.target.closest('.cube');
+                    if (!g) return;
+                    const hit = voxel.cubes.find(c => c.g === g);
+                    voxel.paint(hit, (hit.colour + 1) % PALETTE.length);
+                    voxel.cubes.forEach(c => {
+                        const d = Math.hypot(c.x - hit.x, c.y - hit.y);
+                        gsap.timeline({ delay: d / 400 })
+                            .to(c.g, { y: -10, duration: .14, ease: 'power2.out' })
+                            .to(c.g, { y: 0, duration: .5, ease: 'bounce.out' });
+                    });
+                }
+
+                addEventListener('pointermove', onMove, { passive: true });
+                document.documentElement.addEventListener('pointerleave', onLeave);
+                svg.addEventListener('click', onClick);
+                cleanups.push(() => {
+                    removeEventListener('pointermove', onMove);
+                    document.documentElement.removeEventListener('pointerleave', onLeave);
+                    svg.removeEventListener('click', onClick);
+                });
+            }
+
+            return () => cleanups.forEach(fn => fn());
+        });
+
+        // Reduced motion: clicking still repaints blocks, just without the ripple.
+        mm.add('(prefers-reduced-motion: reduce)', () => {
+            function onClick(e) {
+                const g = e.target.closest('.cube');
+                if (!g) return;
+                const hit = voxel.cubes.find(c => c.g === g);
+                voxel.paint(hit, (hit.colour + 1) % PALETTE.length);
+            }
+            voxel.svg.addEventListener('click', onClick);
+            return () => voxel.svg.removeEventListener('click', onClick);
         });
 
         function sparkle(chest) {
