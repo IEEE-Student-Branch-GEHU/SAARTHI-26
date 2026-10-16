@@ -38,6 +38,8 @@
             --c-coral: #E0603F;  --c-coral-ink: #B4432A;  --c-coral-tint: #FCECE7;
             --silver: #9AA8B6;
             --bronze: #C68A52;
+            --spectrum: linear-gradient(90deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-coral), var(--c-amber));
+            --shadow-lg: 0 2px 4px rgba(11, 37, 64, .06), 0 18px 48px rgba(11, 37, 64, .14);
 
             --font: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
             --pixel: 'Press Start 2P', monospace;
@@ -109,8 +111,8 @@
             text-decoration: none; cursor: pointer;
             transition: background-color .2s ease, color .2s ease, transform .2s ease;
         }
-        .btn-primary { background: var(--blue); color: #fff; }
-        .btn-primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
+        .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 6px 16px rgba(0, 98, 155, .28); }
+        .btn-primary:hover { background: var(--blue-700); border-color: var(--blue-700); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0, 98, 155, .34); }
         .btn-secondary { background: transparent; color: var(--blue); }
         .btn-secondary:hover { background: var(--blue-50); }
         .btn:active { transform: translateY(1px); }
@@ -127,7 +129,9 @@
             background: rgba(255, 255, 255, .94);
             backdrop-filter: saturate(1.4) blur(8px);
             border-bottom: 1px solid var(--line);
+            transition: box-shadow .25s ease;
         }
+        .site-header.is-scrolled { box-shadow: 0 8px 28px rgba(11, 37, 64, .09); }
         .site-header .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
 
         .brand {
@@ -185,18 +189,27 @@
            SECTIONS
            ========================================================== */
         .section { padding: var(--section-y) 0; position: relative; }
+        .section > .wrap { position: relative; }
         .section-alt { background: var(--mist); }
+        /* Dot texture that fades in from the top-right, so alternate sections have some depth. */
+        .section-alt::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(rgba(0, 98, 155, .16) 1px, transparent 1.5px) 0 0 / 22px 22px;
+            -webkit-mask-image: linear-gradient(200deg, #000 0%, transparent 42%);
+            mask-image: linear-gradient(200deg, #000 0%, transparent 42%);
+        }
 
-        .section-head { max-width: 720px; margin-bottom: clamp(32px, 5vw, 56px); }
+        .section-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 64px); }
         .section-head h2 {
-            display: flex; align-items: center; gap: 14px;
-            font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; letter-spacing: -.01em;
+            display: flex; align-items: center; gap: 16px;
+            font-size: clamp(30px, 4.2vw, 48px); font-weight: 700; letter-spacing: -.02em;
         }
         .section-head h2::before {
-            content: ""; flex: none; width: 24px; height: 27px;
+            content: ""; flex: none; width: 30px; height: 34px;
             background: var(--cube) no-repeat center / contain;
+            filter: drop-shadow(0 6px 8px rgba(0, 78, 124, .25));
         }
-        .section-head p { margin-top: 16px; color: var(--slate); font-size: 18px; }
+        .section-head p { margin-top: 18px; color: var(--slate); font-size: 19px; max-width: 640px; }
 
         /* Thin rule with a small cube at its centre, between sections. */
         .divider { height: 1px; background: var(--line); position: relative; z-index: 2; }
@@ -212,14 +225,28 @@
         .hero {
             position: relative; overflow: hidden;
             padding: clamp(48px, 7vw, 96px) 0 clamp(56px, 8vw, 104px);
+            background: linear-gradient(180deg, #fff 0%, var(--blue-50) 100%);
+        }
+        /* Animated backdrop: a slowly drifting grid and soft colour glows. Only transforms move,
+           so it stays on the compositor. Paused off-screen (script) and stopped for reduced motion. */
+        .hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .hero-bg::before {
+            content: ""; position: absolute; inset: -32px;
             background:
                 linear-gradient(rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
-                linear-gradient(90deg, rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px,
-                radial-gradient(420px 320px at 78% 42%, rgba(15, 139, 141, .10), transparent 70%),
-                radial-gradient(360px 300px at 92% 78%, rgba(106, 75, 196, .10), transparent 70%),
-                radial-gradient(300px 260px at 64% 20%, rgba(229, 165, 10, .10), transparent 70%),
-                linear-gradient(180deg, #fff 0%, var(--blue-50) 100%);
+                linear-gradient(90deg, rgba(0, 98, 155, .07) 1px, transparent 1px) 0 0 / 32px 32px;
+            animation: grid-drift 14s linear infinite;
         }
+        .orb {
+            position: absolute; border-radius: 50%; will-change: transform;
+            animation: orb-float 24s ease-in-out infinite alternate;
+        }
+        .orb-teal   { width: 460px; height: 460px; right: 8%;  top: 6%;     background: radial-gradient(circle, rgba(15, 139, 141, .20), transparent 68%); }
+        .orb-violet { width: 400px; height: 400px; right: -5%; bottom: -8%; background: radial-gradient(circle, rgba(106, 75, 196, .20), transparent 68%); animation-duration: 30s; animation-delay: -9s; }
+        .orb-amber  { width: 320px; height: 320px; right: 36%; top: -10%;   background: radial-gradient(circle, rgba(229, 165, 10, .18), transparent 68%); animation-duration: 27s; animation-delay: -15s; }
+        .hero.is-idle .hero-bg::before, .hero.is-idle .orb { animation-play-state: paused; }
+        @keyframes grid-drift { to { transform: translate(32px, 32px); } }
+        @keyframes orb-float { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-44px, 32px, 0) scale(1.14); } }
         .hero::after {
             /* Fade the grid out towards the left so the text sits on clean white. */
             content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -240,6 +267,8 @@
             color: var(--navy);
             letter-spacing: -.02em;
             white-space: nowrap;
+            /* Stepped extrusion towards the lower right, matching the cube's lighting. */
+            text-shadow: 2px 2px 0 #C7DDEC, 4px 4px 0 #A9CBE2, 6px 6px 0 #8DB9D6;
         }
         .wordmark span { color: var(--blue); }
 
@@ -259,20 +288,25 @@
             margin-bottom: 32px;
         }
         .countdown > div {
-            background: var(--paper); border: 1px solid var(--line); border-radius: 2px;
-            padding: 12px 6px 10px; text-align: center;
-            box-shadow: 0 1px 0 var(--line);
+            background: var(--navy); border-radius: 6px;
+            padding: 14px 6px 12px; text-align: center;
+            box-shadow: 0 10px 22px rgba(11, 37, 64, .22), inset 0 1px 0 rgba(255, 255, 255, .14);
         }
         .countdown .num {
-            display: block; font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--navy);
+            display: block; font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: #fff;
             font-variant-numeric: tabular-nums; line-height: 1.1;
         }
-        .countdown .unit { display: block; font-size: 13px; color: var(--slate); margin-top: 4px; }
-        .countdown .started { grid-column: 1 / -1; font-weight: 700; color: var(--blue); }
+        .countdown .unit { display: block; font-size: 13px; color: #B4C7D9; margin-top: 4px; }
+        .countdown .started { grid-column: 1 / -1; font-weight: 700; color: #fff; }
 
         .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
         .hero-visual { position: relative; display: flex; flex-direction: column; align-items: center; perspective: 900px; }
+        .hero-visual::before {
+            /* Soft glow so the cube sits in light rather than on a flat background. */
+            content: ""; position: absolute; z-index: -1; left: 4%; top: -2%; width: 92%; aspect-ratio: 1;
+            background: radial-gradient(circle, rgba(0, 98, 155, .20), rgba(0, 98, 155, 0) 66%);
+        }
         .voxel-stage { position: relative; width: min(100%, 440px); transform-style: preserve-3d; }
         .voxel { width: 100%; height: auto; overflow: visible; cursor: pointer; -webkit-tap-highlight-color: transparent; }
         .voxel .cube { transition: filter .2s ease; }
@@ -298,7 +332,7 @@
         /* ==========================================================
            TAGLINE BAND (marquee)
            ========================================================== */
-        .band { position: relative; background: var(--navy); color: #fff; overflow: hidden; padding: 16px 0; }
+        .band { position: relative; background: linear-gradient(90deg, var(--navy), #0E3A5E 50%, var(--navy)); color: #fff; overflow: hidden; padding: 18px 0; }
         .band.is-paused .band-track { animation-play-state: paused; }
         .band-toggle {
             position: absolute; right: 0; top: 0; bottom: 0; z-index: 1;
@@ -318,11 +352,32 @@
         .about-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
         .about-copy p + p { margin-top: 18px; }
         .about-copy { font-size: 18px; max-width: 640px; }
+        .about-copy p:first-child { font-size: clamp(20px, 2.2vw, 24px); line-height: 1.5; font-weight: 500; color: var(--navy); }
 
-        .facts {
-            margin: 0; padding: 8px 24px; background: var(--mist);
-            border: 1px solid var(--line); border-radius: var(--radius);
+        /* Key figures under the intro. Each one restates a fact from the event details. */
+        .glance { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 36px 0 0; padding: 0; list-style: none; }
+        .glance li {
+            padding: 16px 14px 14px; background: var(--c-tint); border: 1px solid var(--line);
+            border-top: 3px solid var(--c); border-radius: 10px;
         }
+        .glance strong { display: block; font-size: clamp(26px, 3vw, 34px); line-height: 1.1; color: var(--navy); font-variant-numeric: tabular-nums; }
+        .glance span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; color: var(--slate); }
+        @media (max-width: 520px) { .glance { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        /* The event details, styled as a participant pass. */
+        .pass {
+            background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+            box-shadow: var(--shadow-lg); overflow: hidden;
+        }
+        .pass-head {
+            position: relative; display: flex; align-items: center; gap: 12px;
+            padding: 18px 24px 20px; background: var(--navy); color: #fff;
+        }
+        .pass-head::before { content: ""; width: 22px; height: 25px; background: var(--cube) no-repeat center / contain; }
+        .pass-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--spectrum); }
+        .pass-head strong { font: 12px/1 var(--pixel); }
+        .pass-head span { margin-left: auto; font-size: 14px; color: #B4C7D9; }
+        .facts { margin: 0; padding: 4px 24px 8px; }
         .facts div { padding: 16px 0; border-bottom: 1px solid var(--line); }
         .facts div:last-child { border-bottom: 0; }
         .facts dt { font-size: 14px; color: var(--slate); }
@@ -334,35 +389,42 @@
            JOURNEY (how it works): a real sequence, so it is numbered
            ========================================================== */
         .journey {
-            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px;
-            list-style: none; margin: 0; padding: 0; counter-reset: step; position: relative;
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px;
+            list-style: none; margin: 0; padding: 0; counter-reset: step;
         }
-        .journey::before {
-            /* The connecting line runs behind the step numbers. */
-            content: ""; position: absolute; left: 24px; right: calc(20% - 43.2px); top: 23px; height: 2px; /* first to last circle centre */
-            background: linear-gradient(90deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-amber), var(--c-coral));
-            opacity: .35;
+        .step {
+            position: relative; counter-increment: step;
+            display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+            padding: 22px 20px 24px; background: var(--paper);
+            border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px;
+            transition: box-shadow .25s ease, transform .25s ease;
         }
-        .step { position: relative; counter-increment: step; }
+        .step:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
         .step::before {
             content: counter(step);
-            display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
-            background: var(--c-ink); color: #fff; font-weight: 700; font-size: 18px;
-            box-shadow: 0 0 0 6px var(--step-ring, var(--paper));
-            margin-bottom: 18px; position: relative;
+            display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+            background: var(--c-ink); color: #fff; font-weight: 700; font-size: 18px; margin-bottom: 4px;
         }
-        .section-alt .step { --step-ring: var(--mist); }
-        .step h3 { font-size: 18px; margin-bottom: 6px; }
+        /* Chevron in the gap, pointing to the next step. */
+        .step:not(:last-child)::after {
+            content: ""; position: absolute; right: -13px; top: 38px; width: 10px; height: 10px;
+            border-top: 2px solid var(--c); border-right: 2px solid var(--c); transform: rotate(45deg);
+        }
+        .step h3 { font-size: 20px; }
+        .step .when {
+            font-size: 13px; font-weight: 600; color: var(--c-ink); background: var(--c-tint);
+            padding: 4px 10px; border-radius: 20px;
+        }
         .step p { color: var(--slate); font-size: 15.5px; }
         .step a { font-weight: 600; color: var(--c-ink); }
 
-        @media (max-width: 960px) {
-            .journey { grid-template-columns: 1fr; gap: 0; }
-            .journey::before { left: 23px; right: auto; top: 24px; bottom: 24px; width: 2px; height: auto;
-                background: linear-gradient(180deg, var(--c-blue), var(--c-teal), var(--c-violet), var(--c-amber), var(--c-coral)); }
-            .step { display: grid; grid-template-columns: 48px 1fr; column-gap: 20px; padding-bottom: 28px; }
-            .step::before { grid-row: span 2; margin: 0; }
-            .step:last-child { padding-bottom: 0; }
+        @media (max-width: 1060px) {
+            .journey { grid-template-columns: 1fr; gap: 14px; }
+            .step { display: grid; grid-template-columns: 44px 1fr; gap: 6px 16px; align-items: start; }
+            .step::before { grid-row: 1 / span 3; margin: 0; }
+            .step > * { grid-column: 2; }
+            .step .when { justify-self: start; }
+            .step:not(:last-child)::after { display: none; }
         }
 
         /* ==========================================================
@@ -370,19 +432,28 @@
            ========================================================== */
         .tracks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
         .track {
-            background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
-            padding: 24px 20px 22px;
-            display: flex; flex-direction: column; gap: 18px;
-            border-top: 3px solid var(--c, var(--blue));
-            transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease;
+            background: linear-gradient(180deg, var(--c-tint, var(--paper)) 0%, var(--paper) 70%);
+            border: 1px solid var(--line); border-radius: 10px;
+            padding: 28px 22px 24px;
+            display: flex; flex-direction: column; gap: 20px;
+            border-top: 4px solid var(--c, var(--blue));
+            transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease;
         }
-        .track:hover { box-shadow: var(--shadow); transform: translateY(-3px); background: var(--c-tint, var(--paper)); }
+        .track:hover {
+            transform: translateY(-4px); border-color: var(--c, var(--blue));
+            box-shadow: 0 16px 36px color-mix(in srgb, var(--c, var(--blue)) 26%, transparent);
+        }
         .track img {
-            width: 88px; height: 88px; object-fit: contain; image-rendering: pixelated;
+            width: 108px; height: 108px; padding: 10px; object-fit: contain; image-rendering: pixelated;
+            background: var(--paper); border-radius: 16px;
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--blue)) 28%, transparent), 0 6px 14px rgba(11, 37, 64, .07);
             transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
         }
         .track:hover img { transform: translateY(-4px) rotate(-3deg); }
-        .track h3 { font-size: 17px; font-weight: 600; }
+        .track h3 { font-size: 18px; font-weight: 600; margin-top: auto; }
+        /* Open Innovation is the catch-all track, so it gets the dark treatment. */
+        .track:last-child { background: linear-gradient(160deg, #14416A 0%, var(--navy) 80%); border-color: var(--navy); }
+        .track:last-child h3 { color: #fff; }
 
         .callout {
             margin-top: 28px; padding: 16px 20px;
@@ -394,7 +465,7 @@
         @media (max-width: 460px) {
             .tracks { gap: 12px; }
             .track { padding: 18px 14px; gap: 12px; }
-            .track img { width: 64px; height: 64px; }
+            .track img { width: 72px; height: 72px; padding: 6px; border-radius: 12px; }
             .track h3 { font-size: 15px; }
         }
 
@@ -415,24 +486,52 @@
         }
         .tab:hover { color: var(--navy); }
 
+        .timeline-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(32px, 5vw, 64px); align-items: start; }
+        .day-card {
+            position: sticky; top: calc(var(--header-h) + 24px);
+            background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--c, var(--blue));
+            border-radius: 12px; box-shadow: var(--shadow); padding: 24px;
+        }
+        .day-card .day-name { font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--navy); }
+        .day-card .day-date { margin-top: 4px; color: var(--slate); }
+        .day-card h3 { font-size: 16px; margin: 22px 0 6px; }
+        .day-card ul { list-style: none; margin: 0; padding: 0; }
+        .day-card li { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; }
+        .day-card li time { font-weight: 600; color: var(--c-ink, var(--blue)); font-variant-numeric: tabular-nums; }
+        .day-card .meta { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--slate); }
+        @media (max-width: 1000px) {
+            .timeline-layout { grid-template-columns: 1fr; }
+            .day-card { position: static; order: -1; }
+        }
+
         .schedule { list-style: none; margin: 0; padding: 0; max-width: 820px; }
         .schedule li {
+            position: relative;
             display: grid; grid-template-columns: 96px 40px minmax(0, 1fr); align-items: center; gap: 16px;
-            padding: 14px 0; border-bottom: 1px solid var(--line);
+            padding: 14px 0;
         }
+        /* The spine runs through the icon column; it starts and ends at the first and last icon. */
+        .schedule li::before {
+            content: ""; position: absolute; left: 131px; top: 0; bottom: 0; width: 2px;
+            background: color-mix(in srgb, var(--c, var(--blue)) 30%, transparent);
+        }
+        .schedule li:first-child::before { top: 50%; }
+        .schedule li:last-child::before { bottom: 50%; }
         .schedule time, .schedule .tbd { font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; }
         .schedule .tbd { color: var(--slate); font-weight: 500; }
         .schedule .ico {
             width: 40px; height: 40px; border-radius: 50%;
             display: grid; place-items: center;
             background: var(--c-tint, var(--blue-50)); color: var(--c-ink, var(--blue)); font-size: 16px;
+            position: relative; box-shadow: 0 0 0 6px var(--mist);
         }
         .schedule .what { color: var(--ink); }
         .schedule .key .ico { background: var(--c-ink, var(--blue)); color: #fff; }
         .schedule .key .what { font-weight: 600; color: var(--navy); }
 
         @media (max-width: 520px) {
-            .schedule li { grid-template-columns: 76px minmax(0, 1fr); gap: 4px 12px; }
+            .schedule li { grid-template-columns: 76px minmax(0, 1fr); gap: 4px 12px; border-bottom: 1px solid var(--line); }
+            .schedule li::before { display: none; }
             .schedule .ico { display: none; }
             .tab { padding: 10px 14px 12px; }
         }
@@ -440,46 +539,105 @@
         /* ==========================================================
            WHY ATTEND
            ========================================================== */
-        .reasons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
-        .reasons li { padding: 28px 24px; border-right: 1px solid var(--line); }
-        .reasons li:last-child { border-right: 0; }
+        /* One dark section for rhythm: the page is otherwise white and pale grey. */
+        .section-dark { background: var(--navy); overflow: hidden; }
+        .section-dark::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background:
+                linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px) 0 0 / 32px 32px,
+                linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px) 0 0 / 32px 32px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 80% at 15% 0%, #000, transparent);
+            mask-image: radial-gradient(ellipse 70% 80% at 15% 0%, #000, transparent);
+        }
+        .section-dark .section-head h2 { color: #fff; }
+        .section-dark .section-head p { color: #C5D3E0; }
+        /* The cube separator would vanish against navy, so skip the dividers on either side. */
+        .divider:has(+ .section-dark), .section-dark + .divider { display: none; }
+
+        .reasons {
+            display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+            list-style: none; margin: 0; padding: 0;
+        }
+        .reasons li {
+            position: relative; overflow: hidden; padding: 28px 24px;
+            background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14); border-radius: 12px;
+            transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+        }
+        .reasons li:hover {
+            background: rgba(255, 255, 255, .1); transform: translateY(-3px);
+            border-color: color-mix(in srgb, var(--c) 75%, transparent);
+        }
+        .reasons li:first-child {
+            grid-column: 1 / 3; grid-row: 1 / 3; padding: 36px 32px;
+            display: flex; flex-direction: column;
+            background: linear-gradient(155deg, color-mix(in srgb, var(--c) 60%, var(--navy)) 0%, var(--navy) 85%);
+        }
+        .reasons li:first-child::after {
+            content: ""; position: absolute; right: 28px; top: 28px; width: 150px; height: 171px;
+            background: var(--cube) no-repeat center / contain; opacity: .26; transform: rotate(6deg);
+        }
         .reasons i {
             width: 48px; height: 48px; display: grid; place-items: center;
-            background: var(--c-tint, var(--blue-50)); color: var(--c-ink, var(--blue)); border-radius: var(--radius); font-size: 20px;
+            background: var(--c-tint, var(--blue-50)); color: var(--c-ink, var(--blue)); border-radius: 8px; font-size: 20px;
             margin-bottom: 18px;
         }
-        .reasons h3 { font-size: 18px; margin-bottom: 8px; }
-        .reasons p { color: var(--slate); font-size: 16px; }
+        .reasons li:first-child i { margin-bottom: auto; }
+        .reasons h3 { font-size: 20px; margin-bottom: 8px; color: #fff; }
+        .reasons p { color: #C5D3E0; font-size: 16px; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .chips span {
+            font-size: 13px; font-weight: 500; line-height: 1.3; padding: 4px 11px; border-radius: 20px;
+            color: #E4ECF4; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .22);
+        }
+        .reasons li:first-child .chips { margin-top: 20px; }
+        .reasons li:first-child h3 { font-size: clamp(28px, 3vw, 36px); margin-top: 72px; }
+        .reasons li:first-child p { font-size: 18px; max-width: 360px; }
 
         @media (max-width: 1000px) {
             .reasons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .reasons li { border-bottom: 1px solid var(--line); }
-            .reasons li:nth-child(2n) { border-right: 0; }
-            .reasons li:last-child { grid-column: 1 / -1; border-bottom: 0; }
+            .reasons li:first-child { grid-column: 1 / -1; grid-row: auto; }
         }
         @media (max-width: 520px) {
             .reasons { grid-template-columns: 1fr; }
-            .reasons li { border-right: 0; display: grid; grid-template-columns: 48px 1fr; gap: 0 16px; padding: 20px; }
-            .reasons i { margin: 0; grid-row: span 2; }
+            .reasons li, .reasons li:first-child { display: grid; grid-template-columns: 48px 1fr; gap: 0 16px; padding: 20px; }
+            .reasons li:first-child::after { display: none; }
+            .reasons i, .reasons li:first-child i { margin: 0; grid-row: span 3; }
+            .reasons .chips { grid-column: 2; }
+            .reasons li:first-child h3 { font-size: 20px; margin-top: 0; }
+            .reasons li:first-child p { font-size: 16px; }
         }
 
         /* ==========================================================
            PRIZES
            ========================================================== */
+        .prize-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+        .prize-main, .prize-panel {
+            background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+        }
+        .prize-main {
+            display: flex; flex-direction: column; padding: 24px 24px 28px;
+            background: radial-gradient(420px 220px at 50% 0%, rgba(229, 165, 10, .14), transparent 75%), var(--paper);
+        }
+        .prize-main .podium { margin: auto 0; padding-top: 28px; }
+        .prize-panel { display: flex; flex-direction: column; gap: 16px; padding: 24px; }
+        .prize-main > h3, .prize-panel > h3 { font-size: 20px; }
+        .prize-panel .callout { margin-top: auto; }
         .podium {
-            display: grid; grid-template-columns: repeat(3, minmax(0, 260px)); justify-content: center;
-            align-items: end; gap: 20px; list-style: none; margin: 0; padding: 0;
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%;
+            align-items: end; gap: 14px; list-style: none; margin: 0; padding: 0;
         }
         .prize {
             position: relative;
-            background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--rank, var(--blue)) 14%, #fff) 0%, var(--paper) 72%);
+            border: 1px solid var(--line); border-radius: 10px;
             border-top: 4px solid var(--rank, var(--blue));
             padding: 28px 20px 24px; text-align: center;
-            transition: box-shadow .25s ease;
+            transition: box-shadow .25s ease, transform .25s ease;
         }
         .prize { cursor: pointer; }
-        .prize:hover, .prize:focus-within { box-shadow: var(--shadow); }
-        .prize.first { --rank: var(--gold); padding-top: 44px; padding-bottom: 36px; }
+        .prize:hover, .prize:focus-within { box-shadow: var(--shadow); transform: translateY(-3px); }
+        .prize.first { --rank: var(--gold); padding-top: 44px; padding-bottom: 36px; box-shadow: 0 22px 48px rgba(229, 165, 10, .24); }
+        .prize.first:hover, .prize.first:focus-within { box-shadow: 0 26px 56px rgba(229, 165, 10, .34); }
         .prize.second { --rank: var(--silver); }
         .prize.third { --rank: var(--bronze); }
 
@@ -504,7 +662,7 @@
             font-weight: 700; font-size: 14px;
         }
 
-        .specials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 28px 0 0; padding: 0; }
+        .specials { display: grid; grid-template-columns: 1fr; gap: 12px; list-style: none; margin: 0; padding: 0; }
         .specials .prize { display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: 16px; text-align: left; padding: 18px 20px; }
         .specials .chest { width: 88px; height: 76px; margin: 0; }
 
@@ -513,8 +671,10 @@
             left: 50%; top: 40%;
         }
 
+        @media (max-width: 1000px) { .prize-layout { grid-template-columns: 1fr; } }
         @media (max-width: 860px) {
-            .podium { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+            .prize-main { padding: 20px 14px 20px; }
+            .podium { gap: 10px; }
             .prize { padding: 24px 10px 18px; }
             .prize.first { padding-top: 32px; padding-bottom: 24px; }
             .chest, .prize.first .chest { width: 84px; height: 74px; }
@@ -530,14 +690,26 @@
            COMMITTEE
            ========================================================== */
         .committee-group + .committee-group { margin-top: 48px; }
-        .committee-group > h3 { font-size: 20px; margin-bottom: 20px; color: var(--navy); }
+        .committee-group > h3 { display: flex; align-items: center; gap: 16px; font-size: 20px; margin-bottom: 24px; color: var(--navy); }
+        .committee-group > h3::after { content: ""; flex: 1; height: 1px; background: var(--line); }
         .people { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
         .person {
             background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
             padding: 20px; display: grid; grid-template-columns: 88px 1fr; gap: 16px; align-items: start; align-content: start;
+            transition: box-shadow .25s ease, transform .25s ease;
         }
-        .person img { width: 88px; height: 88px; object-fit: cover; border-radius: var(--radius); background: var(--mist); }
-        .person .role { font-size: 14px; font-weight: 600; color: var(--blue); }
+        .person:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+        .person { border-top: 3px solid var(--c, var(--blue)); }
+        .people-lead .person { grid-template-columns: 104px 1fr; padding: 24px; }
+        .people-lead .person img { width: 104px; height: 104px; }
+        .person img {
+            width: 88px; height: 88px; object-fit: cover; border-radius: var(--radius); background: var(--mist);
+            box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--line);
+        }
+        .person .role {
+            display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 20px;
+            color: var(--c-ink, var(--blue)); background: var(--c-tint, var(--blue-50));
+        }
         .person h4 { margin: 2px 0 6px; font-size: 17px; line-height: 1.3; color: var(--navy); }
         .person p { font-size: 14.5px; line-height: 1.5; color: var(--slate); }
         .people-lead { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -591,13 +763,18 @@
             -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
             mask-image: linear-gradient(90deg, transparent, #000 60%);
         }
+        .cta::before {
+            content: ""; position: absolute; right: 40%; top: 50%; width: 220px; height: 251px; pointer-events: none;
+            transform: translateY(-50%) rotate(-8deg); opacity: .14;
+            background: var(--cube) no-repeat center / contain;
+        }
         .cta .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
         .cta h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); }
         .cta p { margin-top: 12px; color: #D5E2EE; font-size: 18px; max-width: 560px; }
         .cta .days { color: #fff; font-weight: 700; }
         .cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-        .cta .btn-primary { background: var(--c-amber); border-color: var(--c-amber); color: var(--navy); }
-        .cta .btn-primary:hover { background: #F2B829; border-color: #F2B829; }
+        .cta .btn-primary { background: var(--c-amber); border-color: var(--c-amber); color: var(--navy); box-shadow: 0 8px 22px rgba(229, 165, 10, .32); }
+        .cta .btn-primary:hover { background: #F2B829; border-color: #F2B829; box-shadow: 0 12px 28px rgba(229, 165, 10, .42); }
         .cta .btn-secondary { color: #fff; border-color: rgba(255,255,255,.6); }
         .cta .btn-secondary:hover { background: rgba(255,255,255,.1); }
         @media (max-width: 760px) { .cta .wrap { grid-template-columns: 1fr; } }
@@ -631,8 +808,13 @@
         .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
         .to-top:hover { background: var(--blue); }
         .faq { max-width: 820px; }
-        .faq details { border-bottom: 1px solid var(--line); }
-        .faq details:first-child { border-top: 1px solid var(--line); }
+        .faq details {
+            margin-bottom: 12px; padding: 0 24px; background: var(--paper);
+            border: 1px solid var(--line); border-radius: 10px;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .faq details:hover { border-color: #B5C8D8; }
+        .faq details[open] { border-color: var(--blue); box-shadow: var(--shadow); }
         .faq summary {
             list-style: none; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; gap: 16px;
@@ -649,7 +831,10 @@
         /* ==========================================================
            FOOTER
            ========================================================== */
-        .site-footer { background: var(--navy); color: #C9D6E2; padding: 64px 0 0; }
+        .site-footer {
+            background: var(--navy); color: #C9D6E2; padding: 64px 0 0;
+            border-top: 4px solid transparent; border-image: var(--spectrum) 1;
+        }
         .site-footer a { color: #fff; text-decoration: none; }
         .site-footer a:hover { text-decoration: underline; }
         .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1.4fr; gap: 40px; }
@@ -688,8 +873,56 @@
         }
         .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+        /* ==========================================================
+           HOVER MOTION
+           Pointer devices only (no sticky hover on touch) and skipped when reduced motion is
+           requested. Small, quick and consistent: lift for cards, nudge for icons and links.
+           ========================================================== */
+        @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+            .btn i { transition: transform .25s ease; }
+            .btn:hover i.fa-arrow-up-right-from-square { transform: translate(2px, -2px); }
+
+            .glance li { transition: transform .25s ease, box-shadow .25s ease; }
+            .glance li:hover { transform: translateY(-4px); box-shadow: 0 14px 28px color-mix(in srgb, var(--c) 24%, transparent); }
+
+            .pass { transition: transform .3s ease, box-shadow .3s ease; }
+            .pass:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(11, 37, 64, .06), 0 26px 56px rgba(11, 37, 64, .18); }
+
+            .step::before { transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+            .step:hover::before { transform: scale(1.12) rotate(-6deg); }
+
+            .tab { transition: color .2s ease, background-color .2s ease; }
+            .tab:hover { background: color-mix(in srgb, var(--c, var(--blue)) 8%, transparent); }
+            .schedule .ico { transition: transform .25s cubic-bezier(.34, 1.56, .64, 1); }
+            .schedule .what { transition: transform .25s ease; }
+            .schedule li:hover .ico { transform: scale(1.14); }
+            .schedule li:hover .what { transform: translateX(4px); }
+
+            .reasons i { transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+            .reasons li:hover i { transform: translateY(-3px) rotate(-8deg) scale(1.06); }
+            .chips span { transition: background-color .2s ease, border-color .2s ease; }
+            .reasons li:hover .chips span { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .4); }
+
+            .person img { transition: box-shadow .25s ease; }
+            .person:hover img { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--c, var(--blue)); }
+
+            .upcoming li { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+            .upcoming li:hover { transform: translateY(-3px); border-style: solid; border-color: var(--blue); box-shadow: var(--shadow); }
+
+            .faq summary { transition: color .2s ease; }
+            .faq summary:hover { color: var(--blue); }
+            .help-card a i { transition: transform .2s ease; }
+            .help-card a:hover i { transform: scale(1.2); }
+
+            .socials a { transition: background-color .2s ease, transform .25s cubic-bezier(.34, 1.56, .64, 1); }
+            .socials a:hover { transform: translateY(-4px); }
+            .site-footer li a { transition: transform .2s ease; }
+            .site-footer li a:hover { transform: translateX(4px); }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
+            .hero-bg::before, .orb { animation: none; }
             .band-track { animation: none; }
             .band-toggle { display: none; }
             *, *::before, *::after { transition-duration: .01ms !important; }
@@ -725,6 +958,7 @@
     <main id="main">
         <!-- HERO -->
         <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-bg" aria-hidden="true"><span class="orb orb-teal"></span><span class="orb orb-violet"></span><span class="orb orb-amber"></span></div>
             <div class="wrap">
                 <div class="hero-copy">
                     <p class="hero-presenter"><strong>IEEE Student Branch, GEHU</strong> presents</p>
@@ -785,14 +1019,23 @@
                         <p>SAARTHI-26 is the next edition of Uttarakhand's biggest student-run hackathon: a 36-hour build space where students and innovators from across the country come together to create impactful, real-world tech solutions.</p>
                         <p>More than just coding, it is a platform to explore ideas, sharpen skills and grow with a driven community, whether you are just starting out or building complex systems.</p>
                         <p>Enter SAARTHI-26 and shape the future, one idea at a time.</p>
+                        <ul class="glance">
+                            <li class="acc-blue"><strong>36</strong><span>hours of building</span></li>
+                            <li class="acc-teal"><strong>8</strong><span>tracks to choose from</span></li>
+                            <li class="acc-violet"><strong>3</strong><span>days on campus</span></li>
+                            <li class="acc-amber"><strong>30</strong><span>teams rewarded</span></li>
+                        </ul>
                     </div>
-                    <dl class="facts">
-                        <div><dt>Dates</dt><dd>31 October – 2 November 2026</dd></div>
-                        <div><dt>Venue</dt><dd>Graphic Era Hill University, Dehradun, Uttarakhand</dd></div>
-                        <div><dt>Format</dt><dd>36-hour team hackathon, 8 tracks</dd></div>
-                        <div><dt>Who can apply</dt><dd>Students enrolled in any institution in India</dd></div>
-                        <div><dt>Organised by</dt><dd>Departments of Computer Science &amp; Engineering and Computer Applications, GEHU</dd></div>
-                    </dl>
+                    <div class="pass">
+                        <div class="pass-head"><strong>SAARTHI-26</strong><span>Event details</span></div>
+                        <dl class="facts">
+                            <div><dt>Dates</dt><dd>31 October – 2 November 2026</dd></div>
+                            <div><dt>Venue</dt><dd>Graphic Era Hill University, Dehradun, Uttarakhand</dd></div>
+                            <div><dt>Format</dt><dd>36-hour team hackathon, 8 tracks</dd></div>
+                            <div><dt>Who can apply</dt><dd>Students enrolled in any institution in India</dd></div>
+                            <div><dt>Organised by</dt><dd>Departments of Computer Science &amp; Engineering and Computer Applications, GEHU</dd></div>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </section>
@@ -807,11 +1050,11 @@
                     <p>From registration to the closing ceremony, here's what your team's weekend looks like.</p>
                 </div>
                 <ol class="journey">
-                    <li class="step acc-blue"><h3>Apply</h3><p>Register your team on <a href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">Unstop</a>. Applications are open now.</p></li>
-                    <li class="step acc-teal"><h3>Check in</h3><p>31 Oct, from 9:00 AM at Graphic Era Hill University, Dehradun.</p></li>
-                    <li class="step acc-violet"><h3>Build</h3><p>Hacking starts at 12:00 PM, with mentoring rounds through the night.</p></li>
-                    <li class="step acc-amber"><h3>Submit</h3><p>Upload your project on Unstop on 1 Nov, by 12:30 PM.</p></li>
-                    <li class="step acc-coral"><h3>Demo &amp; win</h3><p>Present to the judges. Prizes are awarded at 3:00 PM on 2 Nov.</p></li>
+                    <li class="step acc-blue"><h3>Apply</h3><span class="when">Open now</span><p>Register your team on <a href="https://unstop.com/hackathons/saarthi26-ieee-student-branch-graphic-era-hill-university-1758280" target="_blank" rel="noopener noreferrer">Unstop</a>.</p></li>
+                    <li class="step acc-teal"><h3>Check in</h3><span class="when">31 Oct, from 9:00 AM</span><p>Report at Graphic Era Hill University, Dehradun.</p></li>
+                    <li class="step acc-violet"><h3>Build</h3><span class="when">31 Oct, 12:00 PM</span><p>Hacking starts, with mentoring rounds through the night.</p></li>
+                    <li class="step acc-amber"><h3>Submit</h3><span class="when">1 Nov, by 12:30 PM</span><p>Upload your project on Unstop.</p></li>
+                    <li class="step acc-coral"><h3>Demo &amp; win</h3><span class="when">2 Nov, 3:00 PM</span><p>Present to the judges. Prizes are awarded at the closing ceremony.</p></li>
                 </ol>
             </div>
         </section>
@@ -855,6 +1098,8 @@
                     <button class="tab acc-teal" role="tab" id="tab-3" aria-controls="day-3" aria-selected="false" tabindex="-1">Day 3<small>Mon, 2 Nov</small></button>
                 </div>
 
+                <div class="timeline-layout">
+                <div class="timeline-panels">
                 <div class="acc-blue" role="tabpanel" id="day-1" aria-labelledby="tab-1" tabindex="0">
                     <ol class="schedule">
                         <li><time>09:00 AM</time><span class="ico"><i class="fa-solid fa-bus" aria-hidden="true"></i></span><span class="what">Check-in &amp; participant reporting starts</span></li>
@@ -897,24 +1142,28 @@
                         <li><time>06:30 PM</time><span class="ico"><i class="fa-solid fa-bus" aria-hidden="true"></i></span><span class="what">Bus departure</span></li>
                     </ol>
                 </div>
+                </div>
+                <!-- Filled in by script from the active day's schedule; stays hidden without JS. -->
+                <aside class="day-card" id="day-card" aria-label="Day summary" hidden></aside>
+                </div>
             </div>
         </section>
 
         <div class="divider" aria-hidden="true"></div>
 
         <!-- WHY ATTEND -->
-        <section class="section" id="why-attend" aria-labelledby="why-title">
+        <section class="section section-dark" id="why-attend" aria-labelledby="why-title">
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="why-title">Why attend</h2>
                     <p>From coding marathons to keynotes and workshops, SAARTHI is where ideas turn into impact. Each edition grows stronger; be part of the next one.</p>
                 </div>
                 <ul class="reasons">
-                    <li class="acc-blue"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><h3>Build</h3><p>Solve real-world problems with practical impact.</p></li>
-                    <li class="acc-violet"><i class="fa-solid fa-building" aria-hidden="true"></i><h3>Industry</h3><p>Interact with tech leaders and innovators.</p></li>
-                    <li class="acc-teal"><i class="fa-solid fa-people-group" aria-hidden="true"></i><h3>Network</h3><p>Connect with like-minded builders and creators.</p></li>
-                    <li class="acc-amber"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><h3>Careers</h3><p>Explore jobs, internships and mentorships.</p></li>
-                    <li class="acc-coral"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><h3>Community</h3><p>Food, swag and a weekend with people who build.</p></li>
+                    <li class="acc-blue"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><h3>Build</h3><p>Solve real-world problems with practical impact.</p><div class="chips"><span>36 hours</span><span>8 tracks</span><span>3 mentoring rounds</span></div></li>
+                    <li class="acc-violet"><i class="fa-solid fa-building" aria-hidden="true"></i><h3>Industry</h3><p>Interact with tech leaders and innovators.</p><div class="chips"><span>Tech talks</span><span>Partner sessions</span></div></li>
+                    <li class="acc-teal"><i class="fa-solid fa-people-group" aria-hidden="true"></i><h3>Network</h3><p>Connect with like-minded builders and creators.</p><div class="chips"><span>Unplugged</span><span>Midnight games</span></div></li>
+                    <li class="acc-amber"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><h3>Careers</h3><p>Explore jobs, internships and mentorships.</p><div class="chips"><span>Jobs</span><span>Internships</span><span>Mentorships</span></div></li>
+                    <li class="acc-coral"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><h3>Community</h3><p>Food, swag and a weekend with people who build.</p><div class="chips"><span>Meals</span><span>Swag</span><span>DJ night</span></div></li>
                 </ul>
             </div>
         </section>
@@ -929,6 +1178,9 @@
                     <p>Prize amounts will be announced soon. Hover over or select a chest to open it.</p>
                 </div>
 
+                <div class="prize-layout">
+                <div class="prize-main">
+                <h3>Top three teams</h3>
                 <ul class="podium">
                     <li class="prize second" tabindex="0">
                         <span class="place" aria-hidden="true">2</span>
@@ -949,7 +1201,10 @@
                         <p class="amount" data-amount="TBD">To be announced</p>
                     </li>
                 </ul>
+                </div>
 
+                <aside class="prize-panel" aria-labelledby="also-title">
+                <h3 id="also-title">Special awards and recognition</h3>
                 <ul class="specials">
                     <li class="prize" tabindex="0">
                         <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczO8ZGXlGbm7X7XvSdvVmmhQ8xm6qRXm2lp3MQE-t7SDlHi03j34G_pzG4lrqK5vWZ36PIA_Qx103qKP7dTN0W1NBPJocWfe0ymas-iJLPEiR-Rf7gdoOBvCL7QYQmDy0G5CkJQbjxtiTCL7foIPkl1k=w371-h364-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczN9nTQaGdGy3Pp2kOllw1rFEwSplHIA_esSnMHenRQCJnbKa52nnCDvHJeD2pe2kdzkEY4TgBJm-qkddV3QLWUmUUaToLDZR86dpGcNVwv7J9innIuWOBe0lfflyV64SDFe5vcoQrVon0u3JnZcvBBW=w496-h445-s-no-gm?authuser=0" alt=""></div>
@@ -966,6 +1221,8 @@
                 </ul>
 
                 <p class="callout">The top 30 teams receive mementos, certificates and swag.</p>
+                </aside>
+                </div>
             </div>
         </section>
 
@@ -980,17 +1237,17 @@
                 </div>
 
                 <div class="committee-group">
-                    <h3 class="visually-hidden">Patrons and convener</h3>
+                    <h3>Patrons and convener</h3>
                     <ul class="people people-lead">
-                        <li class="person">
+                        <li class="person acc-blue">
                             <img src="images/committee/kamal-ghanshala.jpg" alt="Prof. (Dr.) Kamal Ghanshala" width="88" height="88" loading="lazy">
                             <div><p class="role">Chief Patron</p><h4>Prof. (Dr.) Kamal Ghanshala</h4><p>Chairman, Graphic Era Group of Institutions</p></div>
                         </li>
-                        <li class="person">
+                        <li class="person acc-teal">
                             <img src="images/committee/tabassum-naqvi.jpg" alt="Prof. (Dr.) Tabassum Naqvi" width="88" height="88" loading="lazy">
                             <div><p class="role">Co-Patron</p><h4>Prof. (Dr.) Tabassum Naqvi</h4><p>Vice Chancellor, Graphic Era Hill University</p></div>
                         </li>
-                        <li class="person">
+                        <li class="person acc-violet">
                             <img src="images/committee/anupam-singh.jpg" alt="Prof. (Dr.) Anupam Singh" width="88" height="88" loading="lazy">
                             <div><p class="role">Convener</p><h4>Prof. (Dr.) Anupam Singh</h4><p>Head, Department of Computer Science &amp; Engineering and Department of Computer Application</p></div>
                         </li>
@@ -1000,21 +1257,21 @@
                 <div class="committee-group">
                     <h3>Coordinators</h3>
                     <ul class="people people-stack">
-                        <li class="person">
+                        <li class="person acc-blue">
                             <img src="images/committee/chandradeep-bhatt.jpg" alt="Dr. Chandradeep Bhatt" width="88" height="88" loading="lazy">
-                            <div><h4>Dr. Chandradeep Bhatt</h4><p>Faculty Coordinator, IEEE Student Branch, GEHU. Associate Professor, Department of Computer Science &amp; Engineering, GEHU</p></div>
+                            <div><p class="role">Coordinator</p><h4>Dr. Chandradeep Bhatt</h4><p>Faculty Coordinator, IEEE Student Branch, GEHU. Associate Professor, Department of Computer Science &amp; Engineering, GEHU</p></div>
                         </li>
-                        <li class="person">
+                        <li class="person acc-teal">
                             <img src="images/committee/sushant-chamoli.jpg" alt="Mr. Sushant Chamoli" width="88" height="88" loading="lazy">
-                            <div><h4>Mr. Sushant Chamoli</h4><p>Assistant Professor, Department of Computer Science &amp; Engineering, GEHU</p></div>
+                            <div><p class="role">Coordinator</p><h4>Mr. Sushant Chamoli</h4><p>Assistant Professor, Department of Computer Science &amp; Engineering, GEHU</p></div>
                         </li>
-                        <li class="person">
+                        <li class="person acc-violet">
                             <img src="images/committee/amit-juyal.jpg" alt="Mr. Amit Juyal" width="88" height="88" loading="lazy">
-                            <div><h4>Mr. Amit Juyal</h4><p>Assistant Professor, Department of Computer Application, GEHU</p></div>
+                            <div><p class="role">Coordinator</p><h4>Mr. Amit Juyal</h4><p>Assistant Professor, Department of Computer Application, GEHU</p></div>
                         </li>
-                        <li class="person">
+                        <li class="person acc-amber">
                             <img src="images/committee/atika-gupta.jpg" alt="Ms. Atika Gupta" width="88" height="88" loading="lazy">
-                            <div><h4>Ms. Atika Gupta</h4><p>Assistant Professor, Department of Computer Application, GEHU</p></div>
+                            <div><p class="role">Coordinator</p><h4>Ms. Atika Gupta</h4><p>Assistant Professor, Department of Computer Application, GEHU</p></div>
                         </li>
                     </ul>
                 </div>
@@ -1223,6 +1480,34 @@
         /* ---------- Timeline tabs ---------- */
         (function initTabs() {
             const tabs = [...document.querySelectorAll('[role="tab"]')];
+            const card = document.getElementById('day-card');
+
+            // Summarise the active day: its key moments and how many items are still to be confirmed.
+            function renderCard(tab) {
+                const panel = document.getElementById(tab.getAttribute('aria-controls'));
+                const rows = [...panel.querySelectorAll('.schedule li')];
+                const tbd = rows.filter(li => li.querySelector('.tbd')).length;
+                const el = (tag, cls, text) => {
+                    const node = document.createElement(tag);
+                    if (cls) node.className = cls;
+                    if (text) node.textContent = text;
+                    return node;
+                };
+                const list = el('ul');
+                rows.filter(li => li.classList.contains('key')).forEach(li => {
+                    const item = el('li');
+                    item.append(el('time', '', li.querySelector('time').textContent), el('span', '', li.querySelector('.what').textContent));
+                    list.append(item);
+                });
+                const meta = `${rows.length} scheduled items` + (tbd ? `, ${tbd} to be confirmed` : '');
+                card.className = 'day-card ' + [...panel.classList].find(c => c.startsWith('acc-'));
+                card.replaceChildren(
+                    el('p', 'day-name', tab.firstChild.textContent.trim()),
+                    el('p', 'day-date', tab.querySelector('small').textContent),
+                    el('h3', '', 'Key moments'), list, el('p', 'meta', meta)
+                );
+                card.hidden = false;
+            }
 
             function select(tab, focus) {
                 tabs.forEach(t => {
@@ -1232,11 +1517,13 @@
                     document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
                 });
                 if (focus) tab.focus();
+                renderCard(tab);
                 const panel = document.getElementById(tab.getAttribute('aria-controls'));
                 if (window.gsap && !reduceMotion()) {
                     gsap.fromTo(panel.querySelectorAll('li'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .3, stagger: .025, ease: 'power2.out' });
                 }
             }
+            renderCard(tabs[0]);
             tabs.forEach((tab, i) => {
                 tab.addEventListener('click', () => select(tab, false));
                 tab.addEventListener('keydown', e => {
@@ -1263,6 +1550,13 @@
             });
         })();
 
+        /* ---------- Pause the hero backdrop while it is off-screen ---------- */
+        (function initHeroIdle() {
+            const hero = document.querySelector('.hero');
+            // A batch can hold several entries (e.g. the initial one and a later scroll); the last is current.
+            new IntersectionObserver(entries => hero.classList.toggle('is-idle', !entries[entries.length - 1].isIntersecting)).observe(hero);
+        })();
+
         /* ---------- Tagline band pause (moving content needs a stop control) ---------- */
         (function initBand() {
             const band = document.querySelector('.band');
@@ -1278,10 +1572,12 @@
         (function initScrollUi() {
             const bar = document.getElementById('progress');
             const toTop = document.getElementById('to-top');
+            const header = document.querySelector('.site-header');
             let ticking = false;
             function update() {
                 const max = document.documentElement.scrollHeight - innerHeight;
                 bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+                header.classList.toggle('is-scrolled', scrollY > 8);
                 toTop.classList.toggle('show', scrollY > 900);
                 ticking = false;
             }
@@ -1417,15 +1713,21 @@
 
             // 2. Tracks: a light staggered entrance (the old minecart slide-in, made quiet).
             gsap.from('.track', {
-                opacity: 0, y: 24, duration: .5, ease: 'power2.out',
+                opacity: 0, y: 24, duration: .5, ease: 'power2.out', clearProps: 'transform,opacity',
                 stagger: { each: .06, grid: 'auto' },
                 scrollTrigger: { trigger: '.tracks', start: 'top 82%', once: true }
             });
 
             // 3. Journey: the steps light up in order, once.
             gsap.from('.step', {
-                opacity: 0, x: -12, duration: .45, ease: 'power2.out', stagger: .1,
+                opacity: 0, x: -12, duration: .45, ease: 'power2.out', stagger: .1, clearProps: 'transform,opacity',
                 scrollTrigger: { trigger: '.journey', start: 'top 80%', once: true }
+            });
+
+            // Why attend: the bento cards settle in once, in reading order.
+            gsap.from('.reasons li', {
+                opacity: 0, y: 20, duration: .5, ease: 'power2.out', stagger: .08, clearProps: 'transform,opacity',
+                scrollTrigger: { trigger: '.reasons', start: 'top 82%', once: true }
             });
 
             // 4. Prizes: chests drop onto their cards and burst a few pixel sparkles.
