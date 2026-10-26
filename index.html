@@ -504,10 +504,6 @@
             font-weight: 700; font-size: 14px;
         }
 
-        .specials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 28px 0 0; padding: 0; }
-        .specials .prize { display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: 16px; text-align: left; padding: 18px 20px; }
-        .specials .chest { width: 88px; height: 76px; margin: 0; }
-
         .sparkle {
             position: absolute; width: 7px; height: 7px; pointer-events: none;
             left: 50%; top: 40%;
@@ -519,7 +515,6 @@
             .prize.first { padding-top: 32px; padding-bottom: 24px; }
             .chest, .prize.first .chest { width: 84px; height: 74px; }
             .prize h3 { font-size: 16px; }
-            .specials { grid-template-columns: 1fr; }
         }
         @media (max-width: 420px) {
             .prize h3 { font-size: 14px; }
@@ -911,46 +906,29 @@
             <div class="wrap">
                 <div class="section-head">
                     <h2 id="prizes-title">Prizes</h2>
-                    <p>Prize amounts will be announced soon. Hover over or select a chest to open it.</p>
+                    <p>A total prize pool of ₹1,75,000. Hover over or select a chest to open it.</p>
                 </div>
 
                 <ul class="podium">
                     <li class="prize second" tabindex="0">
                         <span class="place" aria-hidden="true">2</span>
                         <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczNu_H5PVobUGKHQkuX0j_QQtF_N5AV7ezccjknQ0oHH8mRJslsN9h1DglGhHoIX_ZK6gd7nQLWTLk8anZdHajEDnFfaTDfcU8H5r4wd-Hxi7qZoH2y2BdWziMxdqBWb2Bm25twGCUwRLWSYrRbC6qUX=w273-h246-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczOUx7jS6BjysWc4E9ccmAONBxbf0I2UMQ4c7xYwHIJiBpnpr4KgfY5DlBuW5F-_jWHFGFUyBh546ClFqFX2bhu9IW86mAYoCfYfuO1BnNfSvaTL-RXnbvyp-xvxTTLl2sDpBKeB7p6O-3kCaMk08QZL=w560-h491-s-no-gm?authuser=0" alt=""></div>
-                        <h3>2nd place</h3>
-                        <p class="amount" data-amount="TBD">To be announced</p>
+                        <h3>1st runner-up</h3>
+                        <p class="amount">₹50,000</p>
                     </li>
                     <li class="prize first" tabindex="0">
                         <span class="place" aria-hidden="true">1</span>
                         <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczONpnP1yvDpP72KKTsTLkeid_wP14rFywsXKG-CAMpdcdGUehQI3CRHlJ-FXZePgPxFC62sJ3XVTPwm31e-neNRWNaJOO6dHZeG4q_WOmrcyoXVA33-c2xOecGan4k7F7GNllG7qnVacuRiS2INB5SO=w346-h296-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczPa0z9wORDhiDT9JohihWaMmxp1AQDIY8sRMyMvhwNuVhgRnoF1udYA0e1ekWUa0ROljmNK4Ouw9pPFqEOKdTT9O9St4vRoDXXnziemauSVOekiqxzwKKM04IpsTHPnPFfGHX3TGeQQCsXMx3SqDRUw=w560-h461-s-no-gm?authuser=0" alt=""></div>
-                        <h3>1st place</h3>
-                        <p class="amount" data-amount="TBD">To be announced</p>
+                        <h3>Winner</h3>
+                        <p class="amount">₹1,00,000</p>
                     </li>
                     <li class="prize third" tabindex="0">
                         <span class="place" aria-hidden="true">3</span>
                         <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczMuquS5JtdH4UZd3pxUiWPzxjpYFXME5jWI2m2ydzr-mcbCTGDFN9AWXNLfxkPv39k-RNZd7-WPvJ07760yiIXiLOeWHxsb535QfxPRnjMpnZ3VQl1lmBsWSc0FuSm0xtt5xTVQg-tcyBnYTU1DSgcg=w366-h354-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczOxe138R0rw7XV-rbmWygQnSTsHRDqHcO9wvfpIy2En1Viamu2CXVAjJ-EbIl19OT8zdHmbtTu5GeIpiG3J6w71Thqd6f77csGz-aQRbn_J0N-Oxy_PDa_zsfRlpFxtt3VqezgzFJd1xveMXIw_1M3S=w566-h471-s-no-gm?authuser=0" alt=""></div>
-                        <h3>3rd place</h3>
-                        <p class="amount" data-amount="TBD">To be announced</p>
+                        <h3>2nd runner-up</h3>
+                        <p class="amount">₹25,000</p>
                     </li>
                 </ul>
-
-                <ul class="specials">
-                    <li class="prize" tabindex="0">
-                        <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczO8ZGXlGbm7X7XvSdvVmmhQ8xm6qRXm2lp3MQE-t7SDlHi03j34G_pzG4lrqK5vWZ36PIA_Qx103qKP7dTN0W1NBPJocWfe0ymas-iJLPEiR-Rf7gdoOBvCL7QYQmDy0G5CkJQbjxtiTCL7foIPkl1k=w371-h364-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczN9nTQaGdGy3Pp2kOllw1rFEwSplHIA_esSnMHenRQCJnbKa52nnCDvHJeD2pe2kdzkEY4TgBJm-qkddV3QLWUmUUaToLDZR86dpGcNVwv7J9innIuWOBe0lfflyV64SDFe5vcoQrVon0u3JnZcvBBW=w496-h445-s-no-gm?authuser=0" alt=""></div>
-                        <div><h3>Best beginner team</h3><p class="amount" data-amount="TBD">To be announced</p></div>
-                    </li>
-                    <li class="prize" tabindex="0">
-                        <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczNNDXrSPaGnDcsLe6Frcv42JFY6v7Z_k0DRcRaFobE3vnpoPY9W1ZgrL5iG07YgJlzf4_1SvFVflW3u0SYgNk8jR2LzbeyK8-EXl6DtE2mYeF4rhyx8vZhLuaZjcucfRnARK64I_484jJ3tBqnEIkno=w377-h362-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczOtxhCyJOfFGclzyqK6pPIY-JLHSjrss7V4rlf4GWdDvxmluFnDVr9KYFWK9kxtBlnVZm8oP7ebIAtFnlZ_fBstkWTMwIIWjxVUaROA2Wr1-kXITHBMryvj040TdlQh2FynZUnNLxuXxT3zNnnH6Xs0=w489-h437-s-no-gm?authuser=0" alt=""></div>
-                        <div><h3>Best all-girls team</h3><p class="amount" data-amount="TBD">To be announced</p></div>
-                    </li>
-                    <li class="prize" tabindex="0">
-                        <div class="chest"><img class="closed" src="https://lh3.googleusercontent.com/pw/AP1GczPpc9LL6lwBVY9i5iTU6ulUwGiQ40CWRAQuM4oIfI3cNg1HRv7q9fP0PV8TQOc6RvKI8yg5GsJkuljxryZ-O7dUYGbkdS7RalEbUg6PXhMZ18tvv-KdC_zKjSvmpuoLpkQJIvf6KsRi7vYsgZSw-UD7=w228-h219-s-no-gm?authuser=0" alt=""><img class="open" src="https://lh3.googleusercontent.com/pw/AP1GczOftM8eW7ImP-1-64GKKAUhX41DANBybLypZ8BPSs8t-Js7yBsLePRWG1fIlZOXVJShu5rHT-DPgNnILg0c43HGbKTP8d_FRI7OzNdiyiXCzXXtnNMxydDj2mkLCwFqnyliHkOeA5tzFF1ihI6rRGdH=w376-h347-s-no-gm?authuser=0" alt=""></div>
-                        <div><h3>Top 10 teams</h3><p class="amount">Swag box</p></div>
-                    </li>
-                </ul>
-
-                <p class="callout">The top 30 teams receive mementos, certificates and swag.</p>
             </div>
         </section>
 
